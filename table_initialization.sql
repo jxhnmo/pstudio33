@@ -17,11 +17,11 @@ CREATE TABLE inventory_items (
 CREATE TABLE menu_items (
     id INT PRIMARY KEY,
     name VARCHAR(50),
-    description TEXT,
-    image_data BYTEA,
+    /* description TEXT,*/
+    /* image_data BYTEA,*/
     available BOOLEAN,
-    price NUMERIC,
-    category VARCHAR(50)
+    price NUMERIC--,
+    /* category VARCHAR(50) */
 );
 
 CREATE TABLE ingredients (
@@ -65,7 +65,7 @@ CREATE TABLE sales_items (
     FOREIGN KEY (sales_id) REFERENCES sales_transactions(id),
     FOREIGN KEY (menu_id) REFERENCES menu_items(id)
 );
-
+/*
 CREATE TABLE customizations (
     id INT PRIMARY KEY,
     sales_item_id INT,
@@ -74,3 +74,4 @@ CREATE TABLE customizations (
     FOREIGN KEY (sales_item_id) REFERENCES sales_items(id),
     FOREIGN KEY (item_id) REFERENCES inventory_items(id)
 );
+*/

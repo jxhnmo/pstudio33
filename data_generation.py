@@ -49,7 +49,7 @@ menu_id = 1
 menu_csv.writerow(["id","name","available","price"])
 menu_item_ids = {}
 for x in menu_items:
-    menu_csv.writerow([menu_id,x,True,format(menu_item_costs[x],".2f")])
+    menu_csv.writerow([menu_id,x,"true",format(menu_item_costs[x],".2f")])
     menu_item_ids[x] = menu_id
     menu_id += 1
 menu_file.close()
@@ -169,7 +169,8 @@ for i in range(randrange(366,415,7)):
             cost += menu_item_costs[item]
             sale_item_csv.writerow([sale_item_id,sales_id,menu_item_ids[item]])
             sale_item_id += 1
-        sales_csv.writerow([sales_id,format(cost,".2f"),emp_id,t.strftime("%H:%M:%S")])
+        sale_time = datetime.combine(day,t)
+        sales_csv.writerow([sales_id,format(cost,".2f"),emp_id,sale_time.strftime("%Y-%m-%d %H:%M:%S")])
         sales_id += 1
     
     if day.weekday() == 3 or day.weekday() == 6:
@@ -185,7 +186,7 @@ for i in range(randrange(366,415,7)):
             inv_item_csv.writerow([inv_item_id,inv_trans_id,item_ids[item],restock[item],cost])
             inv_item_id += 1
         # the only manager has id = 1
-        inv_trans_csv.writerow([inv_trans_id,1,stock_time.strftime("%Y-%M-%D %H:%M:%S"),format(price,".2f")])
+        inv_trans_csv.writerow([inv_trans_id,1,stock_time.strftime("%Y-%m-%d %H:%M:%S"),format(price,".2f")])
         curr_inventory = inventory_count.copy()
         inv_trans_id += 1
         
