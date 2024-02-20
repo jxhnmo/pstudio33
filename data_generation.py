@@ -90,7 +90,7 @@ ing_item_costs = {
 }
 
 
-menu_file = open("menu_items.csv","w")
+menu_file = open("menu_items.csv","w",newline="")
 menu_csv = writer(menu_file)
 menu_id = 1
 menu_csv.writerow(["id","name","available","price"])
@@ -111,7 +111,7 @@ for item in menu_items:
 for ing in inventory_count:
     inventory_count[ing] *= 400
 
-item_file = open("inventory_items.csv","w")
+item_file = open("inventory_items.csv","w",newline="")
 item_csv = writer(item_file)
 item_id = 1
 item_ids = {}
@@ -122,7 +122,7 @@ for x in ingredients:
     item_id += 1
 item_file.close()
 
-ingredients_file = open("ingredients.csv","w")
+ingredients_file = open("ingredients.csv","w",newline="")
 ingr_csv = writer(ingredients_file)
 ingr_id = 1
 ingr_csv.writerow(["id","item_id","menu_id","num"])
@@ -169,22 +169,22 @@ multipliers = [1.3,1.7,2.4,3.5,4.2,2.6,1]
 num_items = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,4]
 avail_emp = [1,2,2,2,3,3,3,4,4,4,5,5]
 
-sales_file = open("sales_transactions.csv","w")
+sales_file = open("sales_transactions.csv","w",newline="")
 sales_csv = writer(sales_file)
 sales_id = 1
 sales_csv.writerow(["id","cost","employee_id","purchase_time"])
 
-sale_item_file = open("sales_items.csv","w")
+sale_item_file = open("sales_items.csv","w",newline="")
 sale_item_csv = writer(sale_item_file)
 sale_item_id = 1
 sale_item_csv.writerow(["id","sales_id","menu_id"])
 
-inventory_trans_file = open("inventory_transactions.csv","w")
+inventory_trans_file = open("inventory_transactions.csv","w",newline="")
 inv_trans_csv = writer(inventory_trans_file)
 inv_trans_id = 1
 inv_trans_csv.writerow(["id","manager_id","transaction_date","price"])
 
-inventory_item_file = open("inventory_item_orders.csv","w")
+inventory_item_file = open("inventory_item_orders.csv","w",newline="")
 inv_item_csv = writer(inventory_item_file)
 inv_item_id = 1
 inv_item_csv.writerow(["id","transaction_id","item_id","stock","price"])
