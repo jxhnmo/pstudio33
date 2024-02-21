@@ -4,17 +4,30 @@ from datetime import *
 # from time import *
 
 employees = [1,2,3,4,5]
-ingredients = ["buns","lettuce","patty","cheese","bacon","bread","tomato","crispy chicken","spicy crispy chicken","grilled chicken","croutons","fries"]
+ingredients = ["buns","lettuce","patty","cheese","bacon","bread","tomato","crispy chicken","spicy crispy chicken","grilled chicken","croutons","fries","small cup","large cup","cookie","chicken tender","corn dog","hot dog bun","hot dog bun","wiener","tortilla","salsa","ice cream","whipped cream","ribs","pickles","onions","napkin","cup lid","straw","tray","ice cream bowl","shake cup","salad bowl"]
 menu_items = {
-    "bacon cheeseburger":["buns","patty","cheese","bacon"],
-    "cheeseburger":["buns","patty","cheese"],
-    "patty melt":["bread","patty","cheese"],
-    "hamburger":["buns","patty","lettuce","tomato"],
-    "aggie chicken club":["buns","crispy chicken","lettuce","bacon"],
-    "revs grilled chicken sandwich":["buns","grilled chicken","lettuce","tomato"],
-    "spicy chicken sandwich":["buns","spicy crispy chicken","lettuce"],
-    "chicken caesar salad":["grilled chicken","lettuce","lettuce","lettuce","croutons"],
-    "french fries":["fries"]
+    "bacon cheeseburger":["buns","patty","cheese","bacon","tray","napkin"],
+    "cheeseburger":["buns","patty","cheese","tray","napkin"],
+    "patty melt":["bread","patty","cheese","tray","napkin"],
+    "hamburger":["buns","patty","lettuce","tomato","tray","napkin"],
+    "aggie chicken club":["buns","crispy chicken","lettuce","bacon","tray","napkin"],
+    "revs grilled chicken sandwich":["buns","grilled chicken","lettuce","tomato","tray","napkin"],
+    "spicy chicken sandwich":["buns","spicy crispy chicken","lettuce","tray","napkin"],
+    "chicken caesar salad":["grilled chicken","lettuce","lettuce","lettuce","croutons","salad bowl","napkin"],
+    "french fries":["fries","tray","napkin"],
+    "small drink":["small cup","cup lid","straw"],
+    "large drink":["large cup","cup lid","straw"],
+    "cookies":["cookie","cookie","tray","napkin"],
+    "chicken tenders":["chicken tender","tray","napkin"],
+    "corn dogs":["corn dog","corn dog","tray","napkin"],
+    "hot dogs":["hot dog bun","hot dog bun","wiener","wiener","tray","napkin"],
+    "chicken wrap":["tortilla","grilled chicken","salsa","lettuce","tray","napkin"],
+    "double scoop ice cream":["ice cream","ice cream","ice cream bowl"],
+    "aggie shakes":["ice cream","whipped cream","shake cup","straw"],
+    "cookie ice cream melt":["cookie","cookie","ice cream","tray","napkin"],
+    "yell bbq rib sandwich":["ribs","onions","pickles","tray","napkin"],
+    "blt burger":["buns","patty","bacon","lettuce","tomato","tray","napkin"],
+    "double cheeseburger":["buns","patty","patty","cheese","tray","napkin"]
 }
 menu_item_costs = {
     "bacon cheeseburger":8.65,
@@ -25,7 +38,20 @@ menu_item_costs = {
     "revs grilled chicken sandwich":6.60,
     "spicy chicken sandwich":6.30,
     "chicken caesar salad":6.80,
-    "french fries":3.50
+    "french fries":3.50,
+    "small drink": 1.50,
+    "large drink": 2.50,
+    "cookies":2.00,
+    "chicken tenders":5.60,
+    "corn dogs":4.45,
+    "hot dogs":5.75,
+    "chicken wrap":6.45,
+    "double scoop ice cream":4.25,
+    "aggie shakes":4.50,
+    "cookie ice cream melt":5.25,
+    "yell bbq rib sandwich":7.30,
+    "blt burger":9.25,
+    "double cheeseburger":8.45
 }
 ing_item_costs = {
     "buns": .30,
@@ -39,7 +65,28 @@ ing_item_costs = {
     "spicy crispy chicken": .85,
     "grilled chicken": .75,
     "croutons": .10,
-    "fries": 1.20
+    "fries": 1.20,
+    "small cup": .05,
+    "large cup": .08,
+    "cookie": .25,
+    "chicken tender": .80,
+    "corn dog": 1.10,
+    "hot dog bun": .25,
+    "wiener":.75,
+    "tortilla":.10,
+    "salsa":.05,
+    "ice cream":.75,
+    "whipped cream":.25,
+    "ribs":1.50,
+    "pickles":.20,
+    "onions":.20,
+    "napkin":.02,
+    "cup lid":.10,
+    "straw":.05,
+    "tray":.05,
+    "ice cream bowl":.20,
+    "shake cup":.23,
+    "salad bowl":.18
 }
 
 
@@ -100,6 +147,7 @@ dinner_end = datetime(year=2023,month=1,day=1,hour=20,minute=30,second=0)
 closing_time = datetime(year=2023,month=1,day=1,hour=22,minute=30,second=0)
 inc = timedelta(seconds=1)
 
+
 while curr_time < closing_time:
     available_times.append(curr_time.time())
     if curr_time < lunch_end:
@@ -113,6 +161,8 @@ while curr_time < closing_time:
 
 ingredients_file.close()
 day1 = date(2023,1,1)
+peak_day_1 = date(2023,8,randrange(27,30))
+peak_day_2 = date(2024,1,randrange(15,20))
 inc = timedelta(days=1)
 
 multipliers = [1.3,1.7,2.4,3.5,4.2,2.6,1]
@@ -152,10 +202,17 @@ for ing in inventory_count:
 '''
 
 curr_inventory = inventory_count.copy()
-
-for i in range(randrange(366,415,7)):
+num_days = (date(2024,2,21) - day1).days
+#print(num_days)
+#exit()
+#for i in range(randrange(366,415,7)):
+for i in range(num_days):
     day = day1 + (inc)*i
     multi = multipliers[day.weekday()]
+    if day == peak_day_1:
+        multi = 10.4
+    if day == peak_day_2:
+        multi = 9.2
     num_orders = randrange(int(150*multi),int(250*multi))
     times = sample(available_times,num_orders)
     for t in times:
