@@ -21,7 +21,7 @@ CREATE TABLE menu_items (
     image_data BYTEA,
     available BOOLEAN,
     price NUMERIC,
-    Category VARCHAR(50)
+    category VARCHAR(50)
 );
 
 CREATE TABLE ingredients (
