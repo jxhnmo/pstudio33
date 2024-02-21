@@ -6,11 +6,11 @@ VALUES
 (4, 'Man Ger', 10.0, '10:00:00', '23:30:00', false),
 (5, 'Han Surger', 12.0, '10:00:00', '23:30:00', false);
 
-COPY inventory_items FROM 'inventory_items.csv' CSV HEADER
-COPY menu_items FROM 'menu_items.csv' CSV HEADER
-COPY ingredients FROM 'ingredients.csv' CSV HEADER
-COPY inventory_transactions FROM 'inventory_transactions.csv' CSV HEADER
-COPY inventory_item_orders FROM 'inventory_item_orders.csv' CSV HEADER
-COPY sales_transactions FROM 'sales_transactions.csv' CSV HEADER
-COPY sales_items FROM 'sales_items.csv' CSV HEADER
-COPY customizations FROM 'customizations.csv' CSV HEADER
+\copy inventory_items FROM 'inventory_items.csv' CSV HEADER;
+\copy menu_items FROM 'menu_items.csv' CSV HEADER;
+\copy ingredients FROM 'ingredients.csv' CSV HEADER;
+\copy inventory_transactions FROM 'inventory_transactions.csv' CSV HEADER;
+\copy inventory_item_orders FROM 'inventory_item_orders.csv' CSV HEADER;
+\copy sales_transactions FROM 'sales_transactions.csv' CSV HEADER;
+\copy sales_items FROM 'sales_items.csv' CSV HEADER;
+-- \copy customizations FROM 'customizations.csv' CSV HEADER;
