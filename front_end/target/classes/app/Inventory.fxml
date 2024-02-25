@@ -13,11 +13,12 @@
 	</center>
 	<bottom>
 	    <HBox alignment="CENTER" spacing="10" style="-fx-background-color: white " prefHeight="100.0">
+			<Pane HBox.hgrow="ALWAYS"/>
 	        <Button text="Sign Out" fx:id="btnSignOut" onAction="#handleSignOff" minWidth="150.0" minHeight="70.0"/>
 	        <Button text="Menu" fx:id="btnMenu" onAction="#goToMenu" minWidth="150.0" minHeight="70.0"/>
 	        <Button text="Statistics" fx:id="btnStatistics" onAction="#goToStatistics" minWidth="150.0" minHeight="70.0"/>
 	        <Button text="Inventory" fx:id="btnInventory" onAction="#goToInventory" minWidth="150.0" minHeight="70.0"/>
-	        <Pane HBox.hgrow="ALWAYS"/> <!-- This pane will take up the remaining space -->
+	        <Pane HBox.hgrow="ALWAYS"/>
 	        <!-- The rightmost space is left empty for now -->
 	    </HBox>
 	</bottom>
