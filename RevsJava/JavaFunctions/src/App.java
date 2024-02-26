@@ -5,7 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class App {
+public class App extends JFrame implements ActionListener{
+  static JFrame f;
     public static void main(String[] args) throws Exception {
         Connection conn = null;
         DbSetup setup = new DbSetup();
@@ -38,10 +39,10 @@ public class App {
         JOptionPane.showMessageDialog(null,"Error accessing Database.");
       }
       // create a new frame
-     // f = new JFrame("DB GUI");
+      f = new JFrame("DB GUI");
 
       // create a object
-     // GUI s = new GUI();
+      App s = new App();
 
       // create a panel
       JPanel p = new JPanel();
@@ -49,7 +50,7 @@ public class App {
       JButton b = new JButton("Close");
 
       // add actionlistener to button
-    //  b.addActionListener(s);
+      b.addActionListener(s);
 
       //TODO Step 3 (see line 9)
       JTextArea textArea = new JTextArea(name);
@@ -64,12 +65,12 @@ public class App {
       p.add(b);
 
       // add panel to frame
-      //f.add(p);
+      f.add(p);
 
       // set the size of frame
-      //f.setSize(400, 400);
+      f.setSize(400, 400);
 
-     // f.setVisible(true);
+      f.setVisible(true);
 
       //closing the connection
       try {
@@ -79,7 +80,13 @@ public class App {
         JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
       }
     }
-
+    public void actionPerformed(ActionEvent e)
+    {
+        String s = e.getActionCommand();
+        if (s.equals("Close")) {
+            f.dispose();
+        }
+    }
  
 
     }
