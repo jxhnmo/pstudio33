@@ -9,8 +9,9 @@ import app.entity_classes.DbSetup;
 public class DbConnection{
     //want constructor 
     DbSetup setup;
+    Connection conn;
     public DbConnection(){ 
-        Connection conn = null;
+        conn = null;
         DbSetup setup = new DbSetup();
        
         try {
@@ -20,21 +21,21 @@ public class DbConnection{
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
-      JOptionPane.showMessageDialog(null,"Opened database successfully");
-        String name = "";
-      try{
-        //create a statement object
-        Statement stmt = conn.createStatement();
-        //create a SQL statement
-        //TODO Step 2 (see line 8)
-        String sqlStatement = "SELECT * FROM menu_items LIMIT 5;";
-        //send statement to DBMS
-        ResultSet result = stmt.executeQuery(sqlStatement);
-      }
-        catch (Exception e){
-            JOptionPane.showMessageDialog(null,"Error accessing Database.");
-          }
+     
         //connect to databas
+        
+    }
+    public ResultSet runStatement(String sqlStatement){
+    
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(sqlStatement);
+            return result;
+          }
+            catch (Exception e){
+                System.err.println("Error accessingg database");
+              }
+
         
     }
     public void closeConnection(){
