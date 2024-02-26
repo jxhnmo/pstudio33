@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 public class Employee {
     private int id;
     private String name;

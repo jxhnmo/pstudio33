@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 public class InventoryItems {
     private int ID;
     private String itemName;
