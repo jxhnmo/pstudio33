@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 public class SalesItems {
     private int ID;
     private int salesID;

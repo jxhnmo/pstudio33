@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 public class SalesTransactions {
     private int id;
     private double cost;

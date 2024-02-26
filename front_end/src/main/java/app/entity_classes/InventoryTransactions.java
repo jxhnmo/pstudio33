@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 import java.time.LocalDateTime;
 
 public class InventoryTransactions {

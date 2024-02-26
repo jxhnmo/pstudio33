@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 public class InventoryItemOrders {
     public int ID;
     public int transactionID;

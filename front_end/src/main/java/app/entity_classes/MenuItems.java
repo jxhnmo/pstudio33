@@ -1,3 +1,5 @@
+package app.entity_classes;
+
 public class MenuItems {
     private int ID;
     private String name;
