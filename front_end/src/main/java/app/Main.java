@@ -21,7 +21,7 @@ public class Main extends Application {
     public static void navigateTo(String fxml) {
         try {
             Parent root = FXMLLoader.load(Main.class.getResource(fxml + ".fxml"));
-            Scene scene = new Scene(root, 1600, 1200); // Adjusted size of screen
+            Scene scene = new Scene(root, 1200, 900); // Adjusted size of screen
             primaryStage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
