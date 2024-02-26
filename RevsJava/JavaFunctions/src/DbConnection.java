@@ -37,6 +37,18 @@ public class DbConnection{
               }
 
     }
+    public String getResultString(ResultSet result, String columnLabel){
+        String res = "";
+        try{
+            while (result.next()) {
+              res += result.getString("name")+"\t"+result.getString("price")+"\n";
+            }
+          }
+          catch (Exception e){
+            System.err.println("error with result");
+          }
+          return res;
+    }
     public void closeConnection(){
         try {
             conn.close();
