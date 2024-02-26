@@ -6,57 +6,77 @@ import javax.swing.JOptionPane;
 
 import app.entity_classes.DbSetup;
 
-public class DbConnection{
-    //want constructor 
+/**
+ * The DbConnection class represents a connection to a database.
+ * It provides methods to execute SQL statements and retrieve results.
+ */
+public class DbConnection {
     DbSetup setup;
     Connection conn;
-    public DbConnection(){ 
+
+    /**
+     * Constructs a new DbConnection object and establishes a connection to the database.
+     */
+    public DbConnection() {
         conn = null;
         DbSetup setup = new DbSetup();
-       
         try {
             conn = DriverManager.getConnection(setup.url, setup.user, setup.password);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
-            System.exit(0);
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-     
-        //connect to databas
-        
     }
-    public ResultSet runStatement(String sqlStatement){
-    
-        try{
+    /**
+     * Executes the given SQL statement and returns the result set.
+     *
+     * @param sqlStatement the SQL statement to execute
+     * @return the result set of the executed SQL statement
+     */
+    public ResultSet runStatement(String sqlStatement) {
+        try {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(sqlStatement);
             return result;
-          }
-            catch (Exception e){
-                System.err.println("Error accessingg database");
-              }
+        } catch (Exception e) {
+            System.err.println("Error accessing database");
+        }
+        return null;
+    }
 
-    }
-    public String getResultString(ResultSet result, String columnLabel){
+    /**
+     * Retrieves a string representation of the result set for the specified column label.
+     *
+     * @param result      the result set to retrieve the string representation from
+     * @param columnLabel the label of the column to retrieve the string representation from
+     * @return a string representation of the result set for the specified column label
+     */
+    public String getResultString(ResultSet result, String columnLabel) {
         String res = "";
-        try{
+        try {
             while (result.next()) {
-              res += result.getString("name")+"\t"+result.getString("price")+"\n";
+
+                res += result.getString("name") + "\t" + result.getString("price") + "\n";
+
             }
-          }
-          catch (Exception e){
-            System.err.println("error with result");
-          }
-          return res;
+        } catch (Exception e) {
+            System.err.println("Error with result");
+        }
+        return res;
     }
-    public void closeConnection(){
+
+    /**
+     * Closes the database connection.
+     */
+    public void closeConnection() {
         try {
             conn.close();
-            System.err.println("Connection closed");
-          } catch(Exception e) {
-            System.err.println("Connection NOT Closed.");
-          }
-        //close connection
+        } catch (Exception e) {
+            System.err.println("Connection NOT closed.");
+        }
     }
-
 }
+        //close connection
+    
+
