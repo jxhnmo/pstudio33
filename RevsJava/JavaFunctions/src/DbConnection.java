@@ -36,9 +36,14 @@ public class DbConnection{
                 System.err.println("Error accessingg database");
               }
 
-        
     }
     public void closeConnection(){
+        try {
+            conn.close();
+            System.err.println("Connection closed");
+          } catch(Exception e) {
+            System.err.println("Connection NOT Closed.");
+          }
         //close connection
     }
 
