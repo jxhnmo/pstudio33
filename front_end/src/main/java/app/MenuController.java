@@ -7,15 +7,32 @@ import javafx.fxml.FXML;
 
 public class MenuController {
     @FXML
-    private Button btnSignOut; // Ensure this matches the fx:id in FXML
+    private Button btnSignOut;
+    @FXML
+    private Button btnMenu;
+    @FXML
+    private Button btnStatistics;
+    @FXML
+    private Button btnInventory;
+
+    // Method to initialize the role
+    public void initializeRole(boolean isManager) {
+        if (!isManager) {
+            btnMenu.setDisable(true); // Disable for employees
+            btnStatistics.setDisable(true); // Disable for employees
+            btnInventory.setDisable(true); // Disable for employees
+            // Disable any other manager-specific buttons
+        }
+        // If isManager is true, no need to disable buttons, assuming all buttons are enabled by default
+    }
 
     @FXML
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
         // Any additional sign-off logic can go here
 
-        // Quit the JavaFX application
-        Platform.exit();
+        // Signs out to login page
+        app.Main.navigateTo("Login");
     }
 
     public void goToMenu(ActionEvent event) {
