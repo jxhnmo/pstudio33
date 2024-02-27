@@ -17,6 +17,7 @@ public class DbConnection {
     /**
      * Constructs a new DbConnection object and establishes a connection to the database.
      */
+
     public DbConnection() {
         conn = null;
         DbSetup setup = new DbSetup();
@@ -56,9 +57,7 @@ public class DbConnection {
         String res = "";
         try {
             while (result.next()) {
-
-                res += result.getString("name") + "\t" + result.getString("price") + "\n";
-
+                res += result.getString(columnLabel);
             }
         } catch (Exception e) {
             System.err.println("Error with result");
