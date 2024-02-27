@@ -1,5 +1,6 @@
 package app;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
@@ -12,8 +13,11 @@ public class InventoryController {
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
         // Any additional sign-off logic can go here
-    }
 
+        // Quit the JavaFX application
+        Platform.exit();
+    }
+    
     public void goToMenu(ActionEvent event) {
         app.Main.navigateTo("Menu");
     }
