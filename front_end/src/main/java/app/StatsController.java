@@ -1,5 +1,6 @@
 package app;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
@@ -12,6 +13,9 @@ public class StatsController {
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
         // Any additional sign-off logic can go here
+
+        // Signs out to login page
+        app.Main.navigateTo("Login");
     }
 
     public void goToMenu(ActionEvent event) {

@@ -1,6 +1,7 @@
 package app;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
@@ -28,6 +29,9 @@ public class InventoryController {
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
         // Any additional sign-off logic can go here
+
+        // Signs out to login page
+        app.Main.navigateTo("Login");
     }
 
     @FXML

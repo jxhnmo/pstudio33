@@ -19,12 +19,12 @@ public class Main extends Application {
      * This method is the entry point of the JavaFX application.
      * It is called when the application is launched and sets up the primary stage.
      *
-     * @param primaryStage The primary stage of the JavaFX application.
+     * The primary stage of the JavaFX application.
      */
     @Override
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage; // Store the primary stage as a static variable
-        navigateTo("Menu");
+        navigateTo("Login");
         primaryStage.show();
     }
 
@@ -45,6 +45,26 @@ public class Main extends Application {
             e.printStackTrace();
             
             // Handle the exception (e.g., FXML file not found)
+        }
+    }
+
+    // New method to navigate to Menu.fxml with role information
+    public static void navigateToMenuWithRole(String fxml, boolean isManager) {
+        try {
+            // Load the FXML file and get the loader
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxml));
+            Parent root = loader.load();
+
+            // Get the controller and pass the role
+            MenuController controller = loader.getController();
+            controller.initializeRole(isManager); // Ensure your MenuController has this method
+
+            // Show the scene
+            Scene scene = new Scene(root, 1200, 900); // Adjusted size of screen
+            primaryStage.setScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle the exception (e.g., controller method not found, FXML file not found)
         }
     }
 
