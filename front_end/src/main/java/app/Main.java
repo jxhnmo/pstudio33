@@ -19,7 +19,7 @@ public class Main extends Application {
      * This method is the entry point of the JavaFX application.
      * It is called when the application is launched and sets up the primary stage.
      *
-     * @param primaryStage The primary stage of the JavaFX application.
+     * The primary stage of the JavaFX application.
      */
     @Override
     public void start(Stage primaryStage) {
