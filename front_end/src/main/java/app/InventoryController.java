@@ -14,8 +14,8 @@ public class InventoryController {
         System.out.println("Signed off");
         // Any additional sign-off logic can go here
 
-        // Quit the JavaFX application
-        Platform.exit();
+        // Signs out to login page
+        app.Main.navigateTo("Login");
     }
     
     public void goToMenu(ActionEvent event) {
