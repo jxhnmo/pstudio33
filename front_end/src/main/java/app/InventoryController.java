@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import app.entity_classes.InventoryItems;
+import app.database.*;
 
 public class InventoryController {
     @FXML
@@ -20,6 +21,8 @@ public class InventoryController {
 
     @FXML // column 3 is the order column
     private TableColumn<InventoryItems, Number> c3;
+
+    private DbConnection dbConnection;
     
     @FXML
     private void initialize() {    
