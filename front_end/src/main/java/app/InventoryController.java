@@ -34,6 +34,7 @@ public class InventoryController {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
         
+
         c1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
         c2.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
         c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
