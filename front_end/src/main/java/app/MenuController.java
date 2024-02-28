@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
 import javafx.fxml.FXML;
 
@@ -37,6 +38,15 @@ public class MenuController {
     private TextArea salesTextbox;
     @FXML
     private Label total;
+    @FXML
+    private HBox taskbar;
+    @FXML
+    private Button addCategory;
+    @FXML
+    private Button addMenuItem;
+    
+    boolean editmode = false;
+    private MenuItems currMenuItem;
     
     private DbConnection dbConnection;
     
@@ -61,6 +71,15 @@ public class MenuController {
             // Disable any other manager-specific buttons
         }
         // If isManager is true, no need to disable buttons, assuming all buttons are enabled by default
+        else {
+            taskbar.setTranslateX(-79.2);
+            Button newbutton = new Button("Edit Menu");
+            newbutton.setMnemonicParsing(false);
+            newbutton.setMinHeight(70);
+            newbutton.setMinWidth(150);
+            newbutton.setOnAction(this::handleEditMenu);
+            taskbar.getChildren().add(2,newbutton);
+        }
     }
     
     public void initialize() {
@@ -170,7 +189,7 @@ public class MenuController {
     }
 
     public void goToMenu(ActionEvent event) {
-        app.Main.navigateTo("Menu");
+        // app.Main.navigateTo("Menu");
     }
 
     public void goToStatistics(ActionEvent event) {
@@ -189,6 +208,10 @@ public class MenuController {
         updateMenuItems();
     }
     private void handleItemSelection(ActionEvent event) {
+        if(editmode) {
+            handleItemPriceEdit(event);
+            return;
+        }
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         MenuItems item = currItems.get(index);
@@ -198,6 +221,23 @@ public class MenuController {
         updateSalesInfo();
         // System.out.println(item.getName());
     }
+    private void handleItemPriceEdit(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        int index = itemButtons.indexOf(button);
+        currMenuItem = currItems.get(index);
+    }
+    private void changeItemPrice(MenuItems item,double price) {
+        item.setPrice(price);
+        String query = "UPDATE menu_items SET price="+item.getPrice()+" WHERE id="+item.getID()+";";
+        try {
+            dbConnection.runUpdate(query);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
+    }
+    
     private int getCurrTransactionId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
         try {
@@ -227,6 +267,8 @@ public class MenuController {
     
     @FXML
     public void handleOrderConfirm(ActionEvent event) {
+        if(editmode)
+            return;
         if(currSalesItems.size() != 0) {
             int transactionId = getCurrTransactionId();
             int salesItemID = getCurrSaleItemId();
@@ -263,5 +305,42 @@ public class MenuController {
             currTransaction = new SalesTransactions(-1,0,employeeId,"");
             updateSalesInfo();
         }
+    }
+    
+    @FXML
+    public void handleEditMenu(ActionEvent event) {
+        if(editmode) {
+            categories.getChildren().remove(addCategory);
+            menuItems.getChildren().remove(addMenuItem);
+            ((Button) taskbar.getChildren().get(2)).setText("Edit Menu");
+        } else {
+            ((Button) taskbar.getChildren().get(2)).setText("Exit Editor");
+            addCategory = new Button("Add Category");
+            addCategory.setMnemonicParsing(false);
+            addCategory.setPrefHeight(77.0);
+            addCategory.setPrefWidth(192.0);
+            addCategory.setOnAction(this::handleCategoryAdd);
+            categories.getChildren().add(addCategory);
+            
+            int numChildren = menuItems.getChildren().size();
+            addMenuItem = new Button("Add new item");
+            addMenuItem.setMnemonicParsing(false);
+            addMenuItem.setPrefHeight(211.0);
+            addMenuItem.setPrefWidth(280.0);
+            addMenuItem.setWrapText(true);
+            addMenuItem.setOnAction(this::handleMenuItemAdd);    
+            menuItems.add(addMenuItem, numChildren % 3, numChildren / 3);
+            menuItems.setMargin(addMenuItem, new Insets(10));
+        }
+        editmode = !editmode;
+    }
+    
+    @FXML
+    public void handleCategoryAdd(ActionEvent event) {
+        
+    }
+    @FXML
+    public void handleMenuItemAdd(ActionEvent event) {
+        
     }
 }
