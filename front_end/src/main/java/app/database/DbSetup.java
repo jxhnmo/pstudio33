@@ -5,8 +5,9 @@ package app.database;
  * It should provide the URL, username, and password for the database connection.
  */
 public  final class DbSetup {
-   public String url = "jdbc:postgresql://localhost:5432/csce315_903_03_db";
-   public String user = "csce315_903_03_user";
-   public String password = "PIJ5JlKq";
+   public static final String name = "csce315_903_03_db";
+   public static final String user = "csce315_903_03_user";
+   public static final String password = "PIJ5JlKq";
+   public static final String url = String.format("jdbc:postgresql://csce-315-db.engr.tamu.edu/%s", name);
 }//end class
   

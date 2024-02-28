@@ -29,6 +29,11 @@ public class InventoryController {
     private void initialize() {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
+        
+        c1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
+        c2.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
+        c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
+    
         c3.setCellFactory(column -> new OrderCell());
     }
 
@@ -39,10 +44,10 @@ public class InventoryController {
             while (result.next()){
                 InventoryItems item = new InventoryItems(
                     result.getInt("id"),
-                    result.getString("itemName"),
+                    result.getString("item_name"),
                     result.getInt("stock"),
                     result.getDouble("price")
-                    );
+                );
                 addItemToTable(item);
             }
         }
@@ -83,9 +88,5 @@ public class InventoryController {
     private void addItemToTable(InventoryItems item)
     {
         tableView.getItems().add(item);
-
-        c1.setCellValueFactory(data -> new SimpleStringProperty(item.getItemName()));
-        c2.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(item.getStock())));
-        c4.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(item.getPrice())));
     }
 }
