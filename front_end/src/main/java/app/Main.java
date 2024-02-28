@@ -6,10 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
  * The Main class is the entry point of the JavaFX application.
- * It sets up the primary stage and provides methods for navigating between scenes.
+ * It sets up the primary stage and provides methods for navigating between
+ * scenes.
  */
 public class Main extends Application {
 
@@ -29,11 +29,13 @@ public class Main extends Application {
     }
 
     // Central method to switch scenes
-         
-    /* 
-     * Navigates to the specified FXML file and sets it as the scene for the primary stage.
+
+    /*
+     * Navigates to the specified FXML file and sets it as the scene for the primary
+     * stage.
      *
-     * @param fxml The name of the FXML file to navigate to (without the file extension).
+     * @param fxml The name of the FXML file to navigate to (without the file
+     * extension).
      */
     public static void navigateTo(String fxml) {
         try {
@@ -43,7 +45,7 @@ public class Main extends Application {
         } catch (Exception e) {
 
             e.printStackTrace();
-            
+
             // Handle the exception (e.g., FXML file not found)
         }
     }
@@ -57,7 +59,7 @@ public class Main extends Application {
 
             // Get the controller and pass the role
             MenuController controller = loader.getController();
-            controller.initializeRole(isManager); // Ensure your MenuController has this method
+            controller.initializeMenu(isManager); // Ensure your MenuController has this method
 
             // Show the scene
             Scene scene = new Scene(root, 1200, 900); // Adjusted size of screen
