@@ -33,23 +33,12 @@ public class InventoryController {
     private void initialize() {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
-        
 
         c1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
         c2.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
         c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
     
         c3.setCellFactory(column -> new OrderCell());
-    }
-
-    private void updateOrderList() {
-            StringBuilder orderList = new StringBuilder();
-            for (InventoryItems item : tableView.getItems()) {
-            if (item.getOrder() > 0) {
-                orderList.append(item.getOrder()).append(" ").append(item.getItemName()).append("s\n");
-            }
-        }
-        orderListTextArea.setText(orderList.toString());
     }
 
     private void populateTableFromDatabase() {
@@ -93,7 +82,6 @@ public class InventoryController {
             }
         }
         tableView.refresh();
-        updateOrderList();
 
         tableView.getItems().clear();
         populateTableFromDatabase();
