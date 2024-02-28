@@ -5,11 +5,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.fxml.FXML;
 
 import java.sql.ResultSet;
@@ -156,6 +159,26 @@ public class MenuController {
                 newbutton.setPrefWidth(280.0);
                 newbutton.setWrapText(true);
                 newbutton.setOnAction(this::handleItemSelection);
+
+                //TODO: add appropriate image to button
+                try {
+                    String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
+                    System.out.println("Attempting to load " + filePath);
+                    Image image = new Image(getClass().getResource(filePath).toString());
+
+                    // Set dimensions of button's image:
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(100);
+                    imageView.setFitWidth(100);
+                    imageView.setPreserveRatio(true);
+
+                    newbutton.setGraphic(imageView);
+                    newbutton.setContentDisplay(ContentDisplay.TOP);
+                }
+                catch (Exception e) {
+                    System.err.println("Error loading " + item.getName() + " image");
+                }
+
                 itemButtons.add(newbutton);
                 menuItems.add(newbutton, c, r);
                 menuItems.setMargin(newbutton, new Insets(10));
