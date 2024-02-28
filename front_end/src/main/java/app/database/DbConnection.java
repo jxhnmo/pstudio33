@@ -21,6 +21,7 @@ public class DbConnection {
         conn = null;
         DbSetup setup = new DbSetup();
         try {
+            Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(setup.url, setup.user, setup.password);
         } 
         catch (Exception e) {

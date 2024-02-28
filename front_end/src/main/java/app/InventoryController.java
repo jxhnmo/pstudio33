@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import java.sql.ResultSet;
 import app.entity_classes.InventoryItems;
 import app.database.*;
 
@@ -25,9 +26,30 @@ public class InventoryController {
     private DbConnection dbConnection;
     
     @FXML
-    private void initialize() {    
+    private void initialize() {
+        dbConnection = new DbConnection();
+        populateTableFromDatabase();
         c3.setCellFactory(column -> new OrderCell());
-        addItemToTable(new InventoryItems(0, "Default Item", 0, 0.0));
+    }
+
+    private void populateTableFromDatabase() {
+        String query = "SELECT * FROM inventory_items";
+        ResultSet result = dbConnection.runStatement(query);
+        try {
+            while (result.next()){
+                InventoryItems item = new InventoryItems(
+                    result.getInt("id"),
+                    result.getString("itemName"),
+                    result.getInt("stock"),
+                    result.getDouble("price")
+                    );
+                addItemToTable(item);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
     }
 
     @FXML
