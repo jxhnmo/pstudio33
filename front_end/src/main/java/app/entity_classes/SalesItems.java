@@ -45,4 +45,7 @@ public class SalesItems {
         this.itemCounter = itemCounter;
     }
     */
+    public String toString() {
+        return "("+ID+","+salesID+","+itemID+")";
+    }
 }

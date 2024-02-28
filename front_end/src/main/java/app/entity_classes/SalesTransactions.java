@@ -48,4 +48,8 @@ public class SalesTransactions {
     public void setTimeStamp(String timeStamp){
         this.timeStamp = timeStamp;
     }
+    
+    public String toString() {
+        return "("+id+","+String.format("%.2f",cost)+","+employeeId+",'"+timeStamp+"')";
+    }
 }

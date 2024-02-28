@@ -18,6 +18,7 @@ import app.entity_classes.SalesItems;
 import app.database.*;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class MenuController {
     @FXML
@@ -197,9 +198,67 @@ public class MenuController {
         updateSalesInfo();
         // System.out.println(item.getName());
     }
+    private int getCurrTransactionId() {
+        String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
+        try {
+            ResultSet result = dbConnection.runStatement(query);
+            result.next();
+            return result.getInt("max_id")+1;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
+        return -1;
+    }
+    private int getCurrSaleItemId() {
+        String query = "SELECT MAX(id) AS max_id FROM sales_items;";
+        try {
+            ResultSet result = dbConnection.runStatement(query);
+            result.next();
+            return result.getInt("max_id")+1;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
+        return -1;
+    }
+    
     @FXML
     public void handleOrderConfirm(ActionEvent event) {
         if(currSalesItems.size() != 0) {
+            int transactionId = getCurrTransactionId();
+            int salesItemID = getCurrSaleItemId();
+            if (transactionId == -1 || salesItemID == -1)
+                return;
+            currTransaction.setId(transactionId);
+            LocalDateTime currTime = LocalDateTime.now();
+            currTime = currTime.withNano(0);
+            currTransaction.setTimeStamp(currTime.toString());
+            String query = "INSERT INTO sales_transactions VALUES "+currTransaction.toString()+";\n";
+            query += "INSERT INTO sales_items VALUES\n";
+            int index = 0;
+            int lastIndex = currSalesItems.size()-1;
+            for (SalesItems sitem : currSalesItems) {
+                sitem.setID(salesItemID);
+                sitem.setSalesID(transactionId);
+                query += sitem.toString();
+                if(index != lastIndex)
+                    query += ",\n";
+                ++salesItemID;
+                ++index;
+            }
+            query += ";\n";
+            try {
+                dbConnection.runUpdate(query);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Error while populating table from database.");
+            }
+            // System.out.println(query);
+            // System.out.println(currTransaction.toString());
             currSalesItems.clear();
             currTransaction = new SalesTransactions(-1,0,employeeId,"");
             updateSalesInfo();
