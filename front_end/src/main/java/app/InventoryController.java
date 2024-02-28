@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
 import java.sql.ResultSet;
 import app.entity_classes.InventoryItems;
@@ -23,6 +24,9 @@ public class InventoryController {
     @FXML // column 3 is the order column
     private TableColumn<InventoryItems, Number> c3;
 
+    @FXML
+    private TextArea orderListTextArea;
+
     private DbConnection dbConnection;
     
     @FXML
@@ -35,6 +39,16 @@ public class InventoryController {
         c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
     
         c3.setCellFactory(column -> new OrderCell());
+    }
+
+    private void updateOrderList() {
+            StringBuilder orderList = new StringBuilder();
+            for (InventoryItems item : tableView.getItems()) {
+            if (item.getOrder() > 0) {
+                orderList.append(item.getOrder()).append(" ").append(item.getItemName()).append("s\n");
+            }
+        }
+        orderListTextArea.setText(orderList.toString());
     }
 
     private void populateTableFromDatabase() {
@@ -65,6 +79,21 @@ public class InventoryController {
         // Signs out to login page
         app.Main.navigateTo("Login");
     }
+
+    @FXML
+    private void handleConfirmOrder(ActionEvent event) {
+        for (InventoryItems item : tableView.getItems()) {
+            if (item.getOrder() > 0) {
+                // Add the ordered quantity of the item to the database
+                String updateQuery = "UPDATE inventory_items SET stock = stock + " + item.getOrder() + " WHERE id = " + item.getID();
+                dbConnection.runUpdate(updateQuery);
+                item.setOrder(0);
+            }
+        }
+        tableView.refresh();
+        updateOrderList();
+    }
+
 
     @FXML
     public void goToMenu(ActionEvent event) {

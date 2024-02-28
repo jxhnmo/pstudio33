@@ -46,6 +46,17 @@ public class DbConnection {
         return null;
     }
 
+    public int runUpdate(String sqlStatement) {
+        int rowsChanged = 0;
+        try {
+            Statement stmt = conn.createStatement();
+            rowsChanged = stmt.executeUpdate(sqlStatement);
+        } catch (Exception e) {
+            System.err.println("Error accessing database");
+        }
+        return rowsChanged;
+    }
+
     /**
      * Retrieves a string representation of the result set for the specified column label.
      *

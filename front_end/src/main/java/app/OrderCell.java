@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import app.entity_classes.InventoryItems;
 
 public class OrderCell extends TableCell<InventoryItems, Number> {
-    private final HBox container = new HBox();
+    private final HBox container = new HBox(5);
     private final Button minusTenButton = new Button("-10");
     private final Button minusOneButton = new Button("-1");
     private final TextField quantityField = new TextField();
