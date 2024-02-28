@@ -4,13 +4,13 @@ public class SalesItems {
     private int ID;
     private int salesID;
     private int itemID;
-    private int itemCounter;
+    // private int itemCounter;
 
-    public SalesItems(int ID, int salesID, int itemID, int itemCounter){
+    public SalesItems(int ID, int salesID, int itemID/*, int itemCounter*/){
         this.ID = ID;
         this.salesID = salesID;
         this.itemID = itemID;
-        this.itemCounter = itemCounter;
+        // this.itemCounter = itemCounter;
     }
 
     public int getID(){
@@ -36,7 +36,7 @@ public class SalesItems {
     public void setItemID(int itemID){
         this.itemID = itemID;
     }
-
+    /*
     public int getItemCounter(){
         return itemCounter;
     }
@@ -44,4 +44,5 @@ public class SalesItems {
     public void setItemCounter(int itemCounter){
         this.itemCounter = itemCounter;
     }
+    */
 }

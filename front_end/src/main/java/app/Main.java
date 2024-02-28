@@ -57,7 +57,7 @@ public class Main extends Application {
 
             // Get the controller and pass the role
             MenuController controller = loader.getController();
-            controller.initializeRole(isManager); // Ensure your MenuController has this method
+            controller.initializeMenu(isManager); // Ensure your MenuController has this method
 
             // Show the scene
             Scene scene = new Scene(root, 1200, 900); // Adjusted size of screen

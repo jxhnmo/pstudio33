@@ -6,13 +6,13 @@ public class MenuItems {
     private String description;
     //? private  image
     private Boolean available;
-    private int price;
+    private double price;
     private String category;
 
-    public MenuItems(int ID, String name, String description, /*Image image*/ Boolean available, int price, String category){
+    public MenuItems(int ID, String name, /*String description,*/ /*Image image,*/ Boolean available, double price, String category){
         this.ID = ID;
         this.name = name;
-        this.description = description;
+        /*this.description = description;*/
         /*this.image = image */
         this.available = available;
         this.price = price;
@@ -34,14 +34,14 @@ public class MenuItems {
     public void setName(String name){
         this.name = name;
     }
-
+    /*
     public String getDescription(){
         return description;
     }
-
     public void setDescription(String description){
         this.description = description;
     }
+    */
 
     /*
     public image getImage(){
@@ -61,11 +61,11 @@ public class MenuItems {
         this.available = available;
     }
 
-    public int getPrice(){
+    public double getPrice(){
         return price;
     }
 
-    public void setPrice(int price){
+    public void setPrice(double price){
         this.price = price;
     }
 
