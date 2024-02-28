@@ -15,11 +15,10 @@ public class InventoryController {
     @FXML
     private TableView<InventoryItems> tableView;
 
-    @FXML
+    @FXML // columns 1  (item), 2 (stock), and 4 (price)
     private TableColumn<InventoryItems, String> c1, c2, c4;
 
-    // c4 is different because it holds the order buttons, not just a value
-    @FXML
+    @FXML // column 3 is the order column
     private TableColumn<InventoryItems, Number> c3;
     
     @FXML
