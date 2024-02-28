@@ -87,11 +87,15 @@ public class InventoryController {
                 // Add the ordered quantity of the item to the database
                 String updateQuery = "UPDATE inventory_items SET stock = stock + " + item.getOrder() + " WHERE id = " + item.getID();
                 dbConnection.runUpdate(updateQuery);
+                item.setStock(item.getStock() + item.getOrder());
                 item.setOrder(0);
             }
         }
         tableView.refresh();
         updateOrderList();
+
+        tableView.getItems().clear();
+        populateTableFromDatabase();
     }
 
 
