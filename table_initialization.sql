@@ -18,10 +18,10 @@ CREATE TABLE menu_items (
     id INT PRIMARY KEY,
     name VARCHAR(50),
     /* description TEXT,*/
-    /* image_data BYTEA,*/
+    image_data BYTEA,
     available BOOLEAN,
-    price NUMERIC--,
-    /* category VARCHAR(50) */
+    price NUMERIC,
+    category VARCHAR(50)
 );
 
 CREATE TABLE ingredients (

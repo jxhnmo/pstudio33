@@ -18,7 +18,7 @@ public class LoginController {
         } 
         else if ("1".equals(userId)) {
             isManager = false; // User is an employee
-        } 
+        }
         else {
             System.out.println("Invalid ID"); // Implement proper error handling
             return;
