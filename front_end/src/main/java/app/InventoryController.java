@@ -1,20 +1,16 @@
 package app;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn;
 import app.entity_classes.InventoryItems;
-import app.OrderCell;
 
 public class InventoryController {
     @FXML
-    private Button btnSignOut; // Ensure this matches the fx:id in FXML
+    private Button btnSignOut;
 
     @FXML
     private TableView<InventoryItems> tableView;
@@ -28,8 +24,6 @@ public class InventoryController {
     
     @FXML
     private void initialize() {    
-        // tableView.setEditable(true);
-
         c3.setCellFactory(column -> new OrderCell());
         addItemToTable(new InventoryItems(0, "Default Item", 0, 0.0));
     }
@@ -58,6 +52,10 @@ public class InventoryController {
         app.Main.navigateTo("Inventory");
     }
 
+    
+    /** 
+     * @param item - the item whose information is added to the TableView
+     */
     private void addItemToTable(InventoryItems item)
     {
         tableView.getItems().add(item);
