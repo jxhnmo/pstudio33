@@ -160,24 +160,23 @@ public class MenuController {
                 newbutton.setWrapText(true);
                 newbutton.setOnAction(this::handleItemSelection);
 
-                //TODO: add appropriate image to button
+                // Apply image to button:
+                String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
+                Image image;
                 try {
-                    String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
-                    System.out.println("Attempting to load " + filePath);
-                    Image image = new Image(getClass().getResource(filePath).toString());
-
-                    // Set dimensions of button's image:
-                    ImageView imageView = new ImageView(image);
-                    imageView.setFitHeight(100);
-                    imageView.setFitWidth(100);
-                    imageView.setPreserveRatio(true);
-
-                    newbutton.setGraphic(imageView);
-                    newbutton.setContentDisplay(ContentDisplay.TOP);
+                    image = new Image(getClass().getResource(filePath).toString());
                 }
                 catch (Exception e) {
-                    System.err.println("Error loading " + item.getName() + " image");
+                    image = new Image(getClass().getResource("/app/image/default.png").toString());
                 }
+                // Set dimensions of button's image:
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                imageView.setPreserveRatio(true);
+
+                newbutton.setGraphic(imageView);
+                newbutton.setContentDisplay(ContentDisplay.TOP);
 
                 itemButtons.add(newbutton);
                 menuItems.add(newbutton, c, r);
