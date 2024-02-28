@@ -5,12 +5,14 @@ public class InventoryItems {
     private String itemName;
     private int stock;
     private double price;
+    private int order;
 
     public InventoryItems(int ID, String itemName, int stock, double price){
         this.ID = ID;
         this.itemName = itemName;
         this.stock = stock;
         this.price = price;
+        this.order = 0;
     }
 
     public int getID(){
@@ -33,6 +35,7 @@ public class InventoryItems {
         return stock;
     }
 
+
     public void setStock(int stock){
         this.stock = stock;
     }
@@ -43,5 +46,13 @@ public class InventoryItems {
 
     public void setPrice(double price){
         this.price = price;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }
