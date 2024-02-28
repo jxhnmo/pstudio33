@@ -6,7 +6,9 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import java.sql.ResultSet;
 import app.entity_classes.InventoryItems;
+import app.database.*;
 
 public class InventoryController {
     @FXML
@@ -15,17 +17,44 @@ public class InventoryController {
     @FXML
     private TableView<InventoryItems> tableView;
 
-    @FXML
+    @FXML // columns 1  (item), 2 (stock), and 4 (price)
     private TableColumn<InventoryItems, String> c1, c2, c4;
 
-    // c4 is different because it holds the order buttons, not just a value
-    @FXML
+    @FXML // column 3 is the order column
     private TableColumn<InventoryItems, Number> c3;
+
+    private DbConnection dbConnection;
     
     @FXML
-    private void initialize() {    
+    private void initialize() {
+        dbConnection = new DbConnection();
+        populateTableFromDatabase();
+        
+        c1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
+        c2.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
+        c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
+    
         c3.setCellFactory(column -> new OrderCell());
-        addItemToTable(new InventoryItems(0, "Default Item", 0, 0.0));
+    }
+
+    private void populateTableFromDatabase() {
+        String query = "SELECT * FROM inventory_items";
+        ResultSet result = dbConnection.runStatement(query);
+        try {
+            while (result.next()){
+                InventoryItems item = new InventoryItems(
+                    result.getInt("id"),
+                    result.getString("item_name"),
+                    result.getInt("stock"),
+                    result.getDouble("price")
+                );
+                addItemToTable(item);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
     }
 
     @FXML
@@ -59,9 +88,5 @@ public class InventoryController {
     private void addItemToTable(InventoryItems item)
     {
         tableView.getItems().add(item);
-
-        c1.setCellValueFactory(data -> new SimpleStringProperty(item.getItemName()));
-        c2.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(item.getStock())));
-        c4.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(item.getPrice())));
     }
 }

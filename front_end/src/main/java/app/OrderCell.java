@@ -25,8 +25,6 @@ public class OrderCell extends TableCell<InventoryItems, Number> {
 
         quantityField.setEditable(false);
         quantityField.setPrefWidth(100.0);
-
-        System.out.println("OrderCell constructor called!");
     }
 
     
@@ -40,7 +38,10 @@ public class OrderCell extends TableCell<InventoryItems, Number> {
     protected void updateItem(Number item, boolean empty) {
         super.updateItem(item, empty);
 
-        if (empty || item == null) {
+        if (empty) {
+            setGraphic(null);
+        }
+        else if (item == null) {
             setGraphic(container);
             quantityField.setText("0");
         } else {
