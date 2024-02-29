@@ -177,12 +177,11 @@ public class MenuController {
 
                 newbutton.setGraphic(imageView);
                 newbutton.setContentDisplay(ContentDisplay.TOP);
-
                 itemButtons.add(newbutton);
                 menuItems.add(newbutton, c, r);
                 menuItems.setMargin(newbutton, new Insets(10));
                 ++c;
-                if (c == 3) {
+                if (c >= 4) { // 4 columns for the buttons
                     c = 0;
                     ++r;
                 }
