@@ -5,10 +5,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.fxml.FXML;
 
 import java.sql.ResultSet;
@@ -37,6 +41,15 @@ public class MenuController {
     private TextArea salesTextbox;
     @FXML
     private Label total;
+    @FXML
+    private HBox taskbar;
+    @FXML
+    private Button addCategory;
+    @FXML
+    private Button addMenuItem;
+
+    boolean editmode = false;
+    private MenuItems currMenuItem;
 
     private DbConnection dbConnection;
 
@@ -135,11 +148,28 @@ public class MenuController {
                 newbutton.setPrefWidth(280.0);
                 newbutton.setWrapText(true);
                 newbutton.setOnAction(this::handleItemSelection);
+
+                // Apply image to button:
+                String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
+                Image image;
+                try {
+                    image = new Image(getClass().getResource(filePath).toString());
+                } catch (Exception e) {
+                    image = new Image(getClass().getResource("/app/image/default.png").toString());
+                }
+                // Set dimensions of button's image:
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                imageView.setPreserveRatio(true);
+
+                newbutton.setGraphic(imageView);
+                newbutton.setContentDisplay(ContentDisplay.TOP);
                 itemButtons.add(newbutton);
                 menuItems.add(newbutton, c, r);
                 menuItems.setMargin(newbutton, new Insets(10));
                 ++c;
-                if (c == 3) {
+                if (c >= 4) { // 4 columns for the buttons
                     c = 0;
                     ++r;
                 }
@@ -169,7 +199,7 @@ public class MenuController {
     }
 
     public void goToMenu(ActionEvent event) {
-        app.Main.navigateTo("Menu");
+        // app.Main.navigateTo("Menu");
     }
 
     public void goToStatistics(ActionEvent event) {
@@ -189,6 +219,10 @@ public class MenuController {
     }
 
     private void handleItemSelection(ActionEvent event) {
+        if (editmode) {
+            handleItemPriceEdit(event);
+            return;
+        }
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         MenuItems item = currItems.get(index);
@@ -262,5 +296,43 @@ public class MenuController {
             currTransaction = new SalesTransactions(-1, 0, employeeId, "");
             updateSalesInfo();
         }
+    }
+
+    @FXML
+    public void handleEditMenu(ActionEvent event) {
+        if (editmode) {
+            categories.getChildren().remove(addCategory);
+            menuItems.getChildren().remove(addMenuItem);
+            ((Button) taskbar.getChildren().get(2)).setText("Edit Menu");
+        } else {
+            ((Button) taskbar.getChildren().get(2)).setText("Exit Editor");
+            addCategory = new Button("Add Category");
+            addCategory.setMnemonicParsing(false);
+            addCategory.setPrefHeight(77.0);
+            addCategory.setPrefWidth(192.0);
+            addCategory.setOnAction(this::handleCategoryAdd);
+            categories.getChildren().add(addCategory);
+
+            int numChildren = menuItems.getChildren().size();
+            addMenuItem = new Button("Add new item");
+            addMenuItem.setMnemonicParsing(false);
+            addMenuItem.setPrefHeight(211.0);
+            addMenuItem.setPrefWidth(280.0);
+            addMenuItem.setWrapText(true);
+            addMenuItem.setOnAction(this::handleMenuItemAdd);
+            menuItems.add(addMenuItem, numChildren % 3, numChildren / 3);
+            menuItems.setMargin(addMenuItem, new Insets(10));
+        }
+        editmode = !editmode;
+    }
+
+    @FXML
+    public void handleCategoryAdd(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void handleMenuItemAdd(ActionEvent event) {
+
     }
 }

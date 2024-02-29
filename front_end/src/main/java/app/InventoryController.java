@@ -44,30 +44,13 @@ public class InventoryController {
     }
 
     private void updateOrderList() {
-        // StringBuilder orderList = new StringBuilder();
-        String orderText = "";
+        StringBuilder orderList = new StringBuilder();
         for (InventoryItems item : tableView.getItems()) {
             if (item.getOrder() > 0) {
-                orderText += item.getOrder() + " " + item.getItemName() + "s\n";
+                orderList.append(item.getOrder()).append(" ").append(item.getItemName()).append("s\n");
             }
         }
-        orderListTextArea.setText(orderText);
-
-        // for (SalesItems sitem : ) {
-        // MenuItems item = allItems.get(sitem.getItemId() - 1);
-        // salesText += item.getName() + "\n" + item.getPrice() + "\n\n";
-        // }
-        // salesTextbox.setText(salesText);
-        // String totalCost = String.format("%.2f", currTransaction.getCost());
-        // total.setText(totalCost);
-
-        // for (InventoryItems item : tableView.getItems()) {
-        // if (item.getOrder() > 0) {
-        // orderList.append(item.getOrder()).append("
-        // ").append(item.getItemName()).append("s\n");
-        // }
-        // }
-        // orderListTextArea.setText(orderList.toString());
+        orderListTextArea.setText(orderList.toString());
     }
 
     private void populateTableFromDatabase() {
@@ -110,7 +93,6 @@ public class InventoryController {
             }
         }
         tableView.refresh();
-        updateOrderList();
 
         tableView.getItems().clear();
         populateTableFromDatabase();
