@@ -1,0 +1,17 @@
+.text-field {
+    -fx-pref-width: 200px; /* Set the preferred width of the text field */
+    -fx-max-width: 200px; /* Ensure it doesn't stretch beyond this width */
+    -fx-min-width: 200px; /* Minimum width */
+}
+
+.button {
+    -fx-background-color: #DAA520; /* Mustard orange */
+    -fx-text-fill: #800000; /* Maroon */
+    -fx-padding: 10px 20px; /* Padding around the text */
+    -fx-border-color: #800000; /* Maroon border */
+    -fx-border-width: 2px; /* Border width */
+}
+
+.button:hover {
+    -fx-background-color: #FFD700; /* Lighter orange for hover effect */
+}
