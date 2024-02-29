@@ -9,6 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
 import java.sql.ResultSet;
 import app.entity_classes.InventoryItems;
+import app.entity_classes.MenuItems;
+import app.entity_classes.SalesItems;
 import app.database.*;
 
 public class InventoryController {
@@ -18,7 +20,7 @@ public class InventoryController {
     @FXML
     private TableView<InventoryItems> tableView;
 
-    @FXML // columns 1  (item), 2 (stock), and 4 (price)
+    @FXML // columns 1 (item), 2 (stock), and 4 (price)
     private TableColumn<InventoryItems, String> c1, c2, c4;
 
     @FXML // column 3 is the order column
@@ -28,45 +30,59 @@ public class InventoryController {
     private TextArea orderListTextArea;
 
     private DbConnection dbConnection;
-    
+
     @FXML
     private void initialize() {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
-        
 
         c1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
         c2.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getStock())));
         c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
-    
+
         c3.setCellFactory(column -> new OrderCell());
     }
 
     private void updateOrderList() {
-            StringBuilder orderList = new StringBuilder();
-            for (InventoryItems item : tableView.getItems()) {
+        // StringBuilder orderList = new StringBuilder();
+        String orderText = "";
+        for (InventoryItems item : tableView.getItems()) {
             if (item.getOrder() > 0) {
-                orderList.append(item.getOrder()).append(" ").append(item.getItemName()).append("s\n");
+                orderText += item.getOrder() + " " + item.getItemName() + "s\n";
             }
         }
-        orderListTextArea.setText(orderList.toString());
+        orderListTextArea.setText(orderText);
+
+        // for (SalesItems sitem : ) {
+        // MenuItems item = allItems.get(sitem.getItemId() - 1);
+        // salesText += item.getName() + "\n" + item.getPrice() + "\n\n";
+        // }
+        // salesTextbox.setText(salesText);
+        // String totalCost = String.format("%.2f", currTransaction.getCost());
+        // total.setText(totalCost);
+
+        // for (InventoryItems item : tableView.getItems()) {
+        // if (item.getOrder() > 0) {
+        // orderList.append(item.getOrder()).append("
+        // ").append(item.getItemName()).append("s\n");
+        // }
+        // }
+        // orderListTextArea.setText(orderList.toString());
     }
 
     private void populateTableFromDatabase() {
         String query = "SELECT * FROM inventory_items";
         ResultSet result = dbConnection.runStatement(query);
         try {
-            while (result.next()){
+            while (result.next()) {
                 InventoryItems item = new InventoryItems(
-                    result.getInt("id"),
-                    result.getString("item_name"),
-                    result.getInt("stock"),
-                    result.getDouble("price")
-                );
+                        result.getInt("id"),
+                        result.getString("item_name"),
+                        result.getInt("stock"),
+                        result.getDouble("price"));
                 addItemToTable(item);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error while populating table from database.");
         }
@@ -86,7 +102,8 @@ public class InventoryController {
         for (InventoryItems item : tableView.getItems()) {
             if (item.getOrder() > 0) {
                 // Add the ordered quantity of the item to the database
-                String updateQuery = "UPDATE inventory_items SET stock = stock + " + item.getOrder() + " WHERE id = " + item.getID();
+                String updateQuery = "UPDATE inventory_items SET stock = stock + " + item.getOrder() + " WHERE id = "
+                        + item.getID();
                 dbConnection.runUpdate(updateQuery);
                 item.setStock(item.getStock() + item.getOrder());
                 item.setOrder(0);
@@ -98,7 +115,6 @@ public class InventoryController {
         tableView.getItems().clear();
         populateTableFromDatabase();
     }
-
 
     @FXML
     public void goToMenu(ActionEvent event) {
@@ -115,12 +131,10 @@ public class InventoryController {
         app.Main.navigateTo("Inventory");
     }
 
-    
-    /** 
+    /**
      * @param item - the item whose information is added to the TableView
      */
-    private void addItemToTable(InventoryItems item)
-    {
+    private void addItemToTable(InventoryItems item) {
         tableView.getItems().add(item);
     }
 }

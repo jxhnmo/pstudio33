@@ -37,21 +37,21 @@ public class MenuController {
     private TextArea salesTextbox;
     @FXML
     private Label total;
-    
+
     private DbConnection dbConnection;
-    
+
     private ArrayList<String> menuCategories = new ArrayList<>();
     private ArrayList<Button> categoryButtons = new ArrayList<>();
     private Button currCategory;
-    
+
     private ArrayList<MenuItems> allItems = new ArrayList<>();
     private ArrayList<MenuItems> currItems = new ArrayList<>();
     private ArrayList<Button> itemButtons = new ArrayList<>();
-    
+
     private int employeeId = 1;
     private SalesTransactions currTransaction;
     private ArrayList<SalesItems> currSalesItems = new ArrayList<>();
-    
+
     public void initializeMenu(boolean isManager) {
         // Initialize the role
         if (!isManager) {
@@ -60,9 +60,10 @@ public class MenuController {
             btnInventory.setDisable(true); // Disable for employees
             // Disable any other manager-specific buttons
         }
-        // If isManager is true, no need to disable buttons, assuming all buttons are enabled by default
+        // If isManager is true, no need to disable buttons, assuming all buttons are
+        // enabled by default
     }
-    
+
     public void initialize() {
         // Initialize dbConnection
         dbConnection = new DbConnection();
@@ -71,19 +72,18 @@ public class MenuController {
         currCategory.setDisable(true);
         getMenuItems();
         updateMenuItems();
-        currTransaction = new SalesTransactions(-1,0,employeeId,"");
+        currTransaction = new SalesTransactions(-1, 0, employeeId, "");
     }
-    
+
     private void getCategories() {
         String query = "SELECT category FROM menu_items GROUP BY category";
         try {
             ResultSet result = dbConnection.runStatement(query);
-            while (result.next()){
+            while (result.next()) {
                 menuCategories.add(result.getString("category"));
             }
             categories.getChildren().clear();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error while populating table from database.");
         }
@@ -99,29 +99,27 @@ public class MenuController {
             categories.getChildren().add(newbutton);
         }
     }
-    
+
     private void getMenuItems() {
         String query = "SELECT * FROM menu_items ORDER BY id;";
         ResultSet result = dbConnection.runStatement(query);
-        
+
         try {
-            while (result.next()){
+            while (result.next()) {
                 MenuItems item = new MenuItems(
-                    result.getInt("id"),
-                    result.getString("name"),
-                    result.getBoolean("available"),
-                    result.getDouble("price"),
-                    result.getString("category")
-                );
+                        result.getInt("id"),
+                        result.getString("name"),
+                        result.getBoolean("available"),
+                        result.getDouble("price"),
+                        result.getString("category"));
                 allItems.add(item);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error while populating table from database.");
         }
     }
-    
+
     private void updateMenuItems() {
         currItems.clear();
         menuItems.getChildren().clear();
@@ -129,7 +127,7 @@ public class MenuController {
         int r = 0;
         int c = 0;
         for (MenuItems item : allItems) {
-            if(item.getCategory().equals(currCategory.getText())) {
+            if (item.getCategory().equals(currCategory.getText())) {
                 currItems.add(item);
                 Button newbutton = new Button(item.getName());
                 newbutton.setMnemonicParsing(false);
@@ -148,18 +146,19 @@ public class MenuController {
             }
         }
     }
-    
+
     private void updateSalesInfo() {
         String salesText = "";
-        for(SalesItems sitem : currSalesItems) {
-            MenuItems item = allItems.get(sitem.getItemId()-1);
+        for (SalesItems sitem : currSalesItems) {
+            MenuItems item = allItems.get(sitem.getItemId() - 1);
             salesText += item.getName() + "\n" + item.getPrice() + "\n\n";
         }
+
         salesTextbox.setText(salesText);
-        String totalCost = String.format("%.2f",currTransaction.getCost());
+        String totalCost = String.format("%.2f", currTransaction.getCost());
         total.setText(totalCost);
     }
-    
+
     @FXML
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
@@ -180,7 +179,7 @@ public class MenuController {
     public void goToInventory(ActionEvent event) {
         app.Main.navigateTo("Inventory");
     }
-    
+
     private void handleCategorySelection(ActionEvent event) {
         Button button = (Button) event.getSource();
         currCategory.setDisable(false);
@@ -188,46 +187,47 @@ public class MenuController {
         currCategory.setDisable(true);
         updateMenuItems();
     }
+
     private void handleItemSelection(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         MenuItems item = currItems.get(index);
-        SalesItems saleItem = new SalesItems(-1,-1,item.getID());
+        SalesItems saleItem = new SalesItems(-1, -1, item.getID());
         currSalesItems.add(saleItem);
         currTransaction.addCost(item.getPrice());
         updateSalesInfo();
         // System.out.println(item.getName());
     }
+
     private int getCurrTransactionId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
         try {
             ResultSet result = dbConnection.runStatement(query);
             result.next();
-            return result.getInt("max_id")+1;
-        }
-        catch (Exception e) {
+            return result.getInt("max_id") + 1;
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error while populating table from database.");
         }
         return -1;
     }
+
     private int getCurrSaleItemId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_items;";
         try {
             ResultSet result = dbConnection.runStatement(query);
             result.next();
-            return result.getInt("max_id")+1;
-        }
-        catch (Exception e) {
+            return result.getInt("max_id") + 1;
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error while populating table from database.");
         }
         return -1;
     }
-    
+
     @FXML
     public void handleOrderConfirm(ActionEvent event) {
-        if(currSalesItems.size() != 0) {
+        if (currSalesItems.size() != 0) {
             int transactionId = getCurrTransactionId();
             int salesItemID = getCurrSaleItemId();
             if (transactionId == -1 || salesItemID == -1)
@@ -236,15 +236,15 @@ public class MenuController {
             LocalDateTime currTime = LocalDateTime.now();
             currTime = currTime.withNano(0);
             currTransaction.setTimeStamp(currTime.toString());
-            String query = "INSERT INTO sales_transactions VALUES "+currTransaction.toString()+";\n";
+            String query = "INSERT INTO sales_transactions VALUES " + currTransaction.toString() + ";\n";
             query += "INSERT INTO sales_items VALUES\n";
             int index = 0;
-            int lastIndex = currSalesItems.size()-1;
+            int lastIndex = currSalesItems.size() - 1;
             for (SalesItems sitem : currSalesItems) {
                 sitem.setID(salesItemID);
                 sitem.setSalesID(transactionId);
                 query += sitem.toString();
-                if(index != lastIndex)
+                if (index != lastIndex)
                     query += ",\n";
                 ++salesItemID;
                 ++index;
@@ -252,15 +252,14 @@ public class MenuController {
             query += ";\n";
             try {
                 dbConnection.runUpdate(query);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Error while populating table from database.");
             }
             // System.out.println(query);
             // System.out.println(currTransaction.toString());
             currSalesItems.clear();
-            currTransaction = new SalesTransactions(-1,0,employeeId,"");
+            currTransaction = new SalesTransactions(-1, 0, employeeId, "");
             updateSalesInfo();
         }
     }
