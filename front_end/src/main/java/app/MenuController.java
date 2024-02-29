@@ -242,11 +242,13 @@ public class MenuController {
         updateSalesInfo();
         // System.out.println(item.getName());
     }
+    
     private void handleItemPriceEdit(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         currMenuItem = currItems.get(index);
     }
+
     private void changeItemPrice(MenuItems item,double price) {
         item.setPrice(price);
         String query = "UPDATE menu_items SET price="+item.getPrice()+" WHERE id="+item.getID()+";";
