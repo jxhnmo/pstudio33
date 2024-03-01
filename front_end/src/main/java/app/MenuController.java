@@ -4,16 +4,24 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.Parent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 
 import java.sql.ResultSet;
 import app.entity_classes.MenuItems;
@@ -64,7 +72,13 @@ public class MenuController {
     private int employeeId = 1;
     private SalesTransactions currTransaction;
     private ArrayList<SalesItems> currSalesItems = new ArrayList<>();
+
+    private final int BTNS_PER_ROW = 4;
     
+    
+    /** 
+     * @param isManager
+     */
     public void initializeMenu(boolean isManager) {
         // Initialize the role
         if (!isManager) {
@@ -181,7 +195,7 @@ public class MenuController {
                 menuItems.add(newbutton, c, r);
                 menuItems.setMargin(newbutton, new Insets(10));
                 ++c;
-                if (c >= 4) { // 4 columns for the buttons
+                if (c >= BTNS_PER_ROW) { // 4 columns for the buttons
                     c = 0;
                     ++r;
                 }
@@ -200,6 +214,10 @@ public class MenuController {
         total.setText(totalCost);
     }
     
+    
+    /** 
+     * @param event
+     */
     @FXML
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
@@ -209,18 +227,34 @@ public class MenuController {
         app.Main.navigateTo("Login");
     }
 
+    
+    /** 
+     * @param event
+     */
     public void goToMenu(ActionEvent event) {
         // app.Main.navigateTo("Menu");
     }
 
+    
+    /** 
+     * @param event
+     */
     public void goToStatistics(ActionEvent event) {
         app.Main.navigateTo("Stats");
     }
 
+    
+    /** 
+     * @param event
+     */
     public void goToInventory(ActionEvent event) {
         app.Main.navigateTo("Inventory");
     }
     
+    
+    /** 
+     * @param event
+     */
     private void handleCategorySelection(ActionEvent event) {
         Button button = (Button) event.getSource();
         currCategory.setDisable(false);
@@ -228,6 +262,10 @@ public class MenuController {
         currCategory.setDisable(true);
         updateMenuItems();
     }
+    
+    /** 
+     * @param event
+     */
     private void handleItemSelection(ActionEvent event) {
         if(editmode) {
             handleItemPriceEdit(event);
@@ -242,13 +280,22 @@ public class MenuController {
         updateSalesInfo();
         // System.out.println(item.getName());
     }
+
     
+    /** 
+     * @param event
+     */
     private void handleItemPriceEdit(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         currMenuItem = currItems.get(index);
     }
 
+    
+    /** 
+     * @param item
+     * @param price
+     */
     private void changeItemPrice(MenuItems item,double price) {
         item.setPrice(price);
         String query = "UPDATE menu_items SET price="+item.getPrice()+" WHERE id="+item.getID()+";";
@@ -261,6 +308,10 @@ public class MenuController {
         }
     }
     
+    
+    /** 
+     * @return int
+     */
     private int getCurrTransactionId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
         try {
@@ -274,6 +325,10 @@ public class MenuController {
         }
         return -1;
     }
+    
+    /** 
+     * @return int
+     */
     private int getCurrSaleItemId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_items;";
         try {
@@ -288,6 +343,10 @@ public class MenuController {
         return -1;
     }
     
+    
+    /** 
+     * @param event
+     */
     @FXML
     public void handleOrderConfirm(ActionEvent event) {
         if(editmode)
@@ -330,9 +389,14 @@ public class MenuController {
         }
     }
     
+    
+    /** 
+     * @param event
+     */
     @FXML
     public void handleEditMenu(ActionEvent event) {
-        if(editmode) {
+        // TODO: Don't need to change the text on the Edit Menu Button.
+        if (editmode) {
             categories.getChildren().remove(addCategory);
             menuItems.getChildren().remove(addMenuItem);
             ((Button) taskbar.getChildren().get(2)).setText("Edit Menu");
@@ -352,18 +416,55 @@ public class MenuController {
             addMenuItem.setPrefWidth(280.0);
             addMenuItem.setWrapText(true);
             addMenuItem.setOnAction(this::handleMenuItemAdd);    
-            menuItems.add(addMenuItem, numChildren % 3, numChildren / 3);
+            menuItems.add(addMenuItem, numChildren % BTNS_PER_ROW, numChildren / BTNS_PER_ROW);
             menuItems.setMargin(addMenuItem, new Insets(10));
         }
         editmode = !editmode;
     }
     
+    
+    /** 
+     * @param event
+     */
     @FXML
     public void handleCategoryAdd(ActionEvent event) {
-        
+        System.out.println("Handle Category Addd called.");
     }
+    
+    /** 
+     * @param event
+     */
     @FXML
     public void handleMenuItemAdd(ActionEvent event) {
-        
+        // TODO: Add a popup window to add an item
+        System.out.println("Handle Menu Item Add called.");
+        createPopUpWindow();
+    }
+
+    /** 
+     * Loads the FXML file for the new popup window,
+     * and disables parent window until popup is closed.
+     */
+    private void createPopUpWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuPopup.fxml"));
+            Parent root = loader.load();
+
+            // Pass data to the popup window:
+            MenuPopupController popupController = loader.getController();
+            popupController.loadCategories(/* */); // Pass data to the popup
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Add New Menu Item");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+
+            Window primaryStage = btnSignOut.getScene().getWindow();
+            popupStage.initOwner(primaryStage);
+            popupStage.setScene(new Scene(root, 800, 600));
+            popupStage.showAndWait();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
