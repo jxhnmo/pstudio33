@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.LoginController">
+<VBox alignment="CENTER" spacing="20.0" stylesheets="@LoginStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.LoginController">
     <padding>
         <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
     </padding>
     <Text text="Enter Your ID:"/>
-    <TextField fx:id="userIdField"/>
-    <Button text="Login" onAction="#handleLogin"/>
+    <TextField fx:id="userIdField" styleClass="text-field"/>
+    <Button text="Login" onAction="#handleLogin" styleClass="button"/>
 </VBox>
