@@ -1,16 +1,20 @@
 package app;
 
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 
 public class MenuPopupController {
     @FXML
     TextField newItemName;
     @FXML
-    TextField newItemCategory;
+    ChoiceBox<String> choiceBox;
 
     
     /** 
@@ -29,7 +33,10 @@ public class MenuPopupController {
         closeWindow();
     }
 
-    public void loadCategories() {
+    public void loadCategories(ArrayList<String> categories) {
+        ObservableList<String> observableList = FXCollections.observableArrayList(categories);
+        choiceBox.setItems(observableList);
+        choiceBox.setStyle("-fx-font-size: 32px;");
     }
 
     private void closeWindow() {

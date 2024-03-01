@@ -428,7 +428,7 @@ public class MenuController {
      */
     @FXML
     public void handleCategoryAdd(ActionEvent event) {
-        System.out.println("Handle Category Addd called.");
+        // TODO: Implement adding category
     }
     
     /** 
@@ -436,8 +436,6 @@ public class MenuController {
      */
     @FXML
     public void handleMenuItemAdd(ActionEvent event) {
-        // TODO: Add a popup window to add an item
-        System.out.println("Handle Menu Item Add called.");
         createPopUpWindow();
     }
 
@@ -452,7 +450,7 @@ public class MenuController {
 
             // Pass data to the popup window:
             MenuPopupController popupController = loader.getController();
-            popupController.loadCategories(/* */); // Pass data to the popup
+            popupController.loadCategories(menuCategories); // Pass data to the popup
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Add New Menu Item");
