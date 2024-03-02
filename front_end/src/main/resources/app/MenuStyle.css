@@ -19,16 +19,12 @@ Button {
 }
 
 Button:hover {
-    -fx-background-color: #FFD700;
+    -fx-background-color: #FFCA16;
     -fx-text-fill: #611623;
 }
 
-/* idk why i cant get textarea to work */
 TextArea,
-TextArea.content,
-TextArea.scroll-pane,
-.txtArea,
-.txtArea.content {
-    -fx-background-color: #72232D;
+.text-area .content {
+    -fx-background-color: #72232D !important;
     -fx-text-fill: #EEEEEC;
 }
