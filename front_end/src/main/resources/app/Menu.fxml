@@ -147,7 +147,7 @@
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <Label fx:id="total" layoutX="914.0" layoutY="643.0" text="0.00">
+                  <Label fx:id="total" layoutX="914.0" layoutY="643.0" text="0.00" textAlignment="RIGHT">
                      <font>
                         <Font size="23.0" />
                      </font>
