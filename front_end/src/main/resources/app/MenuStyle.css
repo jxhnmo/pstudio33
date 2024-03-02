@@ -1,0 +1,34 @@
+Pane {
+    -fx-background-color: #191111;
+}
+
+SplitPane {
+    -fx-background-color: #201314;
+}
+
+Label {
+    -fx-text-fill: #EEEEEC;
+}
+
+Button {
+    -fx-background-color: #611623;
+    -fx-text-fill: #EEEEEC;
+    -fx-padding: 10px 20px;
+    -fx-border-color: #714F19;
+    -fx-border-width: 2px;
+}
+
+Button:hover {
+    -fx-background-color: #FFD700;
+    -fx-text-fill: #611623;
+}
+
+/* idk why i cant get textarea to work */
+TextArea,
+TextArea.content,
+TextArea.scroll-pane,
+.txtArea,
+.txtArea.content {
+    -fx-background-color: #72232D;
+    -fx-text-fill: #EEEEEC;
+}
