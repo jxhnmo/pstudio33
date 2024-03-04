@@ -90,7 +90,7 @@ public class InventoryController {
 
     @FXML
     public void goToMenu(ActionEvent event) {
-        app.Main.navigateTo("Menu");
+        app.Main.navigateToMenuWithRole("Menu.fxml", app.Main.getIsManager());
     }
 
     @FXML
