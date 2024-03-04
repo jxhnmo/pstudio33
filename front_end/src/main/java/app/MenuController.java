@@ -4,16 +4,24 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.Parent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 
 import java.sql.ResultSet;
 import app.entity_classes.MenuItems;
@@ -65,6 +73,11 @@ public class MenuController {
     private SalesTransactions currTransaction;
     private ArrayList<SalesItems> currSalesItems = new ArrayList<>();
 
+    private final int BTNS_PER_ROW = 4;
+
+    /**
+     * @param isManager
+     */
     public void initializeMenu(boolean isManager) {
         // Initialize the role
         if (!isManager) {
@@ -169,7 +182,7 @@ public class MenuController {
                 menuItems.add(newbutton, c, r);
                 menuItems.setMargin(newbutton, new Insets(10));
                 ++c;
-                if (c >= 4) { // 4 columns for the buttons
+                if (c >= BTNS_PER_ROW) { // 4 columns for the buttons
                     c = 0;
                     ++r;
                 }
@@ -198,14 +211,23 @@ public class MenuController {
         app.Main.navigateTo("Login");
     }
 
+    /**
+     * @param event
+     */
     public void goToMenu(ActionEvent event) {
         // app.Main.navigateTo("Menu");
     }
 
+    /**
+     * @param event
+     */
     public void goToStatistics(ActionEvent event) {
         app.Main.navigateTo("Stats");
     }
 
+    /**
+     * @param event
+     */
     public void goToInventory(ActionEvent event) {
         app.Main.navigateTo("Inventory");
     }
@@ -231,6 +253,23 @@ public class MenuController {
         currTransaction.addCost(item.getPrice());
         updateSalesInfo();
         // System.out.println(item.getName());
+    }
+
+    private void handleItemPriceEdit(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        int index = itemButtons.indexOf(button);
+        currMenuItem = currItems.get(index);
+    }
+
+    private void changeItemPrice(MenuItems item, double price) {
+        item.setPrice(price);
+        String query = "UPDATE menu_items SET price=" + item.getPrice() + " WHERE id=" + item.getID() + ";";
+        try {
+            dbConnection.runUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
     }
 
     private int getCurrTransactionId() {
@@ -284,6 +323,16 @@ public class MenuController {
                 ++index;
             }
             query += ";\n";
+
+            // Updates ingredientes inventory from transaction
+            for (SalesItems sitem : currSalesItems) {
+                int menu_id = sitem.getItemId();
+                query += updateIngredients(menu_id);
+                query += "\n";
+            }
+            System.out.println(query);
+            // End update
+
             try {
                 dbConnection.runUpdate(query);
             } catch (Exception e) {
