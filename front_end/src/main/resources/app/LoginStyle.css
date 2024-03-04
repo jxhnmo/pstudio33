@@ -1,17 +1,36 @@
+/* TextField styling */
 .text-field {
-    -fx-pref-width: 200px; /* Set the preferred width of the text field */
-    -fx-max-width: 200px; /* Ensure it doesn't stretch beyond this width */
-    -fx-min-width: 200px; /* Minimum width */
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
+    -fx-min-width: 200px;
+    -fx-text-fill: #000000; /* Text color */
 }
 
+/* Button styling */
 .button {
-    -fx-background-color: #DAA520; /* Mustard orange */
-    -fx-text-fill: #800000; /* Maroon */
-    -fx-padding: 10px 20px; /* Padding around the text */
+    -fx-background-color: #611623; /* Button background color */
+    -fx-text-fill: #EEEEEC; /* Text color */
+    -fx-padding: 10px 20px;
     -fx-border-color: #800000; /* Maroon border */
+    -fx-border-width: 2px;
+}
+
+/* Button hover effect */
+.button:hover {
+    -fx-background-color: #FFCA16; /* Lighter orange for hover effect */
+    -fx-text-fill: #611623; /* Text color change on hover */
+}
+
+/* VBox background color */
+.vbox {
+    -fx-background-color: #191111;
+}
+
+/* ImageView border color */
+.image-view {
+    -fx-border-color: #714F19; /* Border color for the top image */
     -fx-border-width: 2px; /* Border width */
 }
 
-.button:hover {
-    -fx-background-color: #FFD700; /* Lighter orange for hover effect */
-}
+/* Apply the .vbox style class to your VBox in FXML */
+/* Apply the .image-view style class to your ImageViews in FXML */
