@@ -56,7 +56,7 @@ public class StatsController {
     }
 
     public void goToMenu(ActionEvent event) {
-        app.Main.navigateTo("Menu");
+        app.Main.navigateToMenuWithRole("Menu.fxml", app.Main.getIsManager());
     }
 
     public void goToStatistics(ActionEvent event) {

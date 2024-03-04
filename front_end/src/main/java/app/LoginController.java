@@ -23,6 +23,7 @@ public class LoginController {
             System.out.println("Invalid ID"); // Implement proper error handling
             return;
         }
-        Main.navigateToMenuWithRole("Menu.fxml", isManager);
+        app.Main.setIsManager(isManager);
+        app.Main.navigateToMenuWithRole("Menu.fxml", app.Main.getIsManager());
     }
 }
