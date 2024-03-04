@@ -75,7 +75,7 @@ public class InventoryController {
     }
 
     private void populateTableFromDatabase() {
-        String query = "SELECT * FROM inventory_items";
+        String query = "SELECT * FROM inventory_items ORDER BY item_name ASC";
         ResultSet result = dbConnection.runStatement(query);
         try {
             while (result.next()) {
