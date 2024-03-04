@@ -2,6 +2,7 @@ package app;
 
 import java.util.ArrayList;
 
+import app.database.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ public class MenuPopupController {
     @FXML
     ChoiceBox<String> choiceBox;
 
+    private DbConnection dbConnection;
     
     /** 
      * @param event
@@ -30,13 +32,29 @@ public class MenuPopupController {
      */
     @FXML
     public void handleConfirmClicked(ActionEvent event) {
-        closeWindow();
+        String category = choiceBox.getValue();
+        if (category == null) {
+        }
+        else {
+            try {
+                // TODO: Send a message to the database adding a menu item with newItemName.toString() for the name,
+                // category for the category, and default values for everything else (Except increment id by 1 of course).
+            }   
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            closeWindow();
+        }
     }
 
     public void loadCategories(ArrayList<String> categories) {
         ObservableList<String> observableList = FXCollections.observableArrayList(categories);
         choiceBox.setItems(observableList);
         choiceBox.setStyle("-fx-font-size: 32px;");
+    }
+
+    public void loadDatabase(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     private void closeWindow() {
