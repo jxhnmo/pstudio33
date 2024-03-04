@@ -62,7 +62,7 @@
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <Button layoutX="32.0" layoutY="688.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="188.0" text="Confirm Order" onAction="#handleConfirmOrder">
+                  <Button layoutX="32.0" layoutY="688.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="188.0" text="Confirm" onAction="#handleConfirmOrder">
                      <font>
                         <Font size="23.0" />
                      </font>

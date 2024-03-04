@@ -215,6 +215,16 @@ public class MenuController {
     }
     
     
+    private String updateIngredients(int menu_id) {
+        // String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM ingredients WHERE ingredients.menu_id = "
+        // + menu_id +"AND ingredients.item_id = inventory_items.id);";
+
+        String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM ingredients WHERE ingredients.menu_id = " 
+        + menu_id + "AND ingredients.item_id = inventory_items.id) WHERE id IN (SELECT item_id FROM ingredients WHERE ingredients.menu_id=" 
+        + menu_id + " GROUP BY item_id);";
+        return query;
+    }
+
     /** 
      * @param event
      */
@@ -374,6 +384,17 @@ public class MenuController {
                 ++index;
             }
             query += ";\n";
+
+            //Updates ingredientes inventory from transaction
+            for (SalesItems sitem : currSalesItems){
+                int menu_id = sitem.getItemId();
+                query += updateIngredients(menu_id);
+                query += "\n";
+            }
+            System.out.println(query);
+            //End update
+            
+
             try {
                 dbConnection.runUpdate(query);
             }
