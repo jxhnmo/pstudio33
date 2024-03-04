@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+
 import java.sql.ResultSet;
 import app.entity_classes.InventoryItems;
 import app.entity_classes.MenuItems;
@@ -41,9 +43,28 @@ public class InventoryController {
         c4.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPrice())));
 
         c3.setCellFactory(column -> new OrderCell());
+
+        tableView.setRowFactory(tv -> {
+            TableRow<InventoryItems> row = new TableRow<>();
+            row.setOnMouseEntered(event -> {
+                updateOrderList();
+            });
+            row.setOnMouseClicked(event -> {
+                updateOrderList();
+            });
+            row.setOnMouseExited(event -> {
+                updateOrderList();
+            });
+
+            row.setOnMouseMoved(event -> {
+                updateOrderList();
+            });
+
+            return row;
+        });
     }
 
-    private void updateOrderList() {
+    public void updateOrderList() {
         StringBuilder orderList = new StringBuilder();
         for (InventoryItems item : tableView.getItems()) {
             if (item.getOrder() > 0) {
@@ -54,7 +75,7 @@ public class InventoryController {
     }
 
     private void populateTableFromDatabase() {
-        String query = "SELECT * FROM inventory_items";
+        String query = "SELECT * FROM inventory_items ORDER BY item_name ASC";
         ResultSet result = dbConnection.runStatement(query);
         try {
             while (result.next()) {
@@ -96,6 +117,7 @@ public class InventoryController {
 
         tableView.getItems().clear();
         populateTableFromDatabase();
+        updateOrderList();
     }
 
     @FXML
