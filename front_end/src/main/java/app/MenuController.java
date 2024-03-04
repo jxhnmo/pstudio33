@@ -88,6 +88,15 @@ public class MenuController {
         }
         // If isManager is true, no need to disable buttons, assuming all buttons are
         // enabled by default
+        else {
+            taskbar.setTranslateX(-79.2);
+            Button newbutton = new Button("Edit Menu");
+            newbutton.setMnemonicParsing(false);
+            newbutton.setMinHeight(70);
+            newbutton.setMinWidth(150);
+            newbutton.setOnAction(this::handleEditMenu);
+            taskbar.getChildren().add(2, newbutton);
+        }
     }
 
     public void initialize() {
@@ -196,12 +205,26 @@ public class MenuController {
             MenuItems item = allItems.get(sitem.getItemId() - 1);
             salesText += item.getName() + "\n" + item.getPrice() + "\n\n";
         }
-
         salesTextbox.setText(salesText);
         String totalCost = String.format("%.2f", currTransaction.getCost());
         total.setText(totalCost);
     }
 
+    private String updateIngredients(int menu_id) {
+        // String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM
+        // ingredients WHERE ingredients.menu_id = "
+        // + menu_id +"AND ingredients.item_id = inventory_items.id);";
+
+        String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM ingredients WHERE ingredients.menu_id = "
+                + menu_id
+                + "AND ingredients.item_id = inventory_items.id) WHERE id IN (SELECT item_id FROM ingredients WHERE ingredients.menu_id="
+                + menu_id + " GROUP BY item_id);";
+        return query;
+    }
+
+    /**
+     * @param event
+     */
     @FXML
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
@@ -232,6 +255,9 @@ public class MenuController {
         app.Main.navigateTo("Inventory");
     }
 
+    /**
+     * @param event
+     */
     private void handleCategorySelection(ActionEvent event) {
         Button button = (Button) event.getSource();
         currCategory.setDisable(false);
@@ -240,6 +266,9 @@ public class MenuController {
         updateMenuItems();
     }
 
+    /**
+     * @param event
+     */
     private void handleItemSelection(ActionEvent event) {
         if (editmode) {
             handleItemPriceEdit(event);
@@ -255,12 +284,19 @@ public class MenuController {
         // System.out.println(item.getName());
     }
 
+    /**
+     * @param event
+     */
     private void handleItemPriceEdit(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         currMenuItem = currItems.get(index);
     }
 
+    /**
+     * @param item
+     * @param price
+     */
     private void changeItemPrice(MenuItems item, double price) {
         item.setPrice(price);
         String query = "UPDATE menu_items SET price=" + item.getPrice() + " WHERE id=" + item.getID() + ";";
@@ -272,6 +308,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * @return int
+     */
     private int getCurrTransactionId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
         try {
@@ -285,6 +324,9 @@ public class MenuController {
         return -1;
     }
 
+    /**
+     * @return int
+     */
     private int getCurrSaleItemId() {
         String query = "SELECT MAX(id) AS max_id FROM sales_items;";
         try {
@@ -298,8 +340,13 @@ public class MenuController {
         return -1;
     }
 
+    /**
+     * @param event
+     */
     @FXML
     public void handleOrderConfirm(ActionEvent event) {
+        if (editmode)
+            return;
         if (currSalesItems.size() != 0) {
             int transactionId = getCurrTransactionId();
             int salesItemID = getCurrSaleItemId();
@@ -347,8 +394,12 @@ public class MenuController {
         }
     }
 
+    /**
+     * @param event
+     */
     @FXML
     public void handleEditMenu(ActionEvent event) {
+        // TODO: Don't need to change the text on the Edit Menu Button.
         if (editmode) {
             categories.getChildren().remove(addCategory);
             menuItems.getChildren().remove(addMenuItem);
@@ -369,19 +420,53 @@ public class MenuController {
             addMenuItem.setPrefWidth(280.0);
             addMenuItem.setWrapText(true);
             addMenuItem.setOnAction(this::handleMenuItemAdd);
-            menuItems.add(addMenuItem, numChildren % 3, numChildren / 3);
+            menuItems.add(addMenuItem, numChildren % BTNS_PER_ROW, numChildren / BTNS_PER_ROW);
             menuItems.setMargin(addMenuItem, new Insets(10));
         }
         editmode = !editmode;
     }
 
+    /**
+     * @param event
+     */
     @FXML
     public void handleCategoryAdd(ActionEvent event) {
-
+        System.out.println("Handle Category Addd called.");
     }
 
+    /**
+     * @param event
+     */
     @FXML
     public void handleMenuItemAdd(ActionEvent event) {
+        // TODO: Add a popup window to add an item
+        System.out.println("Handle Menu Item Add called.");
+        createPopUpWindow();
+    }
 
+    /**
+     * Loads the FXML file for the new popup window,
+     * and disables parent window until popup is closed.
+     */
+    private void createPopUpWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuPopup.fxml"));
+            Parent root = loader.load();
+
+            // Pass data to the popup window:
+            MenuPopupController popupController = loader.getController();
+            popupController.loadCategories(/* */); // Pass data to the popup
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Add New Menu Item");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+
+            Window primaryStage = btnSignOut.getScene().getWindow();
+            popupStage.initOwner(primaryStage);
+            popupStage.setScene(new Scene(root, 800, 600));
+            popupStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
