@@ -1,17 +1,24 @@
 package app;
 
+import java.util.ArrayList;
+
+import app.database.DbConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 
 public class MenuPopupController {
     @FXML
     TextField newItemName;
     @FXML
-    TextField newItemCategory;
+    ChoiceBox<String> categoryBox;
+    
 
+    private DbConnection dbConnection;
     
     /** 
      * @param event
@@ -26,11 +33,34 @@ public class MenuPopupController {
      */
     @FXML
     public void handleConfirmClicked(ActionEvent event) {
-        closeWindow();
+        String category = categoryBox.getValue();
+        if (category == null) {
+        }
+        else {
+            try {
+                // TODO: Send a message to the database adding a menu item with newItemName.toString() for the name,
+                // category for the category, and default values for everything else (Except increment id by 1 of course).
+            }   
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            closeWindow();
+        }
     }
 
-    public void loadCategories() {
+    public void loadCategories(ArrayList<String> categories) {
+        ObservableList<String> observableList = FXCollections.observableArrayList(categories);
+        categoryBox.setItems(observableList);
+        categoryBox.setStyle("-fx-font-size: 32px;");
     }
+    public void loadIngredients(){
+        
+    }
+
+    public void loadDatabase(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
+
 
     private void closeWindow() {
         Stage stage = (Stage) newItemName.getScene().getWindow();

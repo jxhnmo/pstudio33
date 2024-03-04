@@ -2,13 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.MenuPopupController">
    <children>
@@ -17,47 +16,27 @@
             <Font size="32.0" />
          </font>
       </Label>
-      <AnchorPane>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <children>
-            <TextField fx:id="newItemName" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
-               <font>
-                  <Font size="32.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </TextField>
-         </children>
+      <TextField fx:id="newItemName">
+         <font>
+            <Font size="32.0" />
+         </font>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-      </AnchorPane>
+         <VBox.margin>
+            <Insets left="60.0" right="60.0" top="10.0" />
+         </VBox.margin>
+      </TextField>
       <Label alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" text="Enter New Item Category:">
          <font>
             <Font size="32.0" />
          </font>
       </Label>
-      <AnchorPane>
+      <ChoiceBox fx:id="categoryBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="600.0">
          <VBox.margin>
-            <Insets />
+            <Insets bottom="50.0" top="10.0" />
          </VBox.margin>
-         <children>
-            <TextField fx:id="newItemCategory" prefWidth="700.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
-               <font>
-                  <Font size="32.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </TextField>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </AnchorPane>
+      </ChoiceBox>
       <HBox alignment="CENTER" prefHeight="200.0" prefWidth="800.0" spacing="60.0">
          <children>
             <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleCancelClicked" prefWidth="300.0" text="Cancel">
