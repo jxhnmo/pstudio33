@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * The DbConnection class represents a connection to a database.
@@ -74,6 +75,22 @@ public class DbConnection {
             System.err.println("Error with result");
         }
         return res;
+    }
+    /** 
+     * @param result
+     * @param columnLabel the label of the column to retrieve the string representation from
+     * @return ArrayList<String> an array representation of the result set for the specified column label
+     */
+    public ArrayList<String> getResultArray(ResultSet result, String columnLabel) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            while (result.next()) {
+                list.add(result.getString(columnLabel));
+            }
+        } catch (Exception e) {
+            System.err.println("Error with result");
+        }
+        return list;
     }
 
     /**
