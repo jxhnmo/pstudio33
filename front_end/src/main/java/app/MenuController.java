@@ -89,13 +89,7 @@ public class MenuController {
         }
         // If isManager is true, no need to disable buttons, assuming all buttons are enabled by default
         else {
-            taskbar.setTranslateX(-79.2);
-            Button newbutton = new Button("Edit Menu");
-            newbutton.setMnemonicParsing(false);
-            newbutton.setMinHeight(70);
-            newbutton.setMinWidth(150);
-            newbutton.setOnAction(this::handleEditMenu);
-            taskbar.getChildren().add(2,newbutton);
+            addEditMenuButton();
         }
     }
     
@@ -108,6 +102,16 @@ public class MenuController {
         getMenuItems();
         updateMenuItems();
         currTransaction = new SalesTransactions(-1,0,employeeId,"");
+    }
+
+    private void addEditMenuButton() {
+        taskbar.setTranslateX(-79.2);
+        Button newbutton = new Button("Edit Menu");
+        newbutton.setMnemonicParsing(false);
+        newbutton.setMinHeight(70);
+        newbutton.setMinWidth(150);
+        newbutton.setOnAction(this::handleEditMenu);
+        taskbar.getChildren().add(2,newbutton);
     }
     
     private void getCategories() {
@@ -457,14 +461,14 @@ public class MenuController {
      */
     @FXML
     public void handleMenuItemAdd(ActionEvent event) {
-        createPopUpWindow();
+        createAddItemPopup();
     }
 
     /** 
      * Loads the FXML file for the new popup window,
      * and disables parent window until popup is closed.
      */
-    private void createPopUpWindow() {
+    private void createAddItemPopup() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuPopup.fxml"));
             Parent root = loader.load();
