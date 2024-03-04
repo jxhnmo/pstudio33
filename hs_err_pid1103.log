@@ -1,0 +1,42 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007ff942cf6ac6, pid=1103, tid=1141
+#
+# JRE version: OpenJDK Runtime Environment (11.0.21+9) (build 11.0.21+9-post-Ubuntu-0ubuntu122.04)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.21+9-post-Ubuntu-0ubuntu122.04, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libnvwgf2umx.so+0x2ca0ac6]
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --module-path=/mnt/c/CSCE315/project2/pstudio33/front_end/target/classes:/home/etvan13/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar:/home/etvan13/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar:/home/etvan13/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar:/home/etvan13/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar -Djdk.module.main=app app/app.Main
+
+Host: Intel(R) Core(TM) i7-10870H CPU @ 2.20GHz, 16 cores, 7G, Ubuntu 22.04.1 LTS
+Time: Mon Mar  4 13:18:27 2024 CST elapsed time: 0.645479 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread is native thread
+
+Stack: [0x00007ff9a404e000,0x00007ff9a484e000],  sp=0x00007ff9a484cda0,  free space=8187k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libnvwgf2umx.so+0x2ca0ac6]
+
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00007ff9a484e000
+
+Register to memory mapping:
+
+RAX=
+[error occurred during error reporting (printing register info), id 0xb, SIGSEGV (0xb) at pc=0x00007ff9d50c06cc]
+
+Registers:
+RAX=0x0000000000000028, RBX=0x00007ff94c28ec80, RCX=0x00007ff94c290d01, RDX=0x00007ff9a484cdb0
+RSP=0x00007ff9a484cda0, RBP=0x0000000000000000, RSI=0x00007ff94c28ec80, RDI=0x00007ff94c2107c0

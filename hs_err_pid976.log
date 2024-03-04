@@ -1,0 +1,45 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f1e34a2bac6, pid=976, tid=1023
+#
+# JRE version: OpenJDK Runtime Environment (11.0.21+9) (build 11.0.21+9-post-Ubuntu-0ubuntu122.04)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.21+9-post-Ubuntu-0ubuntu122.04, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libnvwgf2umx.so+0x2ca0ac6]
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --module-path=/mnt/c/CSCE315/project2/pstudio33/front_end/target/classes:/home/etvan13/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar:/home/etvan13/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar:/home/etvan13/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar:/home/etvan13/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar -Djdk.module.main=app app/app.Main
+
+Host: Intel(R) Core(TM) i7-10870H CPU @ 2.20GHz, 16 cores, 7G, Ubuntu 22.04.1 LTS
+Time: Mon Mar  4 13:18:20 2024 CST elapsed time: 0.927461 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread is native thread
+
+Stack: [0x00007f1e3158b000,0x00007f1e31d8b000],  sp=0x00007f1e31d89da0,  free space=8187k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libnvwgf2umx.so+0x2ca0ac6]
+
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x00007f1e7c2d3000
+
+Register to memory mapping:
+
+RAX=
+[error occurred during error reporting (printing register info), id 0xb, SIGSEGV (0xb) at pc=0x00007f1ec63126cc]
+
+Registers:
+RAX=0x0000000000000028, RBX=0x00007f1e44236910, RCX=0x00007f1e44238901, RDX=0x00007f1e31d89db0
+RSP=0x00007f1e31d89da0, RBP=0x0000000000000000, RSI=0x00007f1e44236910, RDI=0x00007f1e441b8480
+R8 =0x00007f1e441b8480, R9 =0x00007ffe22ff7080, R10=0x00007f1e31d89d90, R11=0x4059f561402e487c
+R12=0x00007f1e31d89e07, R13=0x0000000000000000, R14=0x00007f1e7c2d3000, R15=0x0000000000000000
+RIP=0x00007f1e34a2bac6, EFLAGS=0x0000000000010246, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
