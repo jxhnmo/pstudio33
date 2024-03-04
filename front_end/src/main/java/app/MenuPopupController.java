@@ -15,7 +15,8 @@ public class MenuPopupController {
     @FXML
     TextField newItemName;
     @FXML
-    ChoiceBox<String> choiceBox;
+    ChoiceBox<String> categoryBox;
+    
 
     private DbConnection dbConnection;
     
@@ -32,7 +33,7 @@ public class MenuPopupController {
      */
     @FXML
     public void handleConfirmClicked(ActionEvent event) {
-        String category = choiceBox.getValue();
+        String category = categoryBox.getValue();
         if (category == null) {
         }
         else {
@@ -49,13 +50,17 @@ public class MenuPopupController {
 
     public void loadCategories(ArrayList<String> categories) {
         ObservableList<String> observableList = FXCollections.observableArrayList(categories);
-        choiceBox.setItems(observableList);
-        choiceBox.setStyle("-fx-font-size: 32px;");
+        categoryBox.setItems(observableList);
+        categoryBox.setStyle("-fx-font-size: 32px;");
+    }
+    public void loadIngredients(){
+        
     }
 
     public void loadDatabase(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
+
 
     private void closeWindow() {
         Stage stage = (Stage) newItemName.getScene().getWindow();
