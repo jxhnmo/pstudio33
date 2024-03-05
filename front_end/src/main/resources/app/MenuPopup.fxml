@@ -53,7 +53,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="ingredientsArea" prefHeight="200.0" prefWidth="200.0">
+                  <TextArea fx:id="ingredientsArea" editable="false" prefHeight="200.0" prefWidth="200.0">
                      <font>
                         <Font size="18.0" />
                      </font>

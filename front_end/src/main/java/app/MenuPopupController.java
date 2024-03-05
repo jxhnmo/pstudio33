@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 
@@ -27,7 +28,8 @@ public class MenuPopupController {
     TextArea ingredientsArea;
     @FXML
     private TableView<InventoryItems> tableView;
-
+    @FXML 
+    private TableColumn<InventoryItems, String> tableColumn;
 
     private DbConnection dbConnection;
     
@@ -35,6 +37,8 @@ public class MenuPopupController {
     private void initialize() {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
+        tableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
+
     }
     /** 
      * @param event
