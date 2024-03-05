@@ -1,0 +1,61 @@
+Pane {
+    -fx-background-color: #191111;
+}
+
+SplitPane {
+    -fx-background-color: #201314;
+}
+
+Label {
+    -fx-text-fill: #EEEEEC;
+}
+
+Button {
+    -fx-background-color: #611623;
+    -fx-text-fill: #EEEEEC;
+    -fx-padding: 10px 20px;
+    -fx-border-color: #714F19;
+    -fx-border-width: 2px;
+}
+
+Button:hover {
+    -fx-background-color: #FFD700;
+    -fx-text-fill: #611623;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #611623, #8C333A);
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    /* -fx-background-color: transparent; */
+}
+
+.table-row-cell: hover,
+.table-row-cell.odd: hover,
+.table-row-cell.even: hover {
+    -fx-background-color: #FFCA16 !important;
+    -fx-text-background-color: #611623 !important;
+}
+
+.table-row-cell: odd {
+    -fx-background-color: linear-gradient(to top right, #611623, #8C333A);
+    -fx-text-background-color: #EEEEEC;
+}
+
+.table-row-cell: even {
+    -fx-background-color: linear-gradient(to bottom left, #611623, #8C333A);
+    -fx-text-background-color: #EEEEEC;
+}
+
+/* cant get the textarea on table to not be a PANE ? */
+TextArea,
+.text-area .content {
+    -fx-background-color: #72232D !important;
+    -fx-text-fill: #EEEEEC;
+}
