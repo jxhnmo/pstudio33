@@ -1,30 +1,33 @@
+.login-text {
+    -fx-fill: #EEEEEC; /* Sets the text color to white */
+    -fx-font-family: "Tahoma"; 
+    -fx-font-size: 18px; /* Set an appropriate font size */
+    
+    /* Optional: Add a drop shadow effect for depth */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 3, 0, 0, 1);
+}
+
 /* TextField styling */
 .text-field {
     -fx-pref-width: 200px;
     -fx-max-width: 200px;
     -fx-min-width: 200px;
-    -fx-text-fill: #000000;
-    /* Text color */
+    -fx-text-fill: #000000; /* Text color */
 }
 
 /* Button styling */
 .button {
-    -fx-background-color: #611623;
-    /* Button background color */
-    -fx-text-fill: #EEEEEC;
-    /* Text color */
+    -fx-background-color: #611623; /* Button background color */
+    -fx-text-fill: #EEEEEC; /* Text color */
     -fx-padding: 10px 20px;
-    -fx-border-color: #800000;
-    /* Maroon border */
+    -fx-border-color: #800000; /* Maroon border */
     -fx-border-width: 2px;
 }
 
 /* Button hover effect */
 .button:hover {
-    -fx-background-color: #FFCA16;
-    /* Lighter orange for hover effect */
-    -fx-text-fill: #611623;
-    /* Text color change on hover */
+    -fx-background-color: #FFCA16; /* Lighter orange for hover effect */
+    -fx-text-fill: #611623; /* Text color change on hover */
 }
 
 /* VBox background color */
@@ -34,13 +37,9 @@
 
 /* ImageView border color */
 .image-view {
-    -fx-border-color: #714F19;
-    /* Border color for the top image */
-    -fx-border-width: 2px;
-    /* Border width */
+    -fx-border-color: #714F19; /* Border color for the top image */
+    -fx-border-width: 2px; /* Border width */
 }
 
-.button:hover {
-    -fx-background-color: #FFD700;
-    /* Lighter orange for hover effect */
-}
+/* Apply the .vbox style class to your VBox in FXML */
+/* Apply the .image-view style class to your ImageViews in FXML */
