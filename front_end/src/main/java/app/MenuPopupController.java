@@ -33,7 +33,7 @@ public class MenuPopupController {
 
     private DbConnection dbConnection;
 
-    private String ingredientsAdded;
+    private String ingredientsAdded = "";
     
     @FXML
     private void initialize() {
