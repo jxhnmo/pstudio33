@@ -57,6 +57,23 @@ public class DbConnection {
         }
         return rowsChanged;
     }
+    public int getNextAvailableId(String tableName){
+        int res = -1;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT MAX(id) AS nextAvailableId FROM " + tableName + ";");
+            if(result.next()){
+                res = result.getInt("nextAvailableId");
+                res = res + 1;
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Error getting next table name");
+        }
+
+        return res; 
+    }
+
 
     /**
      * Retrieves a string representation of the result set for the specified column label.
@@ -92,6 +109,8 @@ public class DbConnection {
         }
         return list;
     }
+
+    
 
     /**
      * Closes the database connection.

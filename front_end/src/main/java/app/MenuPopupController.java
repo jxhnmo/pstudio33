@@ -34,7 +34,11 @@ public class MenuPopupController {
     private DbConnection dbConnection;
 
     private String ingredientsAdded = "";
-    
+    private ArrayList<InventoryItems> inventoryItems = new ArrayList<InventoryItems>();
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         dbConnection = new DbConnection();
@@ -45,6 +49,7 @@ public class MenuPopupController {
                 InventoryItems selectedItem = tableView.getSelectionModel().getSelectedItem();
                 ingredientsAdded += selectedItem.getItemName() + "\n";
                 ingredientsArea.setText(ingredientsAdded);
+                inventoryItems.add(selectedItem);
             }
         }
         );
@@ -65,14 +70,19 @@ public class MenuPopupController {
     public void handleConfirmClicked(ActionEvent event) {
         String category = categoryBox.getValue();
         String name = nameField.getText();
+        String price = priceField.getText();
         if (category == null) {
         }
         else {
             try {
-                //dbConnection.runUpdate("INSERT INTO menu_items (item_name, category) VALUES ('" + name + "', '" + category + "'");
-                // TODO: Send a message to the database adding a menu item with newItemName.toString() for the name,
-                // category for the category, and default values for everything else (Except increment id by 1 of course).
-                //category
+            int menuId = dbConnection.getNextAvailableId("menu_items");
+            int ingredientId = dbConnection.getNextAvailableId("ingredients");
+            
+            // int menuId = ??? 
+            //    MenuItems menuItem = new MenuItems(0, name, true, Double.parseDouble(priceField.getText()), category);
+            //     public Ingredients(int ID, String itemName, int menuID, int num)
+            //    Ingredients ingredient = new Ingredients( , name, )
+            // dbConnection.runUpdate("INSERT INTO menu_items (id, name, available, price, category) VALUES ('" + + "', " + price + ", '" + category + "')"
             }   
             catch (Exception e) {
                 e.printStackTrace();
