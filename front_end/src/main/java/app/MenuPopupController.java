@@ -34,7 +34,11 @@ public class MenuPopupController {
     private DbConnection dbConnection;
 
     private String ingredientsAdded = "";
-    
+    private ArrayList<InventoryItems> inventoryItems = new ArrayList<InventoryItems>();
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         dbConnection = new DbConnection();
@@ -45,12 +49,10 @@ public class MenuPopupController {
                 InventoryItems selectedItem = tableView.getSelectionModel().getSelectedItem();
                 ingredientsAdded += selectedItem.getItemName() + "\n";
                 ingredientsArea.setText(ingredientsAdded);
+                inventoryItems.add(selectedItem);
             }
         }
         );
-
-        
-       
     }
     /** 
      * @param event
