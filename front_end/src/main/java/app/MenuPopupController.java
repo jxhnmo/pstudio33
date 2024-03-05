@@ -64,7 +64,7 @@ public class MenuPopupController {
     public void loadCategories(ArrayList<String> categories) {
         ObservableList<String> observableList = FXCollections.observableArrayList(categories);
         categoryBox.setItems(observableList);
-        categoryBox.setStyle("-fx-font-size: 32px;");
+        categoryBox.setStyle("-fx-font-size: 18px;");
     }
     public void updateDatabase(ChoiceBox categoryBox, TextField name, TextArea ingredientsArea){
 
