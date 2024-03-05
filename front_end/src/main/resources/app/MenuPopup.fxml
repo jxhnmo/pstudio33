@@ -48,12 +48,6 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-<<<<<<< HEAD
-         <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-         </padding></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-=======
          <VBox.margin>
             <Insets left="60.0" right="60.0" top="10.0" />
          </VBox.margin>
@@ -69,7 +63,6 @@
          </VBox.margin>
       </ChoiceBox>
       <HBox alignment="CENTER" prefHeight="200.0" prefWidth="800.0" spacing="60.0">
->>>>>>> 0e38c00793c92e5d8142b92e09f6ea28f68472a0
          <children>
             <TableView fx:id="tableView" layoutX="-1.0" layoutY="76.0" prefHeight="398.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
