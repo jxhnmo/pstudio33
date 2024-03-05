@@ -61,10 +61,11 @@ public class DbConnection {
         int res = -1;
         try {
             Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery("SELECT MAX(id) + 1 AS nextAvailableId FROM '" + tableName + "';");
-            res = result.getInt("nextAvailableId");
-            System.out.println("Res: ");
-            System.out.println(res);
+            ResultSet result = stmt.executeQuery("SELECT MAX(id) AS nextAvailableId FROM " + tableName + ";");
+            if(result.next()){
+                res = result.getInt("nextAvailableId");
+                res = res + 1;
+            }
         }
         catch (Exception e) {
             System.err.println("Error getting next table name");
