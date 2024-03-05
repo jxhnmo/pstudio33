@@ -71,7 +71,8 @@ public class MenuPopupController {
         String category = categoryBox.getValue();
         String name = nameField.getText();
         String price = priceField.getText();
-        if (category == null) {
+        if (category == null || name == null || price == null) {
+            // invalid request
         }
         else {
             try {
