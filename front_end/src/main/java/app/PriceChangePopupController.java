@@ -22,14 +22,7 @@ public class PriceChangePopupController {
     private void initialize() {
         TextField spinnerEditor = newPriceSpinner.getEditor();
         spinnerEditor.setStyle("-fx-font-size: 20;");
-
-        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
-            0.00, // minimum value of Spinner
-            Double.MAX_VALUE, // max value of Spinner
-            5.00, // initial value of Spinner
-            0.01 // how much Spinner increments/decrements
-        );
-        newPriceSpinner.setValueFactory(valueFactory);
+        // Initialized more in the loadDatabaseAndMenuItems function
     }
 
     @FXML
@@ -49,6 +42,14 @@ public class PriceChangePopupController {
         this.dbConnection = db;
         this.item = item;
         oldPriceField.setText(String.valueOf(item.getPrice()));
+
+        SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
+            0.00, // minimum value of Spinner
+            Double.MAX_VALUE, // max value of Spinner
+            this.item.getPrice(), // initial value of Spinner
+            0.01 // how much Spinner increments/decrements
+        );
+        newPriceSpinner.setValueFactory(valueFactory);
     }
 
     @FXML
@@ -66,11 +67,6 @@ public class PriceChangePopupController {
                         "SET price = " + newPrice.toString() + "\n" + 
                         "WHERE name = '" + item.getName() + "';\n";
         dbConnection.runUpdate(query);
-
-        query = "SELECT price\n" +
-        "FROM menu_items\n" +
-        "WHERE name = 'Cheese Pizza';\n";
-
         item.setPrice(newPrice);
     }
 }
