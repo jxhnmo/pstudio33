@@ -4,7 +4,6 @@ public class SalesItems {
     private int ID;
     private int salesID;
     private int itemID;
-    // private int itemCounter;
 
     public SalesItems(int ID, int salesID, int itemID/*, int itemCounter*/){
         this.ID = ID;
