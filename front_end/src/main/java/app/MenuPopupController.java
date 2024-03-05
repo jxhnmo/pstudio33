@@ -48,10 +48,8 @@ public class MenuPopupController {
             }
         }
         );
-
-        
-       
     }
+    
     /** 
      * @param event
      */

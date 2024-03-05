@@ -286,12 +286,17 @@ public class MenuController {
     }
 
     /**
+     * Called whenever the manager is editing the menu and clicks on a menu item.
+     * Purpose: create a popup window in which the manager may update the price of a menu item.
+     * 
      * @param event
      */
     private void handleItemPriceEdit(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         currMenuItem = currItems.get(index);
+
+        createChangeItemPricePopup(currMenuItem);
     }
 
     /**
@@ -444,7 +449,7 @@ public class MenuController {
     }
 
     /**
-     * Loads the FXML file for the new popup window,
+     * Loads the FXML file for the add menu item popup window,
      * and disables parent window until popup is closed.
      */
     private void createAddItemPopup() {
@@ -463,6 +468,32 @@ public class MenuController {
             Window primaryStage = btnSignOut.getScene().getWindow();
             popupStage.initOwner(primaryStage);
             popupStage.setScene(new Scene(root, 800, 600));
+            popupStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the FXML file for the change item price popup window,
+     * and disables parent window until popup is closed.
+     */
+    private void createChangeItemPricePopup(MenuItems item) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PriceChangePopup.fxml"));
+            Parent root = loader.load();
+
+            // Pass data to the popup window:
+            PriceChangePopupController popupController = loader.getController();
+            popupController.loadDatabaseAndMenuItems(dbConnection, item);
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Change Menu Item Price");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+
+            Window primaryStage = btnSignOut.getScene().getWindow();
+            popupStage.initOwner(primaryStage);
+            popupStage.setScene(new Scene(root, 400, 300));
             popupStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
