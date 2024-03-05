@@ -12,61 +12,47 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.6638795986622074" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
+<SplitPane dividerPositions="0.75" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <VBox layoutX="139.0" layoutY="84.0" prefHeight="398.0" prefWidth="394.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox layoutX="196.0" layoutY="78.0" prefHeight="398.0" prefWidth="446.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label text="Name:">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="nameField" />
                   <Label layoutX="10.0" layoutY="10.0" text="Category:">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="categoryBox" prefWidth="150.0" />
                   <Label layoutX="10.0" layoutY="10.0" text="Price:">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="priceField" layoutX="10.0" layoutY="35.0" />
+                  <TextField fx:id="priceField" layoutX="10.0" layoutY="37.0" />
                   <Label layoutX="10.0" layoutY="10.0" text="Ingredients:">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                   <TextArea fx:id="ingredientsArea" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <VBox.margin>
-            <Insets left="60.0" right="60.0" top="10.0" />
-         </VBox.margin>
-      </TextField>
-      <Label alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" text="Enter New Item Category:">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="categoryBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="600.0">
-         <VBox.margin>
-            <Insets bottom="50.0" top="10.0" />
-         </VBox.margin>
-      </ChoiceBox>
-      <HBox alignment="CENTER" prefHeight="200.0" prefWidth="800.0" spacing="60.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <TableView fx:id="tableView" layoutX="-1.0" layoutY="76.0" prefHeight="398.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tableView" layoutX="12.0" layoutY="81.0" prefHeight="398.0" prefWidth="146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="tableColumn" prefWidth="199.0" text="Ingredients" />
+                <TableColumn fx:id="tableColumn" prefWidth="145.0" text="Ingreidents" />
               </columns>
             </TableView>
          </children></AnchorPane>
