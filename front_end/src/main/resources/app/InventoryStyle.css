@@ -59,3 +59,9 @@ TextArea,
     -fx-background-color: #72232D !important;
     -fx-text-fill: #EEEEEC;
 }
+
+.table-row-cell .text-field {
+    -fx-text-fill: #EEEEEC; /* Light text color for readability */
+    -fx-background-color: #72232D; /* Adjust the background color as needed */
+    /* Other styling properties as needed */
+}

@@ -24,7 +24,7 @@
             </ImageView>
         </StackPane>
     </HBox>
-    <Text text="Enter Your ID:"/>
+    <Text text="Enter Your ID:" styleClass="login-text"/>
     <TextField fx:id="userIdField" styleClass="text-field"/>
     <Button text="Login" onAction="#handleLogin" styleClass="button"/>
 

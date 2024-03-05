@@ -14,10 +14,9 @@ public class OrderCell extends TableCell<InventoryItems, Number> {
     private final Button plusOneButton = new Button("+1");
     private final Button plusTenButton = new Button("+10");
 
-
     public OrderCell() {
         container.getChildren().addAll(minusTenButton, minusOneButton, quantityField, plusOneButton, plusTenButton);
-        
+
         minusTenButton.setOnAction(e -> adjustQuantity(-10));
         minusOneButton.setOnAction(e -> adjustQuantity(-1));
         plusOneButton.setOnAction(e -> adjustQuantity(1));
@@ -27,12 +26,14 @@ public class OrderCell extends TableCell<InventoryItems, Number> {
         quantityField.setPrefWidth(100.0);
     }
 
-    
-    /** 
-     * @param item - The new item for the cell.
-     * @param empty - whether or not this cell represents data from the list. If it is empty, then it does not represent any domain data, but is a cell being used to render an "empty" row.
+    /**
+     * @param item  - The new item for the cell.
+     * @param empty - whether or not this cell represents data from the list. If it
+     *              is empty, then it does not represent any domain data, but is a
+     *              cell being used to render an "empty" row.
      * 
-     * The important thing here is that the quantityField is updated to be the new order quantity of the item.
+     *              The important thing here is that the quantityField is updated to
+     *              be the new order quantity of the item.
      */
     @Override
     protected void updateItem(Number item, boolean empty) {
@@ -40,8 +41,7 @@ public class OrderCell extends TableCell<InventoryItems, Number> {
 
         if (empty) {
             setGraphic(null);
-        }
-        else if (item == null) {
+        } else if (item == null) {
             setGraphic(container);
             quantityField.setText("0");
         } else {
@@ -50,8 +50,7 @@ public class OrderCell extends TableCell<InventoryItems, Number> {
         }
     }
 
-    
-    /** 
+    /**
      * @param amount - the amount to be added to the order quantity of the item
      */
     private void adjustQuantity(int amount) {
