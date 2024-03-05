@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import app.database.DbConnection;
 import app.entity_classes.InventoryItems;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +31,11 @@ public class MenuPopupController {
 
     private DbConnection dbConnection;
     
+    @FXML
+    private void initialize() {
+        dbConnection = new DbConnection();
+        populateTableFromDatabase();
+    }
     /** 
      * @param event
      */
@@ -64,7 +70,7 @@ public class MenuPopupController {
     public void loadCategories(ArrayList<String> categories) {
         ObservableList<String> observableList = FXCollections.observableArrayList(categories);
         categoryBox.setItems(observableList);
-        categoryBox.setStyle("-fx-font-size: 18px;");
+        categoryBox.setStyle("-fx-font-size: 32px;");
     }
     public void updateDatabase(ChoiceBox categoryBox, TextField name, TextArea ingredientsArea){
 
