@@ -32,13 +32,25 @@ public class MenuPopupController {
     private TableColumn<InventoryItems, String> tableColumn;
 
     private DbConnection dbConnection;
+
+    private String ingredientsAdded;
     
     @FXML
     private void initialize() {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
         tableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
+        tableView.setOnMouseClicked(event ->{
+            if (tableView.getSelectionModel().getSelectedItem() != null) {
+                InventoryItems selectedItem = tableView.getSelectionModel().getSelectedItem();
+                ingredientsAdded += selectedItem.getItemName() + "\n";
+                ingredientsArea.setText(ingredientsAdded);
+            }
+        }
+        );
 
+        
+       
     }
     /** 
      * @param event
@@ -59,7 +71,7 @@ public class MenuPopupController {
         }
         else {
             try {
-                dbConnection.runUpdate("INSERT INTO menu_items (item_name, category) VALUES ('" + name + "', '" + category + "'");
+                //dbConnection.runUpdate("INSERT INTO menu_items (item_name, category) VALUES ('" + name + "', '" + category + "'");
                 // TODO: Send a message to the database adding a menu item with newItemName.toString() for the name,
                 // category for the category, and default values for everything else (Except increment id by 1 of course).
                 //category
