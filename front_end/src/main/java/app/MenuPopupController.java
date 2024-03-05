@@ -36,7 +36,7 @@ public class MenuPopupController {
     private DbConnection dbConnection;
 
     private String ingredientsAdded = "";
-    private ArrayList<String> ingredientsAddedArray = new ArrayList<String>();
+    private ArrayList<String> inventoryIds = new ArrayList<String>();
     private ArrayList<InventoryItems> inventoryItems = new ArrayList<InventoryItems>();
     /**
      * Initializes the controller class. This method is automatically called
@@ -53,6 +53,7 @@ public class MenuPopupController {
                 ingredientsAdded += selectedItem.getItemName() + "\n";
                 ingredientsArea.setText(ingredientsAdded);
                 inventoryItems.add(selectedItem);
+                inventoryIds.add(Integer.toString(selectedItem.getID()));
             }
         }
         );
@@ -65,7 +66,8 @@ public class MenuPopupController {
         closeWindow();
     }
     
-    /** 
+    
+    /**
      * @param event
      */
     @FXML
@@ -82,18 +84,10 @@ public class MenuPopupController {
             int ingredientId = dbConnection.getNextAvailableId("ingredients");
             MenuItems menuItem = new MenuItems(menuId, name, true, Double.parseDouble(priceField.getText()), category);
             dbConnection.runUpdate("INSERT INTO menu_items (id, name, available, price, category) VALUES ('" + Integer.toString(menuId) + "', '" + name + "', '1', '" + price + "', '" + category + "')");
-            for (String ingredient_name: ingredientsAddedArray) {
-                dbConnection.runUpdate("INSERT INTO ingredients (id, item_id, menu_id, num) VALUES ('" + Integer.toString(ingredientId) + "', '" + name + "', '" + Integer.toString(menuId) + "', '1')");
+            for (String inventoryId: inventoryIds) {
+                dbConnection.runUpdate("INSERT INTO ingredients (id, item_id, menu_id, num) VALUES ('" + Integer.toString(ingredientId) + "', '" + inventoryId+ "', '" + Integer.toString(menuId) + "', '1')");
                 ingredientId++;
             }
-            //convert java integer to string ? 
-            String menuIdString = Integer.toString(menuId);
-            
-            // int menuId = ??? 
-            //    MenuItems menuItem = new MenuItems(0, name, true, Double.parseDouble(priceField.getText()), category);
-            //     public Ingredients(int ID, String itemName, int menuID, int num)
-            //    Ingredients ingredient = new Ingredients( , name, )
-            // dbConnection.runUpdate("INSERT INTO menu_items (id, name, available, price, category) VALUES ('" + + "', " + price + ", '" + category + "')"
             }   
             catch (Exception e) {
                 e.printStackTrace();
@@ -101,6 +95,7 @@ public class MenuPopupController {
             closeWindow();
         }
     }
+
 
     public void loadCategories(ArrayList<String> categories) {
         ObservableList<String> observableList = FXCollections.observableArrayList(categories);
@@ -144,6 +139,7 @@ public class MenuPopupController {
     public void loadDatabase(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
+
     private void closeWindow() {
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
