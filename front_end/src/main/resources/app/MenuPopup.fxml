@@ -23,25 +23,25 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextField />
+                  <TextField fx:id="nameField" />
                   <Label layoutX="10.0" layoutY="10.0" text="Category:">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="categoryBox" prefWidth="150.0" />
                   <Label layoutX="10.0" layoutY="10.0" text="Price:">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="10.0" layoutY="35.0" />
+                  <TextField fx:id="priceField" layoutX="10.0" layoutY="35.0" />
                   <Label layoutX="10.0" layoutY="10.0" text="Ingredients:">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="ingredientsArea" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>
@@ -53,9 +53,9 @@
          </padding></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <TableView layoutX="-1.0" layoutY="76.0" prefHeight="398.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tableView" layoutX="-1.0" layoutY="76.0" prefHeight="398.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="199.0" text="Ingredients" />
+                <TableColumn fx:id="tableColumn" prefWidth="199.0" text="Ingredients" />
               </columns>
             </TableView>
          </children></AnchorPane>
