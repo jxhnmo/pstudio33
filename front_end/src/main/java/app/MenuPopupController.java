@@ -56,10 +56,16 @@ public class MenuPopupController {
         categoryBox.setItems(observableList);
         categoryBox.setStyle("-fx-font-size: 32px;");
     }
+    public void addToIngredients(){
+        //TODO: INSERT the ingredients of the new menu item to the ingredients table
+    }
+    public void addToMenuItems(){
+        //TODO: Add the menu item to menu_items table
+    }
+
     public void loadIngredients(){
         ingredients = dbConnection.getResultArray(dbConnection.runStatement("SELECT * FROM inventory_items;"), "item_name");
     }
-
     public void loadDatabase(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
