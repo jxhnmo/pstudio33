@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 
@@ -27,15 +28,33 @@ public class MenuPopupController {
     TextArea ingredientsArea;
     @FXML
     private TableView<InventoryItems> tableView;
-
+    @FXML 
+    private TableColumn<InventoryItems, String> tableColumn;
 
     private DbConnection dbConnection;
-    
+
+    private String ingredientsAdded = "";
+    private ArrayList<InventoryItems> inventoryItems = new ArrayList<InventoryItems>();
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         dbConnection = new DbConnection();
         populateTableFromDatabase();
+        tableColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItemName()));
+        tableView.setOnMouseClicked(event ->{
+            if (tableView.getSelectionModel().getSelectedItem() != null) {
+                InventoryItems selectedItem = tableView.getSelectionModel().getSelectedItem();
+                ingredientsAdded += selectedItem.getItemName() + "\n";
+                ingredientsArea.setText(ingredientsAdded);
+                inventoryItems.add(selectedItem);
+            }
+        }
+        );
     }
+    
     /** 
      * @param event
      */
@@ -51,14 +70,19 @@ public class MenuPopupController {
     public void handleConfirmClicked(ActionEvent event) {
         String category = categoryBox.getValue();
         String name = nameField.getText();
+        String price = priceField.getText();
         if (category == null) {
         }
         else {
             try {
-                dbConnection.runUpdate("INSERT INTO menu_items (item_name, category) VALUES ('" + name + "', '" + category + "'");
-                // TODO: Send a message to the database adding a menu item with newItemName.toString() for the name,
-                // category for the category, and default values for everything else (Except increment id by 1 of course).
-                //category
+            int menuId = dbConnection.getNextAvailableId("menu_items");
+            int ingredientId = dbConnection.getNextAvailableId("ingredients");
+            
+            // int menuId = ??? 
+            //    MenuItems menuItem = new MenuItems(0, name, true, Double.parseDouble(priceField.getText()), category);
+            //     public Ingredients(int ID, String itemName, int menuID, int num)
+            //    Ingredients ingredient = new Ingredients( , name, )
+            // dbConnection.runUpdate("INSERT INTO menu_items (id, name, available, price, category) VALUES ('" + + "', " + price + ", '" + category + "')"
             }   
             catch (Exception e) {
                 e.printStackTrace();
