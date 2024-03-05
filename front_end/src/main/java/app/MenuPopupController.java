@@ -16,7 +16,10 @@ public class MenuPopupController {
     TextField newItemName;
     @FXML
     ChoiceBox<String> categoryBox;
-    
+
+    ArrayList<String> ingredients;
+
+
 
     private DbConnection dbConnection;
     
@@ -54,7 +57,7 @@ public class MenuPopupController {
         categoryBox.setStyle("-fx-font-size: 32px;");
     }
     public void loadIngredients(){
-        
+        ingredients = dbConnection.getResultArray(dbConnection.runStatement("SELECT * FROM inventory_items;"), "item_name");
     }
 
     public void loadDatabase(DbConnection dbConnection) {

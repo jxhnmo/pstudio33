@@ -439,7 +439,6 @@ public class MenuController {
             addMenuItem.setMnemonicParsing(false);
             addMenuItem.setPrefHeight(211.0);
             addMenuItem.setPrefWidth(280.0);
-            addMenuItem.setWrapText(true);
             addMenuItem.setOnAction(this::handleMenuItemAdd);    
             menuItems.add(addMenuItem, numChildren % BTNS_PER_ROW, numChildren / BTNS_PER_ROW);
             menuItems.setMargin(addMenuItem, new Insets(10));
