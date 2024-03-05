@@ -13,14 +13,17 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 
 public class MenuPopupController {
     @FXML
-    TextField newItemName;
+    TextField nameField;
     @FXML
     ChoiceBox<String> categoryBox;
-
-    ArrayList<String> ingredients;
+    @FXML 
+    TextField priceField; 
+    @FXML 
+    TextArea ingredientsArea;
     @FXML
     private TableView<InventoryItems> tableView;
 
@@ -41,7 +44,7 @@ public class MenuPopupController {
     @FXML
     public void handleConfirmClicked(ActionEvent event) {
         String category = categoryBox.getValue();
-        String name = newItemName.getText();
+        String name = nameField.getText();
         if (category == null) {
         }
         else {
@@ -63,7 +66,11 @@ public class MenuPopupController {
         categoryBox.setItems(observableList);
         categoryBox.setStyle("-fx-font-size: 32px;");
     }
+    public void updateDatabase(ChoiceBox categoryBox, TextField name, TextArea ingredientsArea){
+
+    }
     public void addToIngredients(){
+
         //TODO: INSERT the ingredients of the new menu item to the ingredients table
     }
     public void addToMenuItems(){
@@ -96,10 +103,8 @@ public class MenuPopupController {
     public void loadDatabase(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
-
-
     private void closeWindow() {
-        Stage stage = (Stage) newItemName.getScene().getWindow();
+        Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
     }
 }
