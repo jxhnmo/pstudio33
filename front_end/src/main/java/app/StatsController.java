@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 
@@ -17,8 +16,7 @@ public class StatsController {
     @FXML
     private LineChart<String, Number> lineChart;
 
-    @FXML
-    private BarChart<String, Number> salesReportChart;
+
 
     @FXML
     public void initializeLineChart() {
@@ -31,19 +29,6 @@ public class StatsController {
         series.getData().add(new XYChart.Data<>("Mar", 250));
     
         lineChart.getData().add(series);
-    }
-
-    @FXML
-    public void initializeBarChart() {
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Sales Report");
-
-        // Sample data
-        series.getData().add(new XYChart.Data<>("Product A", 150));
-        series.getData().add(new XYChart.Data<>("Product B", 200));
-        series.getData().add(new XYChart.Data<>("Product C", 100));
-    
-        salesReportChart.getData().add(series);
     }
 
     @FXML
