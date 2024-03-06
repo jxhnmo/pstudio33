@@ -18,7 +18,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-
+/**
+ * Controller class for the menu item popup in the application.
+ * This class is responsible for handling all interactions within the popup window,
+ * including initializing the window components, handling button clicks, and managing the menu item's ingredients.
+ */
 public class MenuPopupController {
     @FXML
     TextField nameField;
@@ -39,8 +43,8 @@ public class MenuPopupController {
     private ArrayList<String> inventoryIds = new ArrayList<String>();
     private ArrayList<InventoryItems> inventoryItems = new ArrayList<InventoryItems>();
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     * It sets up the table view with database data and event listeners for the UI components.
      */
     @FXML
     private void initialize() {
@@ -58,8 +62,11 @@ public class MenuPopupController {
         }
         );
     }
-    /** 
-     * @param event
+    /**
+     * Handles the action when the cancel button is clicked.
+     * Closes the current window.
+     *
+     * @param event The action event triggered by clicking the button.
      */
     @FXML
     public void handleCancelClicked(ActionEvent event) {
@@ -68,7 +75,10 @@ public class MenuPopupController {
     
     
     /**
-     * @param event
+     * Handles the action when the confirm button is clicked.
+     * Validates the input fields and adds a new menu item to the database along with its ingredients if valid.
+     *
+     * @param event The action event triggered by clicking the button.
      */
     @FXML
     public void handleConfirmClicked(ActionEvent event) {
@@ -95,24 +105,22 @@ public class MenuPopupController {
             closeWindow();
         }
     }
-
+    /**
+     * Populates the category choice box with available categories.
+     *
+     * @param categories A list of categories to populate the choice box.
+     */
 
     public void loadCategories(ArrayList<String> categories) {
         ObservableList<String> observableList = FXCollections.observableArrayList(categories);
         categoryBox.setItems(observableList);
         categoryBox.setStyle("-fx-font-size: 18px;");
     }
-    public void updateDatabase(ChoiceBox categoryBox, TextField name, TextArea ingredientsArea){
-
-    }
-    public void addToIngredients(){
-
-        //TODO: INSERT the ingredients of the new menu item to the ingredients table
-    }
-    public void addToMenuItems(){
-        //TODO: Add the menu item to menu_items table
-    }
-
+    
+    /**
+     * Populates the table view with inventory items from the database.
+     * This method queries the database for inventory items and adds them to the table view.
+     */
     private void populateTableFromDatabase() {
         String query = "SELECT * FROM inventory_items";
         ResultSet result = dbConnection.runStatement(query);
@@ -132,14 +140,28 @@ public class MenuPopupController {
             System.err.println("Error while populating table from database.");
         }
     }
+    /**
+     * Adds an inventory item to the table view.
+     *
+     * @param item The inventory item to be added to the table.
+     */
     private void addItemToTable(InventoryItems item)
     {
         tableView.getItems().add(item);
     }
+    /**
+     * Loads the database connection into this controller.
+     *
+     * @param dbConnection The database connection to be used by this controller.
+     */
+
     public void loadDatabase(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
-
+    /**
+     * Closes the current window.
+     * This method retrieves the current stage from the name field's scene and closes it.
+     */
     private void closeWindow() {
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
