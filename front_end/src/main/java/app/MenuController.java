@@ -225,7 +225,7 @@ public class MenuController {
 
         String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM ingredients WHERE ingredients.menu_id = "
                 + menu_id
-                + "AND ingredients.item_id = inventory_items.id) WHERE id IN (SELECT item_id FROM ingredients WHERE ingredients.menu_id="
+                + " AND ingredients.item_id = inventory_items.id) WHERE id IN (SELECT item_id FROM ingredients WHERE ingredients.menu_id="
                 + menu_id + " GROUP BY item_id);";
         return query;
     }
@@ -332,8 +332,6 @@ public class MenuController {
      */
     private int getCurrTransactionId() {
         int res = dbConnection.getNextAvailableId("sales_transactions");
-        if(res != -1) 
-            return res - 1;
         return res;
     }
 
@@ -342,8 +340,6 @@ public class MenuController {
      */
     private int getCurrSaleItemId() {
         int res = dbConnection.getNextAvailableId("sales_items");
-        if(res != -1) 
-            return res - 1;
         return res;
     }
 
