@@ -9,14 +9,47 @@
 
 AnchorPane {
     -fx-background-color: #191111;
-    -fx-text-color: #EEEEEC;
+    -fx-text-fill: #EEEEEC;
 }
 
 GridPane {
     -fx-background-color: #201314;
-    -fx-text-color: #EEEEEC;
+    -fx-text-fill: #EEEEEC;
 }
 
 Label {
-    -fx-text-color: #EEEEEC;
+    -fx-text-fill: #EEEEEC;
+}
+
+Button {
+    -fx-background-color: #611623;
+    -fx-text-fill: #EEEEEC;
+    -fx-padding: 10px 20px;
+    -fx-border-color: #714F19;
+    -fx-border-width: 2px;
+}
+
+Button:hover {
+    -fx-background-color: #FFCA16;
+    -fx-text-fill: #611623;
+}
+
+TextField {
+    -fx-background-color: #72232D;
+    -fx-text-fill: #EEEEEC;
+}
+
+Spinner,
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: #FFCA16;
+    -fx-text-fill: #611623;
+    -fx-border-color: #714F19; 
+    -fx-border-width: 2px;
+}
+
+.spinner .text-input {
+    -fx-background-color: #191111;
+    -fx-text-fill: #EEEEEC;
+    -fx-border-color: transparent;
 }
