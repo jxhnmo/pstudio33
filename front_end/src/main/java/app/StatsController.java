@@ -368,10 +368,12 @@ public class StatsController {
         System.out.println("Selected salesReport");
         startDateTime = new DatePicker(firstSale.toLocalDate());
         Label startLabel = new Label("Start Date:  ");
+        startLabel.getStyleClass().add("custom-label");
         HBox startBox = new HBox(startLabel,startDateTime);
         
         endDateTime = new DatePicker(lastSale.toLocalDate());
         Label endLabel = new Label("End Date:  ");
+        endLabel.getStyleClass().add("custom-label");
         HBox endBox = new HBox(endLabel,endDateTime);
         
         startDateTime.valueProperty().addListener(this::handleDateChange);
@@ -437,6 +439,7 @@ public class StatsController {
         System.out.println("Selected excessReport");
         startDateTime = new DatePicker(lastRestock.toLocalDate());
         Label startLabel = new Label("Timestamp:  ");
+        startLabel.getStyleClass().add("custom-label");
         HBox startBox = new HBox(startLabel,startDateTime);
         startBox.setLayoutX(50);
         startBox.setLayoutY(700);
