@@ -64,11 +64,12 @@ public class StatsController {
     
     private DatePicker startDateTime,endDateTime;
     private LocalDateTime firstSale,lastSale;
+    private LocalDateTime lastRestock;
     
     @FXML
     private AnchorPane chartArea;
     private TableView<Map<String, Object>> salesTable;
-    // excess table
+    private TableView<Map<String, Object>> excessTable;
     private TableView<InventoryItems> restockTable;
     private TableView<Map<String, Object>> pairSalesTable;
 
@@ -80,6 +81,7 @@ public class StatsController {
         getInventory();
         getSaleTimeBorders();
         setupSalesTable();
+        setupExcessTable();
         setupRestockTable();
         setupPairTable();
         lineChart.setVisible(false);
@@ -140,7 +142,7 @@ public class StatsController {
             new SimpleStringProperty(data.getValue().get("item_name").toString())
         );
         
-        TableColumn<Map<String, Object>, String> category = new TableColumn<>("Item Name");
+        TableColumn<Map<String, Object>, String> category = new TableColumn<>("Category");
         category.setCellValueFactory(data -> 
             new SimpleStringProperty(data.getValue().get("category").toString())
         );
@@ -154,6 +156,44 @@ public class StatsController {
         );
         
         salesTable.getColumns().addAll(menuID, itemName, category, numSales);
+    }
+    
+    private void setupExcessTable() {
+        excessTable = new TableView<>();
+        // menuid menuitemname sales
+        TableColumn<Map<String, Object>, Integer> itemID = new TableColumn<>("Number of Sales");
+        itemID.setCellValueFactory(data -> 
+            new SimpleIntegerProperty(
+                Integer.parseInt(
+                    data.getValue().get("item_id").toString())).asObject()
+        );
+        
+        TableColumn<Map<String, Object>, String> itemName = new TableColumn<>("Item Name");
+        itemName.setCellValueFactory(data -> 
+            new SimpleStringProperty(data.getValue().get("item_name").toString())
+        );
+        
+        TableColumn<Map<String, Object>, Integer> stockSold = new TableColumn<>("Stock Sold");
+        stockSold.setCellValueFactory(data -> 
+            new SimpleIntegerProperty(
+                Integer.parseInt(
+                    data.getValue().get("stock_sold").toString())).asObject()
+        );
+        
+        TableColumn<Map<String, Object>, Integer> maxStock = new TableColumn<>("Max Stock");
+        maxStock.setCellValueFactory(data -> 
+            new SimpleIntegerProperty(
+                Integer.parseInt(
+                    data.getValue().get("max_stock").toString())).asObject()
+        );
+        
+        TableColumn<Map<String, Object>, String> percent = new TableColumn<>("Percent Sold");
+        percent.setCellValueFactory(data -> 
+            new SimpleStringProperty(
+                data.getValue().get("percent_sold").toString())
+        );
+        
+        excessTable.getColumns().addAll(itemID, itemName, stockSold, maxStock, percent);
     }
     
     private void setupRestockTable() {
@@ -250,6 +290,17 @@ public class StatsController {
             e.printStackTrace();
             System.err.println("Error while populating table from database.");
         }
+        
+        String query3 = "SELECT transaction_date FROM inventory_transactions ORDER BY transaction_date DESC LIMIT 1;";
+        result = dbConnection.runStatement(query3);
+        try {
+            if(result.next())
+                lastRestock = result.getTimestamp("transaction_date").toLocalDateTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
+        
     }
     
     private ArrayList<Map<String, Object>> getPairData() {
@@ -384,6 +435,73 @@ public class StatsController {
     
     public void excessReport() {
         System.out.println("Selected excessReport");
+        startDateTime = new DatePicker(lastRestock.toLocalDate());
+        Label startLabel = new Label("Timestamp:  ");
+        HBox startBox = new HBox(startLabel,startDateTime);
+        startBox.setLayoutX(50);
+        startBox.setLayoutY(700);
+        startDateTime.valueProperty().addListener(this::handleExcessUpdate);
+
+        chartArea.getChildren().add(startBox);
+        
+        populateExcessTable();
+        chartArea.getChildren().add(excessTable);
+        chartArea.setLeftAnchor(excessTable,0.0);
+        chartArea.setRightAnchor(excessTable,0.0);
+        chartArea.setTopAnchor(excessTable,0.0);
+        chartArea.setBottomAnchor(excessTable,200.0);
+        
+    }
+    
+    private void handleExcessUpdate(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+        populateExcessTable();
+    }
+    
+    private void populateExcessTable() {
+        Timestamp start = Timestamp.valueOf(startDateTime.getValue().atStartOfDay());
+        Timestamp end = Timestamp.valueOf(LocalDateTime.now());
+        
+        String front = """
+        SELECT inventory_items.id,item_name,SUM(ingredients.num) AS stock_sold,max_stock FROM inventory_items
+        JOIN ingredients ON inventory_items.id = ingredients.item_id
+        JOIN menu_items ON ingredients.menu_id = menu_items.id
+        JOIN sales_items ON menu_items.id = sales_items.menu_id
+        JOIN sales_transactions ON sales_items.sales_id = sales_transactions.id
+        """;
+        String time_portion = "WHERE sales_transactions.purchase_time > '" + start + "'\n";
+        String end_part = """
+        GROUP BY inventory_items.id;
+        """;
+        String query = front + time_portion + end_part;
+        
+        // System.out.println(query);
+        ResultSet result = dbConnection.runStatement(query);
+        ArrayList<Map<String, Object>> data = new ArrayList<>();
+        try {
+            while (result.next()) {
+                if(result.getInt("stock_sold")*5 < result.getInt("max_stock"))
+                    data.add(new HashMap<>() {{
+                        put("item_id",result.getInt("id"));
+                        put("item_name",result.getString("item_name"));
+                        put("stock_sold",result.getInt("stock_sold"));
+                        put("max_stock",result.getInt("max_stock"));
+                        put("percent_sold",getPercent(result.getInt("stock_sold"),result.getInt("max_stock")));
+                    }});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
+        excessTable.getItems().clear();
+        excessTable.getItems().addAll(data);
+        
+        
+    }
+    
+    private String getPercent(int a, int b) {
+        double ans = a * 100.0;
+        ans /= b;
+        return String.format("%.2f",ans)+"%";
     }
     
     public void restockReport() {
