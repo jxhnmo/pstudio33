@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private static Stage primaryStage; // Keep a reference to the primary stage
+    private static boolean isManager = false;
 
     /**
      * This method is the entry point of the JavaFX application.
@@ -72,5 +73,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static void setIsManager(boolean b) {
+        isManager = b;
+    }
+
+    public static boolean getIsManager() {
+        return isManager;
     }
 }

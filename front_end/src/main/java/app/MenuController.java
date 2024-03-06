@@ -89,6 +89,7 @@ public class MenuController {
         // If isManager is true, no need to disable buttons, assuming all buttons are
         // enabled by default
         else {
+
             taskbar.setTranslateX(-79.2);
             Button newbutton = new Button("Edit Menu");
             newbutton.setMnemonicParsing(false);
@@ -285,12 +286,17 @@ public class MenuController {
     }
 
     /**
+     * Called whenever the manager is editing the menu and clicks on a menu item.
+     * Purpose: create a popup window in which the manager may update the price of a menu item.
+     * 
      * @param event
      */
     private void handleItemPriceEdit(ActionEvent event) {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         currMenuItem = currItems.get(index);
+
+        createChangeItemPricePopup(currMenuItem);
     }
 
     /**
@@ -312,32 +318,20 @@ public class MenuController {
      * @return int
      */
     private int getCurrTransactionId() {
-        String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
-        try {
-            ResultSet result = dbConnection.runStatement(query);
-            result.next();
-            return result.getInt("max_id") + 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error while populating table from database.");
-        }
-        return -1;
+        int res = dbConnection.getNextAvailableId("sales_transactions");
+        if(res != -1) 
+            return res - 1;
+        return res;
     }
 
     /**
      * @return int
      */
     private int getCurrSaleItemId() {
-        String query = "SELECT MAX(id) AS max_id FROM sales_items;";
-        try {
-            ResultSet result = dbConnection.runStatement(query);
-            result.next();
-            return result.getInt("max_id") + 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error while populating table from database.");
-        }
-        return -1;
+        int res = dbConnection.getNextAvailableId("sales_items");
+        if(res != -1) 
+            return res - 1;
+        return res;
     }
 
     /**
@@ -431,7 +425,7 @@ public class MenuController {
      */
     @FXML
     public void handleCategoryAdd(ActionEvent event) {
-        System.out.println("Handle Category Addd called.");
+        // TODO: Implement adding category
     }
 
     /**
@@ -439,23 +433,21 @@ public class MenuController {
      */
     @FXML
     public void handleMenuItemAdd(ActionEvent event) {
-        // TODO: Add a popup window to add an item
-        System.out.println("Handle Menu Item Add called.");
-        createPopUpWindow();
+        createAddItemPopup();
     }
 
     /**
-     * Loads the FXML file for the new popup window,
+     * Loads the FXML file for the add menu item popup window,
      * and disables parent window until popup is closed.
      */
-    private void createPopUpWindow() {
+    private void createAddItemPopup() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuPopup.fxml"));
             Parent root = loader.load();
 
             // Pass data to the popup window:
             MenuPopupController popupController = loader.getController();
-            popupController.loadCategories(/* */); // Pass data to the popup
+            popupController.loadCategories(menuCategories); // Pass data to the popup
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Add New Menu Item");
@@ -464,6 +456,32 @@ public class MenuController {
             Window primaryStage = btnSignOut.getScene().getWindow();
             popupStage.initOwner(primaryStage);
             popupStage.setScene(new Scene(root, 800, 600));
+            popupStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the FXML file for the change item price popup window,
+     * and disables parent window until popup is closed.
+     */
+    private void createChangeItemPricePopup(MenuItems item) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PriceChangePopup.fxml"));
+            Parent root = loader.load();
+
+            // Pass data to the popup window:
+            PriceChangePopupController popupController = loader.getController();
+            popupController.loadDatabaseAndMenuItems(dbConnection, item);
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Change Menu Item Price");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+
+            Window primaryStage = btnSignOut.getScene().getWindow();
+            popupStage.initOwner(primaryStage);
+            popupStage.setScene(new Scene(root, 400, 300));
             popupStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();

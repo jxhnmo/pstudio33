@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * The DbConnection class represents a connection to a database.
@@ -56,6 +57,23 @@ public class DbConnection {
         }
         return rowsChanged;
     }
+    public int getNextAvailableId(String tableName){
+        int res = -1;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT MAX(id) AS nextAvailableId FROM " + tableName + ";");
+            if(result.next()){
+                res = result.getInt("nextAvailableId");
+                res = res + 1;
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Error getting next table name");
+        }
+
+        return res; 
+    }
+
 
     /**
      * Retrieves a string representation of the result set for the specified column label.
@@ -75,6 +93,24 @@ public class DbConnection {
         }
         return res;
     }
+    /** 
+     * @param result
+     * @param columnLabel the label of the column to retrieve the string representation from
+     * @return ArrayList<String> an array representation of the result set for the specified column label
+     */
+    public ArrayList<String> getResultArray(ResultSet result, String columnLabel) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            while (result.next()) {
+                list.add(result.getString(columnLabel));
+            }
+        } catch (Exception e) {
+            System.err.println("Error with result");
+        }
+        return list;
+    }
+
+    
 
     /**
      * Closes the database connection.

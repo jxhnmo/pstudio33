@@ -1,0 +1,35 @@
+id,item_name,stock,price
+1,buns,3200,0.30
+2,lettuce,3600,0.25
+3,patty,2800,1.50
+4,cheese,1600,0.40
+5,bacon,1200,0.50
+6,bread,400,0.20
+7,tomato,1200,0.40
+8,crispy chicken,400,0.75
+9,spicy crispy chicken,400,0.85
+10,grilled chicken,1200,0.75
+11,croutons,400,0.10
+12,fries,400,1.20
+13,small cup,400,0.05
+14,large cup,400,0.08
+15,cookie,1600,0.25
+16,chicken tender,400,0.80
+17,corn dog,800,1.10
+18,hot dog bun,800,0.25
+19,hot dog bun,800,0.25
+20,wiener,800,0.75
+21,tortilla,400,0.10
+22,salsa,400,0.05
+23,ice cream,1600,0.75
+24,whipped cream,400,0.25
+25,ribs,400,1.50
+26,pickles,400,0.20
+27,onions,400,0.20
+28,napkin,7200,0.02
+29,cup lid,800,0.10
+30,straw,1200,0.05
+31,tray,6800,0.05
+32,ice cream bowl,400,0.20
+33,shake cup,400,0.23
+34,salad bowl,400,0.18

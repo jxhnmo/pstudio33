@@ -1,0 +1,23 @@
+id,name,available,price
+1,bacon cheeseburger,true,8.65
+2,cheeseburger,true,7.45
+3,patty melt,true,5.45
+4,hamburger,true,8.45
+5,aggie chicken club,true,6.75
+6,revs grilled chicken sandwich,true,6.60
+7,spicy chicken sandwich,true,6.30
+8,chicken caesar salad,true,6.80
+9,french fries,true,3.50
+10,small drink,true,1.50
+11,large drink,true,2.50
+12,cookies,true,2.00
+13,chicken tenders,true,5.60
+14,corn dogs,true,4.45
+15,hot dogs,true,5.75
+16,chicken wrap,true,6.45
+17,double scoop ice cream,true,4.25
+18,aggie shakes,true,4.50
+19,cookie ice cream melt,true,5.25
+20,yell bbq rib sandwich,true,7.30
+21,blt burger,true,9.25
+22,double cheeseburger,true,8.45

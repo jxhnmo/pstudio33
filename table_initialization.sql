@@ -24,6 +24,7 @@ CREATE TABLE menu_items (
     category VARCHAR(50)
 );
 
+
 CREATE TABLE ingredients (
     id INT PRIMARY KEY,
     item_id INT,
