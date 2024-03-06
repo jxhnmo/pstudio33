@@ -73,3 +73,19 @@ TextField {
     -fx-background-color: #FFCA16;
     -fx-text-fill: #611623;
 }
+
+.table-view {
+    -fx-base: #72232D;
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+}
+
+.table-view .table-row-cell:selected,
+.table-view .table-row-cell:selected > .label {
+    -fx-background-color: #FFCA16;
+    -fx-text-fill: #611623;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #FFCA16;
+}
