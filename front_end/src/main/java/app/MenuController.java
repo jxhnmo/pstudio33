@@ -413,12 +413,12 @@ public class MenuController {
             ((Button) taskbar.getChildren().get(2)).setText("Edit Menu");
         } else {
             ((Button) taskbar.getChildren().get(2)).setText("Exit Editor");
-            addCategory = new Button("Add Category");
+            /*addCategory = new Button("Add Category");
             addCategory.setMnemonicParsing(false);
             addCategory.setPrefHeight(77.0);
             addCategory.setPrefWidth(192.0);
             addCategory.setOnAction(this::handleCategoryAdd);
-            categories.getChildren().add(addCategory);
+            categories.getChildren().add(addCategory);*/
 
             int numChildren = menuItems.getChildren().size();
             addMenuItem = new Button("Add new item");
