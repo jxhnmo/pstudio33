@@ -47,6 +47,14 @@ public class DbConnection {
         return null;
     }
 
+    /**
+     * Executes the given SQL statement, which may be an INSERT, UPDATE, or DELETE statement or
+     * an SQL statement that returns nothing, such as an SQL DDL statement.
+     *
+     * @param sqlStatement the SQL statement to execute
+     * @return the number of rows affected by the command; 0 if no rows are affected or the statement
+     *         does not return anything
+     */
     public int runUpdate(String sqlStatement) {
         int rowsChanged = 0;
         try {
@@ -57,6 +65,13 @@ public class DbConnection {
         }
         return rowsChanged;
     }
+    /**
+     * Retrieves the next available ID from the specified table. This is useful for inserting new rows
+     * with a unique ID.
+     *
+     * @param tableName the name of the table to retrieve the next available ID from
+     * @return the next available ID; -1 if an error occurs
+     */
     public int getNextAvailableId(String tableName){
         int res = -1;
         try {
