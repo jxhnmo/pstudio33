@@ -22,3 +22,9 @@ Button:hover {
     -fx-background-color: #FFD700;
     -fx-text-fill: #611623;
 }
+
+.date-picker .text-field {
+    -fx-control-inner-background: #EEEEEC;
+    -fx-background-color: #EEEEEC;
+    -fx-text-fill: #FFFFFF;
+}
