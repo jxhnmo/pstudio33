@@ -1,12 +1,16 @@
 package app;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class LoginController {
 
     @FXML
     private TextField userIdField;
+    
+    @FXML
+    private Label errorMessageLabel;
 
     @FXML
     protected void handleLogin() {
@@ -20,7 +24,7 @@ public class LoginController {
             isManager = false; // User is an employee
         }
         else {
-            System.out.println("Invalid ID"); // Implement proper error handling
+            errorMessageLabel.setText("Invalid ID, please try again.");
             return;
         }
         app.Main.setIsManager(isManager);

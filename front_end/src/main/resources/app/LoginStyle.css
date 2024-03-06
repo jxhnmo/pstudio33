@@ -42,3 +42,9 @@
     -fx-border-color: #714F19; /* Border color for the top image */
     -fx-border-width: 2px; /* Border width */
 }
+
+.error-message {
+    -fx-text-fill: red;
+    -fx-font-size: 24px;
+    -fx-font-family: "Tahoma"; 
+}
