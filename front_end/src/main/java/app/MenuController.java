@@ -318,32 +318,20 @@ public class MenuController {
      * @return int
      */
     private int getCurrTransactionId() {
-        String query = "SELECT MAX(id) AS max_id FROM sales_transactions;";
-        try {
-            ResultSet result = dbConnection.runStatement(query);
-            result.next();
-            return result.getInt("max_id") + 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error while populating table from database.");
-        }
-        return -1;
+        int res = dbConnection.getNextAvailableId("sales_transactions");
+        if(res != -1) 
+            return res - 1;
+        return res;
     }
 
     /**
      * @return int
      */
     private int getCurrSaleItemId() {
-        String query = "SELECT MAX(id) AS max_id FROM sales_items;";
-        try {
-            ResultSet result = dbConnection.runStatement(query);
-            result.next();
-            return result.getInt("max_id") + 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error while populating table from database.");
-        }
-        return -1;
+        int res = dbConnection.getNextAvailableId("sales_items");
+        if(res != -1) 
+            return res - 1;
+        return res;
     }
 
     /**
