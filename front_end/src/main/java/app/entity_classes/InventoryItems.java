@@ -56,6 +56,10 @@ public class InventoryItems {
     public void setMaxStock(int max_stock){
         this.max_stock = max_stock;
     }
+    
+    public int getDeficit(){
+        return max_stock-stock;
+    }
 
     public double getPrice(){
         return price;
@@ -64,7 +68,11 @@ public class InventoryItems {
     public void setPrice(double price){
         this.price = price;
     }
-
+    
+    public double getRestockCost() {
+        return price*getDeficit();
+    }
+    
     public int getOrder() {
         return order;
     }
