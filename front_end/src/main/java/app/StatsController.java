@@ -18,11 +18,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 import java.sql.ResultSet;
 import app.database.*;
 
 import app.entity_classes.MenuItems;
+import app.entity_classes.InventoryItems;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,13 +49,16 @@ public class StatsController {
     private Button product_usage;
     private Button sales_report;
     private Button excess_report;
+    private Button restock_report;
     private Button sells_together;
     private Button currSelected;
     
     private ArrayList<MenuItems> menu_items = new ArrayList<>();
+    private ArrayList<InventoryItems> inventory = new ArrayList<>();
     
     @FXML
     private AnchorPane chartArea;
+    private TableView<InventoryItems> restockTable;
     private TableView<Map<String, Object>> pairSalesTable;
 
     @FXML
@@ -61,6 +66,8 @@ public class StatsController {
         setupButtons();
         dbConnection = new DbConnection();
         getMenuItems();
+        getInventory();
+        setupRestockTable();
         setupPairTable();
         lineChart.setVisible(false);
     }
@@ -69,6 +76,7 @@ public class StatsController {
         product_usage = addButton("Product Usage");
         sales_report = addButton("Sales Report");
         excess_report = addButton("Excess Report");
+        restock_report = addButton("Restock Report");
         sells_together = addButton("Paired Menu Items");
         
         currSelected = product_usage;
@@ -104,6 +112,30 @@ public class StatsController {
         }
     }
     
+    private void setupRestockTable() {
+        restockTable = new TableView<>();
+        TableColumn<InventoryItems, Integer> id = new TableColumn<>("Item ID");
+        id.setCellValueFactory(data->new SimpleIntegerProperty(data.getValue().getID()).asObject());
+        
+        TableColumn<InventoryItems, String> itemName = new TableColumn<>("Item Name");
+        itemName.setCellValueFactory(data->new SimpleStringProperty(data.getValue().getItemName()));
+        
+        TableColumn<InventoryItems, Integer> stock = new TableColumn<>("Stock");
+        stock.setCellValueFactory(data->new SimpleIntegerProperty(data.getValue().getStock()).asObject());
+        
+        TableColumn<InventoryItems, Integer> maxStock = new TableColumn<>("Max Stock");
+        maxStock.setCellValueFactory(data->new SimpleIntegerProperty(data.getValue().getMaxStock()).asObject());
+        
+        TableColumn<InventoryItems, Double> price = new TableColumn<>("Unit Cost");
+        price.setCellValueFactory(data->new SimpleDoubleProperty(data.getValue().getPrice()).asObject());
+        
+        restockTable.getColumns().addAll(id,itemName,stock,maxStock,price);
+        for(InventoryItems ii : inventory) {
+            if(ii.getStock() < ii.getMaxStock()) // will change to half
+                restockTable.getItems().add(ii);
+        }
+    }
+    
     private void setupPairTable() {
         pairSalesTable = new TableView<>();
         TableColumn<Map<String, Object>, String> menuItem1 = new TableColumn<>("Item 1");
@@ -128,6 +160,27 @@ public class StatsController {
         ArrayList<Map<String, Object>> pairData = getPairData();
         pairSalesTable.getItems().addAll(pairData);
     }
+    
+    private void getInventory() {
+        String query = "SELECT id,item_name,stock,price,max_stock FROM inventory_items;";
+        ResultSet result = dbConnection.runStatement(query);
+        
+        try {
+            while (result.next()) {
+                InventoryItems item = new InventoryItems(
+                        result.getInt("id"),
+                        result.getString("item_name"),
+                        result.getInt("stock"),
+                        result.getDouble("price"),
+                        result.getInt("max_stock"));
+                inventory.add(item);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error while populating table from database.");
+        }
+    }
+    
     private ArrayList<Map<String, Object>> getPairData() {
         ArrayList<Map<String, Object>> data = new ArrayList<>();
         String front = """
@@ -175,6 +228,8 @@ public class StatsController {
             productUsage();
         else if(source == sales_report)
             salesReport();
+        else if(source == restock_report)
+            restockReport();
         else if(source == excess_report)
             excessReport();
         else if(source == sells_together)
@@ -193,6 +248,15 @@ public class StatsController {
     
     public void excessReport() {
         System.out.println("Selected excessReport");
+    }
+    
+    public void restockReport() {
+        System.out.println("Selected restockReport");
+        chartArea.getChildren().add(restockTable);
+        chartArea.setTopAnchor(restockTable,0.0);
+        chartArea.setBottomAnchor(restockTable,0.0);
+        chartArea.setLeftAnchor(restockTable,0.0);
+        chartArea.setRightAnchor(restockTable,0.0);
     }
     
     public void sellsTogether() {
