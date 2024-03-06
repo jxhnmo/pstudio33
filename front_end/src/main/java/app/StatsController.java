@@ -85,6 +85,7 @@ public class StatsController {
         setupRestockTable();
         setupPairTable();
         lineChart.setVisible(false);
+        productUsage();
     }
     private void setupButtons() {
         stats_options.getChildren().clear();
@@ -362,6 +363,27 @@ public class StatsController {
         System.out.println("Selected productUsage");
         chartArea.getChildren().add(lineChart);
         lineChart.setVisible(true);
+        
+        startDateTime = new DatePicker(firstSale.toLocalDate());
+        Label startLabel = new Label("Start Date:  ");
+        HBox startBox = new HBox(startLabel,startDateTime);
+        startBox.setLayoutX(50);
+        startBox.setLayoutY(700);
+        
+        endDateTime = new DatePicker(lastSale.toLocalDate());
+        Label endLabel = new Label("End Date:  ");
+        HBox endBox = new HBox(endLabel,endDateTime);
+        endBox.setLayoutX(57);
+        endBox.setLayoutY(730);
+        chartArea.getChildren().add(startBox);
+        chartArea.getChildren().add(endBox);
+        
+        //startDateTime.valueProperty().addListener(this::handleDateChange);
+        //endDateTime.valueProperty().addListener(this::handleDateChange);
+        chartArea.setLeftAnchor(lineChart,0.0);
+        chartArea.setRightAnchor(lineChart,0.0);
+        chartArea.setTopAnchor(lineChart,0.0);
+        chartArea.setBottomAnchor(lineChart,200.0);
     }
     
     public void salesReport() {
