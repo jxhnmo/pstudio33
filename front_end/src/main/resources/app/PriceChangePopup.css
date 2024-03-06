@@ -1,0 +1,22 @@
+/* color scheme
+    --bg-color: #191111;
+    --bg2-color: #201314;
+    --text-color: #EEEEEC;
+    --obj-bg-color: #611623;
+    --accent-color: #FFCA16;
+    --border-color: #714F19;
+*/
+
+AnchorPane {
+    -fx-background-color: #191111;
+    -fx-text-color: #EEEEEC;
+}
+
+GridPane {
+    -fx-background-color: #201314;
+    -fx-text-color: #EEEEEC;
+}
+
+Label {
+    -fx-text-color: #EEEEEC;
+}
