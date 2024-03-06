@@ -1,47 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
 
-
-<VBox alignment="CENTER" spacing="20.0" styleClass="vbox" stylesheets="@LoginStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.LoginController">
+<VBox alignment="CENTER" spacing="20.0" styleClass="vbox" stylesheets="@LoginStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.LoginController">
     <padding>
-        <Insets top="20.0" right="20.0" bottom="40.0" left="20.0"/>
+        <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <!-- Image above the TextField -->
     <HBox alignment="CENTER">
         <StackPane styleClass="image-view">
-            <ImageView fitWidth="500" fitHeight="500" preserveRatio="true">
+            <ImageView fitHeight="500" fitWidth="500" preserveRatio="true">
                 <image>
                     <Image url="@cssImages/revSign.png" />
                 </image>
             </ImageView>
         </StackPane>
     </HBox>
-    <Text text="Enter Your ID:" styleClass="login-text"/>
-    <TextField fx:id="userIdField" styleClass="text-field"/>
-    <Button text="Login" onAction="#handleLogin" styleClass="button"/>
+    <Text styleClass="login-text" text="Enter Your ID:">
+      <font>
+         <Font size="20.0" />
+      </font></Text>
+    <TextField fx:id="userIdField" styleClass="text-field" />
+    <Button onAction="#handleLogin" styleClass="button" text="Login" />
 
     <!-- HBox for images at the bottom -->
-    <HBox spacing="10" alignment="CENTER">
+    <HBox alignment="CENTER" spacing="10">
         <padding>
-            <Insets top="10" right="0" bottom="30" left="0"/> <!-- Adjust the top value as needed -->
+            <Insets bottom="30" left="0" right="0" top="10" /> <!-- Adjust the top value as needed -->
         </padding>
-        <ImageView fitWidth="250" fitHeight="250" preserveRatio="true">
+        <ImageView fitHeight="250" fitWidth="250" preserveRatio="true">
             <image>
-                <Image url="@cssImages/revCartoon.png"/> <!-- Replace with your first image file name -->
+                <Image url="@cssImages/revCartoon.png" /> <!-- Replace with your first image file name -->
             </image>
         </ImageView>
-        <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
+        <ImageView fitHeight="200" fitWidth="200" preserveRatio="true">
             <image>
-                <Image url="@cssImages/borger.png"/> <!-- Replace with your second image file name -->
+                <Image url="@cssImages/borger.png" /> <!-- Replace with your second image file name -->
             </image>
         </ImageView>
     </HBox>
+    <Label fx:id="errorMessageLabel" text="" styleClass="error-message" />
 </VBox>
