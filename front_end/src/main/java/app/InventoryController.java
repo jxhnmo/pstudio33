@@ -14,7 +14,12 @@ import app.entity_classes.InventoryItems;
 import app.entity_classes.MenuItems;
 import app.entity_classes.SalesItems;
 import app.database.*;
-
+/**
+ * Represents a transaction in the inventory management system. This class holds information
+ * about each transaction, including the transaction ID, manager ID responsible for the transaction,
+ * the date and time of the transaction, the total price of the transaction, and an array of item IDs
+ * involved in the transaction.
+ */
 public class InventoryController {
     @FXML
     private Button btnSignOut;
