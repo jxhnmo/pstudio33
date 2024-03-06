@@ -6,11 +6,21 @@ public class InventoryItems {
     private int stock;
     private double price;
     private int order;
-
+    private int max_stock;
+    
     public InventoryItems(int ID, String itemName, int stock, double price){
         this.ID = ID;
         this.itemName = itemName;
         this.stock = stock;
+        this.max_stock = stock;
+        this.price = price;
+        this.order = 0;
+    }
+    public InventoryItems(int ID, String itemName, int stock, double price,int max_stock) {
+        this.ID = ID;
+        this.itemName = itemName;
+        this.stock = stock;
+        this.max_stock = max_stock;
         this.price = price;
         this.order = 0;
     }
@@ -34,10 +44,21 @@ public class InventoryItems {
     public int getStock(){
         return stock;
     }
-
-
+    
     public void setStock(int stock){
         this.stock = stock;
+    }
+    
+    public int getMaxStock(){
+        return max_stock;
+    }
+    
+    public void setMaxStock(int max_stock){
+        this.max_stock = max_stock;
+    }
+    
+    public int getDeficit(){
+        return max_stock-stock;
     }
 
     public double getPrice(){
@@ -47,7 +68,11 @@ public class InventoryItems {
     public void setPrice(double price){
         this.price = price;
     }
-
+    
+    public double getRestockCost() {
+        return price*getDeficit();
+    }
+    
     public int getOrder() {
         return order;
     }

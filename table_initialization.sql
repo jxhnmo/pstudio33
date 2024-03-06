@@ -66,13 +66,3 @@ CREATE TABLE sales_items (
     FOREIGN KEY (sales_id) REFERENCES sales_transactions(id),
     FOREIGN KEY (menu_id) REFERENCES menu_items(id)
 );
-/*
-CREATE TABLE customizations (
-    id INT PRIMARY KEY,
-    sales_item_id INT,
-    item_id Int,
-    num Int,
-    FOREIGN KEY (sales_item_id) REFERENCES sales_items(id),
-    FOREIGN KEY (item_id) REFERENCES inventory_items(id)
-);
-*/
