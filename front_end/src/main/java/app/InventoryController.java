@@ -3,6 +3,7 @@ package app;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -30,6 +31,9 @@ public class InventoryController {
 
     @FXML
     private TextArea orderListTextArea;
+
+    @FXML
+    private Label price;
 
     private DbConnection dbConnection;
 
@@ -72,6 +76,11 @@ public class InventoryController {
             }
         }
         orderListTextArea.setText(orderList.toString());
+        Double totalCost = 0.0;
+        for (InventoryItems item : tableView.getItems()) {
+            totalCost += item.getPrice();
+        }
+        price.setText(String.valueOf(totalCost));
     }
 
     private void populateTableFromDatabase() {
