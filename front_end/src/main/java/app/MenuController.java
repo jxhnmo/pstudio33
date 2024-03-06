@@ -172,6 +172,13 @@ public class MenuController {
                 newbutton.setWrapText(true);
                 newbutton.setOnAction(this::handleItemSelection);
 
+                //Mark unavailable items gray
+                if(!item.getAvailable() && !editmode){
+                    newbutton.setStyle("-fx-background-color: #808080;");
+                } else {
+                    newbutton.setStyle("");
+                }
+
                 // Apply image to button:
                 String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
                 Image image;
@@ -278,6 +285,12 @@ public class MenuController {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         MenuItems item = currItems.get(index);
+
+        //Make unavailable items unclickable
+        if(!item.getAvailable()){
+            return;
+        }
+
         SalesItems saleItem = new SalesItems(-1, -1, item.getID());
         currSalesItems.add(saleItem);
         currTransaction.addCost(item.getPrice());
