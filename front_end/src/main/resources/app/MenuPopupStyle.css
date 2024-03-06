@@ -39,7 +39,37 @@ TextField {
     -fx-text-fill: #EEEEEC;
 }
 
-.text-area {
+.text-area,
+.text-area .content {
     -fx-background-color: #72232D;
     -fx-text-fill: #EEEEEC;
+}
+
+.choice-box {
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+    -fx-border-color: #714F19;
+    -fx-border-width: 2px;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+}
+
+.choice-box .arrow-button,
+.choice-box .arrow {
+    -fx-background-color: #FFCA16;
+}
+
+.choice-box .menu-item > .label,
+.choice-box .menu-item {
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+}
+
+.choice-box .menu-item:focused > .label,
+.choice-box .menu-item:focused {
+    -fx-background-color: #FFCA16;
+    -fx-text-fill: #611623;
 }
