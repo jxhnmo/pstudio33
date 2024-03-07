@@ -171,14 +171,11 @@ public class MenuController {
                 newbutton.setPrefWidth(280.0);
                 newbutton.setWrapText(true);
                 newbutton.setOnAction(this::handleItemSelection);
-
-                //Mark unavailable items gray
-                if(!item.getAvailable() && !editmode){
+                if(!item.getAvailable() && !editmode) {
                     newbutton.setStyle("-fx-background-color: #808080;");
                 } else {
                     newbutton.setStyle("");
                 }
-
                 // Apply image to button:
                 String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
                 Image image;

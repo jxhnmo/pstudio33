@@ -51,7 +51,13 @@ public class Main extends Application {
         }
     }
 
-    // New method to navigate to Menu.fxml with role information
+    /**
+     * Navigates to the specified FXML view and initializes it based on the user's role.
+     * This method dynamically loads the FXML file, retrieves its controller, and calls the initialization method with the user's manager status.
+     *
+     * @param fxml      The name of the FXML file to navigate to (without the ".fxml" extension).
+     * @param isManager A boolean indicating whether the current user is a manager. True if the user is a manager, false otherwise.
+     */
     public static void navigateToMenuWithRole(String fxml, boolean isManager) {
         try {
             // Load the FXML file and get the loader
@@ -71,14 +77,32 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * The main entry point for the application.
+     * This method launches the JavaFX application.
+     *
+     * @param args Command-line arguments passed to the application. Not used in this application.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Sets the manager status for the current session.
+     * This method should be called with the appropriate manager status when a user logs in.
+     *
+     * @param b The manager status to set. True if the user is a manager, false otherwise.
+     */
     public static void setIsManager(boolean b) {
         isManager = b;
     }
 
+    /**
+     * Retrieves the manager status for the current session.
+     * Use this method to check if the current user is recognized as a manager in the application.
+     *
+     * @return True if the current user is a manager, false otherwise.
+     */
     public static boolean getIsManager() {
         return isManager;
     }
