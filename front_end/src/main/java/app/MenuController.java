@@ -100,6 +100,10 @@ public class MenuController {
         }
     }
 
+    /**
+     * establishes database connection and initializes
+     * relevant objects
+     */
     public void initialize() {
         // Initialize dbConnection
         dbConnection = new DbConnection();
@@ -111,6 +115,9 @@ public class MenuController {
         currTransaction = new SalesTransactions(-1, 0, employeeId, "");
     }
 
+    /**
+     * load the available categories from the database
+     */
     private void getCategories() {
         String query = "SELECT category FROM menu_items GROUP BY category";
         try {
@@ -136,6 +143,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * load available menu items from the database
+     */
     private void getMenuItems() {
         String query = "SELECT * FROM menu_items ORDER BY id;";
         ResultSet result = dbConnection.runStatement(query);
@@ -156,6 +166,11 @@ public class MenuController {
         }
     }
 
+    /**
+     * reload the menu items from the database
+     * and add buttons for all items in 
+     * the current category
+     */
     private void updateMenuItems() {
         currItems.clear();
         menuItems.getChildren().clear();
@@ -204,6 +219,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * updates the total cost of the current order and the text box displaying it
+     */
     private void updateSalesInfo() {
         String salesText = "";
         for (SalesItems sitem : currSalesItems) {
@@ -215,6 +233,11 @@ public class MenuController {
         total.setText(totalCost);
     }
 
+    
+    /** 
+     * @param menu_id
+     * @return String
+     */
     private String updateIngredients(int menu_id) {
         // String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM
         // ingredients WHERE ingredients.menu_id = "
@@ -272,6 +295,9 @@ public class MenuController {
     }
 
     /**
+     * adds item to order if not editing the menu
+     * otherwise, offer popup for editing price of item
+     * 
      * @param event
      */
     private void handleItemSelection(ActionEvent event) {
@@ -310,8 +336,8 @@ public class MenuController {
     }
 
     /**
-     * @param item
-     * @param price
+     * @param item  the item whose price is to be changed
+     * @param price the new price of the item
      */
     private void changeItemPrice(MenuItems item, double price) {
         item.setPrice(price);
@@ -325,7 +351,7 @@ public class MenuController {
     }
 
     /**
-     * @return int
+     * @return next available id for a sales_transaction
      */
     private int getCurrTransactionId() {
         int res = dbConnection.getNextAvailableId("sales_transactions");
@@ -333,7 +359,7 @@ public class MenuController {
     }
 
     /**
-     * @return int
+     * @return next available id for a sales_item
      */
     private int getCurrSaleItemId() {
         int res = dbConnection.getNextAvailableId("sales_items");
