@@ -37,6 +37,11 @@ public class InventoryController {
 
     private DbConnection dbConnection;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded. It sets up the table columns and
+     * initializes the connection to the database.
+     */
     @FXML
     private void initialize() {
         dbConnection = new DbConnection();
@@ -68,6 +73,9 @@ public class InventoryController {
         });
     }
 
+    /**
+     * Updates the order list text area with the current orders from the table view.
+     */
     public void updateOrderList() {
         StringBuilder orderList = new StringBuilder();
         for (InventoryItems item : tableView.getItems()) {
@@ -84,6 +92,9 @@ public class InventoryController {
         price.setText(String.valueOf(totalCost));
     }
 
+    /**
+     * Populates the table view with inventory items retrieved from the database.
+     */
     private void populateTableFromDatabase() {
         String query = "SELECT * FROM inventory_items ORDER BY item_name ASC";
         ResultSet result = dbConnection.runStatement(query);
@@ -102,6 +113,11 @@ public class InventoryController {
         }
     }
 
+    /**
+     * Handles the sign-off action. This method is called when the sign-out button is clicked.
+     *
+     * @param event The action event that triggered the method.
+     */
     @FXML
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
@@ -111,6 +127,11 @@ public class InventoryController {
         app.Main.navigateTo("Login");
     }
 
+    /**
+     * Handles the confirmation of orders. This method is called when the confirm order button is clicked.
+     *
+     * @param event The action event that triggered the method.
+     */
     @FXML
     private void handleConfirmOrder(ActionEvent event) {
         for (InventoryItems item : tableView.getItems()) {
@@ -130,16 +151,31 @@ public class InventoryController {
         updateOrderList();
     }
 
+    /**
+     * Navigates to the menu view. This method is called when the menu button is clicked.
+     *
+     * @param event The action event that triggered the method.
+     */
     @FXML
     public void goToMenu(ActionEvent event) {
         app.Main.navigateToMenuWithRole("Menu.fxml", app.Main.getIsManager());
     }
 
+    /**
+     * Navigates to the statistics view. This method is called when the statistics button is clicked.
+     *
+     * @param event The action event that triggered the method.
+     */
     @FXML
     public void goToStatistics(ActionEvent event) {
         app.Main.navigateTo("Stats");
     }
 
+    /**
+     * Navigates back to the inventory view. This method is called when the inventory button is clicked.
+     *
+     * @param event The action event that triggered the method.
+     */
     @FXML
     public void goToInventory(ActionEvent event) {
         app.Main.navigateTo("Inventory");
