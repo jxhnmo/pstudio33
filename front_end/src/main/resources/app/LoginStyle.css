@@ -1,7 +1,7 @@
 .login-text {
-    -fx-fill: #EEEEEC; 
-    -fx-font-family: "Tahoma"; 
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 3, 0, 0, 1);
+    -fx-fill: #EEEEEC;
+    -fx-font-family: "Tahoma";
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 3, 0, 0, 1);
     -fx-font-size: 36px;
 }
 
@@ -12,24 +12,29 @@
     -fx-min-width: 200px;
     -fx-background-color: #611623;
     -fx-border-color: #714F19;
-    -fx-text-fill: #EEEEEC; /* Text color */
+    -fx-text-fill: #EEEEEC;
+    /* Text color */
     -fx-font-size: 16pt;
 }
 
 /* Button styling */
 .button {
-    -fx-background-color: #611623; /* Button background color */
-    -fx-text-fill: #EEEEEC; /* Text color */
+    -fx-background-color: #611623;
+    /* Button background color */
+    -fx-text-fill: #EEEEEC;
+    /* Text color */
     -fx-padding: 10px 20px;
-    -fx-border-color: #800000; /* Maroon border */
+    -fx-border-color: #714F19;
     -fx-border-width: 2px;
     -fx-font-size: 16pt;
 }
 
 /* Button hover effect */
 .button:hover {
-    -fx-background-color: #FFCA16; /* Lighter orange for hover effect */
-    -fx-text-fill: #611623; /* Text color change on hover */
+    -fx-background-color: #FFCA16;
+    /* Lighter orange for hover effect */
+    -fx-text-fill: #611623;
+    /* Text color change on hover */
 }
 
 /* VBox background color */
@@ -39,12 +44,14 @@
 
 /* ImageView border color */
 .image-view {
-    -fx-border-color: #714F19; /* Border color for the top image */
-    -fx-border-width: 2px; /* Border width */
+    -fx-border-color: #714F19;
+    /* Border color for the top image */
+    -fx-border-width: 2px;
+    /* Border width */
 }
 
 .error-message {
     -fx-text-fill: red;
     -fx-font-size: 24px;
-    -fx-font-family: "Tahoma"; 
+    -fx-font-family: "Tahoma";
 }

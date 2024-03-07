@@ -22,3 +22,73 @@ Button:hover {
     -fx-background-color: #FFD700;
     -fx-text-fill: #611623;
 }
+
+.date-picker .text-field {
+    -fx-control-inner-background: #EEEEEC;
+    -fx-background-color: #EEEEEC;
+    -fx-text-fill: #FFFFFF;
+}
+
+.table-view {
+    -fx-base: #72232D;
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+}
+
+.table-view .table-row-cell:selected,
+.table-view .table-row-cell:selected > .label {
+    -fx-background-color: #FFCA16;
+    -fx-text-fill: #611623;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #FFCA16;
+}
+
+.label {
+    fx-font-size: 16px;
+}
+
+.custom-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #EEEEEC;
+}
+
+
+.date-picker .text-field {
+    -fx-background-color: #191111;
+    -fx-border-color: #714F19;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #611623;
+}
+
+.date-picker .arrow {
+    -fx-background-color: #FFCA16;
+}
+
+.date-picker .calendar-grid {
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+}
+
+.date-picker .day-cell {
+    -fx-background-color: #611623;
+    -fx-border-color: transparent;
+    -fx-text-fill: #EEEEEC;
+}
+
+.date-picker .day-cell:focused {
+    -fx-background-color: #FFCA16;
+    -fx-text-fill: #201314;
+}
+
+.date-picker .day-cell:selected {
+    -fx-background-color: #201314;
+    -fx-text-fill: #EEEEEC;
+}
+
+.date-picker .month-year-pane {
+    -fx-background-color: #611623;
+}

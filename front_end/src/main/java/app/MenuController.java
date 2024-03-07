@@ -100,6 +100,10 @@ public class MenuController {
         }
     }
 
+    /**
+     * establishes database connection and initializes
+     * relevant objects
+     */
     public void initialize() {
         // Initialize dbConnection
         dbConnection = new DbConnection();
@@ -111,6 +115,9 @@ public class MenuController {
         currTransaction = new SalesTransactions(-1, 0, employeeId, "");
     }
 
+    /**
+     * load the available categories from the database
+     */
     private void getCategories() {
         String query = "SELECT category FROM menu_items GROUP BY category";
         try {
@@ -136,6 +143,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * load available menu items from the database
+     */
     private void getMenuItems() {
         String query = "SELECT * FROM menu_items ORDER BY id;";
         ResultSet result = dbConnection.runStatement(query);
@@ -156,6 +166,11 @@ public class MenuController {
         }
     }
 
+    /**
+     * reload the menu items from the database
+     * and add buttons for all items in 
+     * the current category
+     */
     private void updateMenuItems() {
         currItems.clear();
         menuItems.getChildren().clear();
@@ -171,7 +186,11 @@ public class MenuController {
                 newbutton.setPrefWidth(280.0);
                 newbutton.setWrapText(true);
                 newbutton.setOnAction(this::handleItemSelection);
-
+                if(!item.getAvailable() && !editmode) {
+                    newbutton.setStyle("-fx-background-color: #808080;");
+                } else {
+                    newbutton.setStyle("");
+                }
                 // Apply image to button:
                 String filePath = "/app/image/" + item.getName().replace(" ", "") + ".png";
                 Image image;
@@ -200,6 +219,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * updates the total cost of the current order and the text box displaying it
+     */
     private void updateSalesInfo() {
         String salesText = "";
         for (SalesItems sitem : currSalesItems) {
@@ -211,6 +233,11 @@ public class MenuController {
         total.setText(totalCost);
     }
 
+    
+    /** 
+     * @param menu_id
+     * @return String
+     */
     private String updateIngredients(int menu_id) {
         // String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM
         // ingredients WHERE ingredients.menu_id = "
@@ -218,7 +245,7 @@ public class MenuController {
 
         String query = "UPDATE inventory_items SET stock = stock - (SELECT num FROM ingredients WHERE ingredients.menu_id = "
                 + menu_id
-                + "AND ingredients.item_id = inventory_items.id) WHERE id IN (SELECT item_id FROM ingredients WHERE ingredients.menu_id="
+                + " AND ingredients.item_id = inventory_items.id) WHERE id IN (SELECT item_id FROM ingredients WHERE ingredients.menu_id="
                 + menu_id + " GROUP BY item_id);";
         return query;
     }
@@ -268,6 +295,9 @@ public class MenuController {
     }
 
     /**
+     * adds item to order if not editing the menu
+     * otherwise, offer popup for editing price of item
+     * 
      * @param event
      */
     private void handleItemSelection(ActionEvent event) {
@@ -278,6 +308,12 @@ public class MenuController {
         Button button = (Button) event.getSource();
         int index = itemButtons.indexOf(button);
         MenuItems item = currItems.get(index);
+
+        //Make unavailable items unclickable
+        if(!item.getAvailable()){
+            return;
+        }
+
         SalesItems saleItem = new SalesItems(-1, -1, item.getID());
         currSalesItems.add(saleItem);
         currTransaction.addCost(item.getPrice());
@@ -300,8 +336,8 @@ public class MenuController {
     }
 
     /**
-     * @param item
-     * @param price
+     * @param item  the item whose price is to be changed
+     * @param price the new price of the item
      */
     private void changeItemPrice(MenuItems item, double price) {
         item.setPrice(price);
@@ -315,22 +351,18 @@ public class MenuController {
     }
 
     /**
-     * @return int
+     * @return next available id for a sales_transaction
      */
     private int getCurrTransactionId() {
         int res = dbConnection.getNextAvailableId("sales_transactions");
-        if(res != -1) 
-            return res - 1;
         return res;
     }
 
     /**
-     * @return int
+     * @return next available id for a sales_item
      */
     private int getCurrSaleItemId() {
         int res = dbConnection.getNextAvailableId("sales_items");
-        if(res != -1) 
-            return res - 1;
         return res;
     }
 
@@ -400,12 +432,12 @@ public class MenuController {
             ((Button) taskbar.getChildren().get(2)).setText("Edit Menu");
         } else {
             ((Button) taskbar.getChildren().get(2)).setText("Exit Editor");
-            addCategory = new Button("Add Category");
+            /*addCategory = new Button("Add Category");
             addCategory.setMnemonicParsing(false);
             addCategory.setPrefHeight(77.0);
             addCategory.setPrefWidth(192.0);
             addCategory.setOnAction(this::handleCategoryAdd);
-            categories.getChildren().add(addCategory);
+            categories.getChildren().add(addCategory);*/
 
             int numChildren = menuItems.getChildren().size();
             addMenuItem = new Button("Add new item");

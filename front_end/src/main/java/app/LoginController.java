@@ -11,24 +11,36 @@ import java.util.Map;
 
 import app.database.*;
 
+/**
+ * Controller for handling user login operations.
+ * This class manages user authentication and redirection based on user roles.
+ */
 public class LoginController {
 
+    // User ID field for input
     @FXML
     private TextField userIdField;
     
+    // Error message label for the event of invalid input
     @FXML
     private Label errorMessageLabel;
 
     // Create an instance of DbConnection for use in the class
     private DbConnection dbConnection = new DbConnection();
 
+    // Makes a hash map of id with the manager boolean
     private Map<Integer, Boolean> employeeManagerStatus = new HashMap<>();
 
+    // Initialization of the login controller
     @FXML
     private void initialize() {
         preloadEmployeeData();
     }
 
+    /**
+     * Preloads employee data from the database and stores it in a map.
+     * This method populates {@code employeeManagerStatus} with employee IDs and their manager status.
+     */
     public void preloadEmployeeData() {
         String query = "SELECT id, manager FROM employees";
         try {
@@ -49,6 +61,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles the login process based on the entered user ID.
+     * Validates the user ID, checks if the user is a manager or employee, and navigates to the appropriate view.
+     */
     @FXML
     protected void handleLogin() {
         String userIdText = userIdField.getText().trim();
