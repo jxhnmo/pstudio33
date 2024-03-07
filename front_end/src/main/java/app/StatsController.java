@@ -38,6 +38,11 @@ import java.util.HashMap;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Controller class for managing statistics view and functionalities.
+ * This class handles the display and management of various statistics
+ * related to menu items, sales, excess, restock, and paired menu items.
+ */
 public class StatsController {
     private DbConnection dbConnection;
     
@@ -73,6 +78,10 @@ public class StatsController {
     private TableView<InventoryItems> restockTable;
     private TableView<Map<String, Object>> pairSalesTable;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded.
+     */
     @FXML
     public void initialize() {
         setupButtons();
@@ -87,6 +96,10 @@ public class StatsController {
         lineChart.setVisible(false);
         productUsage();
     }
+    
+    /**
+     * Sets up buttons for different statistics options.
+     */
     private void setupButtons() {
         stats_options.getChildren().clear();
         product_usage = addButton("Product Usage");
@@ -98,6 +111,13 @@ public class StatsController {
         currSelected = product_usage;
         currSelected.setDisable(true);
     }
+    
+    /**
+     * Adds a button to the statistics options panel.
+     * 
+     * @param name The name of the button.
+     * @return The created button.
+     */
     private Button addButton(String name) {
         Button new_button = new Button(name);
         new_button.setMnemonicParsing(false);
@@ -108,6 +128,9 @@ public class StatsController {
         return new_button;
     }
     
+    /**
+     * Retrieves menu items from the database.
+     */
     private void getMenuItems() {
         String query = "SELECT id,name,available,price,category FROM menu_items;";
         ResultSet result = dbConnection.runStatement(query);
@@ -128,6 +151,9 @@ public class StatsController {
         }
     }
     
+    /**
+     * Sets up the sales table.
+     */
     private void setupSalesTable() {
         salesTable = new TableView<>();
         // menuid menuitemname sales
@@ -159,6 +185,9 @@ public class StatsController {
         salesTable.getColumns().addAll(menuID, itemName, category, numSales);
     }
     
+    /**
+     * Sets up the excess table.
+     */
     private void setupExcessTable() {
         excessTable = new TableView<>();
         // menuid menuitemname sales
@@ -197,6 +226,9 @@ public class StatsController {
         excessTable.getColumns().addAll(itemID, itemName, stockSold, maxStock, percent);
     }
     
+     /**
+     * Sets up the restock table.
+     */
     private void setupRestockTable() {
         restockTable = new TableView<>();
         TableColumn<InventoryItems, Integer> id = new TableColumn<>("Item ID");
@@ -227,6 +259,9 @@ public class StatsController {
         }
     }
     
+    /**
+     * Sets up the paired sales table.
+     */
     private void setupPairTable() {
         pairSalesTable = new TableView<>();
         TableColumn<Map<String, Object>, String> menuItem1 = new TableColumn<>("Item 1");
@@ -252,6 +287,9 @@ public class StatsController {
         pairSalesTable.getItems().addAll(pairData);
     }
     
+    /**
+     * Retrieves inventory items from the database.
+     */
     private void getInventory() {
         String query = "SELECT id,item_name,stock,price,max_stock FROM inventory_items;";
         ResultSet result = dbConnection.runStatement(query);
@@ -272,6 +310,9 @@ public class StatsController {
         }
     }
     
+    /**
+     * Retrieves the boundaries of sale times and restock times from the database.
+     */
     private void getSaleTimeBorders() {
         String query = "SELECT purchase_time FROM sales_transactions ORDER BY purchase_time LIMIT 1;";
         ResultSet result = dbConnection.runStatement(query);
@@ -304,6 +345,11 @@ public class StatsController {
         
     }
     
+    /**
+     * Retrieves paired data for menu items from the database.
+     * 
+     * @return An ArrayList of Map objects containing paired data.
+     */
     private ArrayList<Map<String, Object>> getPairData() {
         ArrayList<Map<String, Object>> data = new ArrayList<>();
         String front = """
@@ -334,6 +380,13 @@ public class StatsController {
         
         return data;
     }
+    
+    /**
+     * Retrieves the name of a menu item given its ID.
+     * 
+     * @param id The ID of the menu item.
+     * @return The name of the menu item.
+     */
     private String getMenuName(int id) {
         for(MenuItems mi : menu_items)
             if(mi.getID() == id)
@@ -341,6 +394,11 @@ public class StatsController {
         return "N/A";
     }
     
+    /**
+     * Handles the selection of buttons for different statistics options.
+     * 
+     * @param e The ActionEvent triggered by button selection.
+     */
     public void handleButtonSelect(ActionEvent e) {
         chartArea.getChildren().clear();
         Button source = (Button) e.getSource();
@@ -359,6 +417,9 @@ public class StatsController {
             sellsTogether();
     }
     
+    /**
+     * Displays product usage statistics.
+     */
     public void productUsage() {
         System.out.println("Selected productUsage");
         chartArea.getChildren().add(lineChart);
@@ -386,6 +447,9 @@ public class StatsController {
         chartArea.setBottomAnchor(lineChart,200.0);
     }
     
+    /**
+     * Displays sales report statistics.
+     */
     public void salesReport() {
         System.out.println("Selected salesReport");
         startDateTime = new DatePicker(firstSale.toLocalDate());
@@ -416,10 +480,20 @@ public class StatsController {
         
     }
     
+    /**
+     * Handles date change for updating statistics based on date range.
+     * 
+     * @param observable The ObservableValue for date.
+     * @param oldValue The old date value.
+     * @param newValue The new date value.
+     */
     private void handleDateChange(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
         populateSalesTable();
     }
     
+    /**
+     * Populates the sales table based on selected date range.
+     */
     private void populateSalesTable() {
         Timestamp start = Timestamp.valueOf(startDateTime.getValue().atStartOfDay());
         Timestamp end = Timestamp.valueOf(endDateTime.getValue().atStartOfDay().plusDays(1));
@@ -457,6 +531,9 @@ public class StatsController {
         
     }
     
+    /**
+     * Displays excess report statistics.
+     */
     public void excessReport() {
         System.out.println("Selected excessReport");
         startDateTime = new DatePicker(lastRestock.toLocalDate());
@@ -478,10 +555,20 @@ public class StatsController {
         
     }
     
+    /**
+     * Handles date change for updating excess report based on date range.
+     * 
+     * @param observable The ObservableValue for date.
+     * @param oldValue The old date value.
+     * @param newValue The new date value.
+     */
     private void handleExcessUpdate(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
         populateExcessTable();
     }
     
+    /**
+     * Populates the excess table based on selected date range.
+     */
     private void populateExcessTable() {
         Timestamp start = Timestamp.valueOf(startDateTime.getValue().atStartOfDay());
         Timestamp end = Timestamp.valueOf(LocalDateTime.now());
@@ -523,12 +610,22 @@ public class StatsController {
         
     }
     
-    private String getPercent(int a, int b) {
+    /**
+     * Calculates and returns the percentage.
+     * 
+     * @param a The numerator.
+     * @param b The denominator.
+     * @return The percentage as a string.
+     */
+     private String getPercent(int a, int b) {
         double ans = a * 100.0;
         ans /= b;
         return String.format("%.2f",ans)+"%";
     }
     
+    /**
+     * Displays restock report statistics.
+     */
     public void restockReport() {
         System.out.println("Selected restockReport");
         chartArea.getChildren().add(restockTable);
@@ -538,6 +635,9 @@ public class StatsController {
         chartArea.setRightAnchor(restockTable,0.0);
     }
     
+    /**
+     * Displays statistics for paired menu items.
+     */
     public void sellsTogether() {
         System.out.println("Selected sellsTogether");
         chartArea.getChildren().add(pairSalesTable);
@@ -547,6 +647,9 @@ public class StatsController {
         chartArea.setRightAnchor(pairSalesTable,0.0);
     }
     
+    /**
+     * Initializes the line chart with sample data.
+     */
     @FXML
     public void initializeLineChart() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -560,6 +663,9 @@ public class StatsController {
         lineChart.getData().add(series);
     }
 
+    /**
+     * Initializes the bar chart with sample data.
+     */
     @FXML
     public void initializeBarChart() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -573,6 +679,11 @@ public class StatsController {
         salesReportChart.getData().add(series);
     }
 
+     /**
+     * Handles the sign-off button action.
+     * 
+     * @param event The ActionEvent triggered by sign-off button.
+     */
     @FXML
     private void handleSignOff(ActionEvent event) {
         System.out.println("Signed off");
@@ -582,14 +693,29 @@ public class StatsController {
         app.Main.navigateTo("Login");
     }
 
+    /**
+     * Navigates to the main menu.
+     * 
+     * @param event The ActionEvent triggered by menu button.
+     */
     public void goToMenu(ActionEvent event) {
         app.Main.navigateToMenuWithRole("Menu.fxml", app.Main.getIsManager());
     }
 
+    /**
+     * Navigates to the statistics page.
+     * 
+     * @param event The ActionEvent triggered by statistics button.
+     */
     public void goToStatistics(ActionEvent event) {
         app.Main.navigateTo("Stats");
     }
 
+    /**
+     * Navigates to the inventory page.
+     * 
+     * @param event The ActionEvent triggered by inventory button.
+     */
     public void goToInventory(ActionEvent event) {
         app.Main.navigateTo("Inventory");
     }
