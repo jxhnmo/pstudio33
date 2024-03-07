@@ -80,6 +80,7 @@ public class InventoryController {
         for (InventoryItems item : tableView.getItems()) {
             totalCost += item.getPrice();
         }
+     
         price.setText(String.valueOf(totalCost));
     }
 
