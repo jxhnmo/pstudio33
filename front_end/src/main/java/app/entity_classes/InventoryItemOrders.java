@@ -6,11 +6,11 @@ package app.entity_classes;
  * stock quantity, and price of the item.
  */
 public class InventoryItemOrders {
-    public int ID;
-    public int transactionID;
-    public int itemID;
-    public int stock;
-    public double price;
+    private int ID;
+    private int transactionID;
+    private int itemID;
+    private int stock;
+    private double price;
     /**
      * Constructs an InventoryItemOrder with specified details.
      *

@@ -29,14 +29,29 @@ public class SalesTransactions {
 
     // Getter and setter methods
 
+    /**
+     * Retrieves the ID of the sales transaction.
+     *
+     * @return The ID of the sales transaction.
+     */
     public int getId(){
         return id;
     }
 
+    /**
+     * Sets the ID of the sales transaction.
+     *
+     * @param id The ID of the sales transaction.
+     */
     public void setId(int id){
         this.id = id;
     }
 
+    /**
+     * Retrieves the total cost of the sales transaction.
+     *
+     * @return The total cost of the sales transaction.
+     */
     public double getCost(){
         return cost;
     }
@@ -50,26 +65,50 @@ public class SalesTransactions {
         this.cost += cost;
     }
     
+    /**
+     * Sets the total cost of the sales transaction.
+     *
+     * @param cost The total cost of the sales transaction.
+     */
     public void setCost(double cost){
         this.cost = cost;
     }
 
+    /**
+     * Retrieves the ID of the employee who processed the sale.
+     *
+     * @return The ID of the employee who processed the sale.
+     */
     public int getEmployeeId(){
         return employeeId;
     }
 
+    /**
+     * Sets the ID of the employee who processed the sale.
+     *
+     * @param employeeId The ID of the employee who processed the sale.
+     */
     public void setEmployeeId(int employeeId){
         this.employeeId = employeeId;
     }
 
+    /**
+     * Retrieves the timestamp when the transaction was processed.
+     *
+     * @return The timestamp when the transaction was processed.
+     */
     public String getTimeStamp(){
         return timeStamp;
     }
 
+    /**
+     * Sets the timestamp when the transaction was processed.
+     *
+     * @param timeStamp The timestamp when the transaction was processed.
+     */
     public void setTimeStamp(String timeStamp){
         this.timeStamp = timeStamp;
     }
-    
 
     /**
      * Returns a string representation of the sales transaction.

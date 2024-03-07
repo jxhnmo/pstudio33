@@ -27,26 +27,56 @@ public class SalesItems {
 
     // Getter and setter methods
 
+    /**
+     * Retrieves the ID of the sales item.
+     *
+     * @return The ID of the sales item.
+     */
     public int getID(){
         return ID;
     }
 
+    /**
+     * Sets the ID of the sales item.
+     *
+     * @param ID The ID of the sales item.
+     */
     public void setID(int ID){
         this.ID = ID;
     }
 
+    /**
+     * Retrieves the ID of the sales transaction this item belongs to.
+     *
+     * @return The ID of the sales transaction this item belongs to.
+     */
     public int getSalesID(){
         return salesID;
     }
 
+    /**
+     * Sets the ID of the sales transaction this item belongs to.
+     *
+     * @param salesID The ID of the sales transaction this item belongs to.
+     */
     public void setSalesID(int salesID){
         this.salesID = salesID;
     }
 
+    /**
+     * Retrieves the ID of the item being sold.
+     *
+     * @return The ID of the item being sold.
+     */
     public int getItemId(){
         return itemID;
     }
 
+    /**
+     * Sets the ID of the item being sold.
+     *
+     * @param itemID The ID of the item being sold.
+     */
     public void setItemID(int itemID){
         this.itemID = itemID;
     }
