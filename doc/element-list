@@ -1,0 +1,4 @@
+module:app
+app
+app.database
+app.entity_classes
